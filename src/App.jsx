@@ -5,6 +5,7 @@ import { Projects } from "@/sections/Projects";
 import { Experience } from "@/sections/Experience";
 import { Skills } from "@/sections/Skills";
 import { Services } from "@/sections/Services";
+import { Resources } from "@/sections/Resources";
 import { Contact } from "@/sections/Contact";
 import { Footer } from "@/layout/Footer";
 
@@ -37,6 +38,7 @@ return ( <HashRouter>
                 <Hero />
                 <About />
                 <Projects />
+                <Resources />
                 <Services />
                 <Experience />
                 <Skills />

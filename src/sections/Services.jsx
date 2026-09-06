@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
     BarChart3,
     Megaphone,
@@ -280,6 +281,7 @@ export const Services = () => {
                         "
                     >
 
+
                         {/* Large background number */}
 
                         <div
@@ -382,9 +384,11 @@ export const Services = () => {
                                                 <p className="text-xs text-gray-400 uppercase tracking-wider">
                                                     Revenue
                                                 </p>
+
                                                 <p className="text-2xl font-bold mt-2 text-gray-900">
                                                     €124.5K
                                                 </p>
+
                                                 <span className="text-xs text-primary font-semibold">
                                                     +18.4%
                                                 </span>
@@ -394,9 +398,11 @@ export const Services = () => {
                                                 <p className="text-xs text-gray-400 uppercase tracking-wider">
                                                     Growth
                                                 </p>
+
                                                 <p className="text-2xl font-bold mt-2 text-gray-900">
                                                     24.8%
                                                 </p>
+
                                                 <span className="text-xs text-primary font-semibold">
                                                     ↑ Trending
                                                 </span>
@@ -406,9 +412,11 @@ export const Services = () => {
                                                 <p className="text-xs text-gray-400 uppercase tracking-wider">
                                                     Quality
                                                 </p>
+
                                                 <p className="text-2xl font-bold mt-2 text-gray-900">
                                                     96.2%
                                                 </p>
+
                                                 <span className="text-xs text-primary font-semibold">
                                                     Valid Data
                                                 </span>
@@ -473,6 +481,7 @@ export const Services = () => {
                                                     <p className="text-xs text-gray-400">
                                                         CTR
                                                     </p>
+
                                                     <p className="text-xl font-bold mt-1">
                                                         3.8%
                                                     </p>
@@ -482,6 +491,7 @@ export const Services = () => {
                                                     <p className="text-xs text-gray-400">
                                                         CPC
                                                     </p>
+
                                                     <p className="text-xl font-bold mt-1">
                                                         €0.42
                                                     </p>
@@ -491,6 +501,7 @@ export const Services = () => {
                                                     <p className="text-xs text-gray-400">
                                                         ROAS
                                                     </p>
+
                                                     <p className="text-xl font-bold mt-1">
                                                         4.6x
                                                     </p>
@@ -575,7 +586,9 @@ export const Services = () => {
                                             <div className="flex items-center gap-2 px-5 py-3 border-b border-gray-800">
 
                                                 <div className="w-2.5 h-2.5 rounded-full bg-gray-600" />
+
                                                 <div className="w-2.5 h-2.5 rounded-full bg-gray-600" />
+
                                                 <div className="w-2.5 h-2.5 rounded-full bg-gray-600" />
 
                                             </div>
@@ -669,6 +682,54 @@ export const Services = () => {
                                     )}
 
                                 </div>
+
+
+                                {/* ================= RELATED PROJECTS ================= */}
+
+                                <Link
+                                    to={
+                                        service.id === "analytics"
+                                            ? "/pages?category=Data%20Analytics&category=Cloud%20%26%20Data%20Engineering"
+                                            : `/pages?category=${encodeURIComponent(
+                                                service.id === "ads"
+                                                    ? "Marketing & Ads"
+                                                    : service.title
+                                            )}`
+                                    }
+                                    className="
+                                        inline-flex
+                                        items-center
+                                        gap-2
+                                        mt-8
+                                        px-5
+                                        py-2.5
+                                        rounded-xl
+                                        bg-purple-500/10
+                                        border
+                                        border-purple-200
+                                        text-sm
+                                        font-semibold
+                                        text-purple-700
+                                        hover:bg-purple-500
+                                        hover:text-white
+                                        hover:border-purple-500
+                                        hover:-translate-y-0.5
+                                        transition-all
+                                        duration-300
+                                    "
+                                >
+                                    View related projects
+
+                                    <ArrowUpRight
+                                        className="
+                                            w-4
+                                            h-4
+                                            transition-transform
+                                            duration-300
+                                        "
+                                    />
+
+                                </Link>
 
                             </div>
 

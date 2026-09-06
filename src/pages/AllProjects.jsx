@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight} from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
@@ -13,17 +13,96 @@ const filters = [
     "SQL",
     "Cloud & Data Engineering",
     "Web Development",
+    "Marketing & Ads",
+];
+
+const yearFilters = [
+    "All",
+    "2026",
+    "2025",
 ];
 
 export const AllProjects = () => {
-    const [activeFilter, setActiveFilter] = useState("All");
+    const [searchParams] = useSearchParams();
+
+    const categoriesFromUrl = searchParams.getAll("category");
+
+    const [activeFilter, setActiveFilter] = useState(
+        categoriesFromUrl.length > 0
+            ? categoriesFromUrl
+            : ["All"]
+    );
+
+    const [activeYear, setActiveYear] = useState("All");
+
+    const handleFilterClick = (filter, event) => {
+
+        if (event.ctrlKey) {
+
+            if (filter === "All") {
+                setActiveFilter(["All"]);
+                return;
+            }
+
+            setActiveFilter((current) => {
+
+                let updatedFilters = current.filter(
+                    (item) => item !== "All"
+                );
+
+                if (updatedFilters.includes(filter)) {
+                    updatedFilters = updatedFilters.filter(
+                        (item) => item !== filter
+                    );
+                } else {
+                    updatedFilters = [...updatedFilters, filter];
+                }
+
+                if (updatedFilters.length === 0) {
+                    return ["All"];
+                }
+
+                return updatedFilters;
+            });
+
+        } else {
+
+            setActiveFilter([filter]);
+
+        }
+    };
 
     const filteredProjects =
-        activeFilter === "All"
-            ? projects
-            : projects.filter((project) =>
-                  project.category?.includes(activeFilter)
-              );
+        activeFilter.includes("All")
+            ? (
+                activeYear === "All"
+                    ? projects
+                    : projects.filter(
+                        (project) => project.year === activeYear
+                    )
+            )
+            : projects.filter((project) => {
+
+                  const matchesCategory = activeFilter.some((filter) => {
+
+                      if (filter === "Data Analytics") {
+                          return (
+                              project.category?.includes("Data Analytics") ||
+                              project.category?.includes("Azure")
+                          );
+                      }
+
+                      return project.category?.includes(filter);
+
+                  });
+
+                  const matchesYear =
+                      activeYear === "All" ||
+                      project.year === activeYear;
+
+                  return matchesCategory && matchesYear;
+
+              });
 
     return (
         <section className="relative overflow-hidden bg-gray-100 border-t border-gray-300 min-h-screen">
@@ -66,16 +145,16 @@ export const AllProjects = () => {
                 </div>
 
 
-                {/* ================= FILTERS ================= */}
+                {/* ================= YEAR FILTERS ================= */}
 
-                <div className="flex flex-wrap justify-center gap-3 mb-12">
+                <div className="flex flex-wrap justify-center gap-3 mb-5">
 
-                    {filters.map((filter) => (
+                    {yearFilters.map((year) => (
 
                         <button
-                            key={filter}
+                            key={year}
                             type="button"
-                            onClick={() => setActiveFilter(filter)}
+                            onClick={() => setActiveYear(year)}
                             className={`
                                 px-5
                                 py-2.5
@@ -87,7 +166,44 @@ export const AllProjects = () => {
                                 duration-300
                                 ease-in-out
                                 ${
-                                    activeFilter === filter
+                                    activeYear === year
+                                        ? "bg-primary text-white border-primary shadow-[0_0_18px_rgba(124,58,237,0.35)]"
+                                        : "bg-white text-purple-600 border-purple-200 hover:bg-purple-50 hover:border-purple-400"
+                                }
+                            `}
+                        >
+                            {year === "All" ? "All Years" : year}
+                        </button>
+
+                    ))}
+
+                </div>
+
+
+                {/* ================= FILTERS ================= */}
+
+                <div className="flex flex-wrap justify-center gap-3 mb-12">
+
+                    {filters.map((filter) => (
+
+                        <button
+                            key={filter}
+                            type="button"
+                            onClick={(event) =>
+                                handleFilterClick(filter, event)
+                            }
+                            className={`
+                                px-5
+                                py-2.5
+                                rounded-full
+                                text-sm
+                                font-semibold
+                                border-2
+                                transition-all
+                                duration-300
+                                ease-in-out
+                                ${
+                                    activeFilter.includes(filter)
                                         ? "bg-primary text-white border-primary shadow-[0_0_18px_rgba(124,58,237,0.35)]"
                                         : "bg-white text-purple-600 border-purple-200 hover:bg-purple-50 hover:border-purple-400"
                                 }
@@ -167,6 +283,33 @@ export const AllProjects = () => {
                             {/* ================= PROJECT CONTENT ================= */}
 
                             <div className="p-6">
+
+
+                                {/* ================= YEAR ================= */}
+
+                                <div className="mb-3">
+
+                                    <span
+                                        className="
+                                            inline-flex
+                                            items-center
+                                            px-3
+                                            py-1
+                                            rounded-full
+                                            text-xs
+                                            font-semibold
+                                            tracking-wider
+                                            uppercase
+                                            bg-purple-50
+                                            text-purple-700
+                                            border
+                                            border-purple-100
+                                        "
+                                    >
+                                        {project.year}
+                                    </span>
+
+                                </div>
 
 
                                 {/* ================= TITLE ================= */}
@@ -281,7 +424,7 @@ export const AllProjects = () => {
                                                 ease-in-out
                                                 hover:bg-primary
                                                 hover:text-white
-                                                hover:shadow-[0_0_15px_rgba(124,58,237,0.45)]
+                                                hover:shadow-[0_0_15px_rgba(124,58,58,0.45)]
                                             "
                                         >
                                             GitHub
