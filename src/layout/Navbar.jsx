@@ -10,6 +10,7 @@ const Navlinks = [
     { href: "services", title: "Services" },
     { href: "projects", title: "Projects" },
     { href: "skills", title: "Skills" },
+    { href: "learning", title: "Learning" },
 ];
 
 export const Navbar = () => {
@@ -86,7 +87,7 @@ export const Navbar = () => {
             }`}
         >
             {/* LEFT SIDE - LOGO */}
-            <nav className="container mx-auto px-6 flex items-center justify-between">
+            <nav className="container mx-auto px-0 flex items-center justify-between">
 
                 <Link
                     to="/"
@@ -212,4 +213,3 @@ export const Navbar = () => {
         </header>
     );
 };
-

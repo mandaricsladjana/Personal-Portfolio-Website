@@ -10,6 +10,8 @@ export const projects = [
         category: ["Data Analytics", "SQL"],
         link: "https://medium.com/p/0eb32dbc058c/edit",
         github: "https://github.com/",
+        status: "Finished",
+        progress: 100,
     },
 
     {
@@ -37,11 +39,12 @@ export const projects = [
             "Blob Storage",
             "Azure SQL Database",
             "Azure Data Factory",
-            "Power BI",
-        ],
+            "Power BI"],
         category: ["Cloud & Data Engineering", "Business Intelligence"],
         link: "https://medium.com/p/0eb32dbc058c/edit",
         github: "",
+        status: "Finished",
+        progress: 100,
     },
 
     {
@@ -55,6 +58,8 @@ export const projects = [
         category: ["Web Development"],
         link: "https://medium.com/",
         github: "https://github.com/",
+        status: "Ongoing",
+        progress: 80
     },
 
     {
@@ -74,10 +79,11 @@ export const projects = [
             "Data Quality",
             "Reporting",
             "Manufacturing",
-            "KPI Analysis"
-        ],
+            "KPI Analysis"],
         image: "/projects/shop-floor-data.jpg",
         link: "",
         github: "",
+        status: "Finished",
+        progress: 100,
     },
 ];

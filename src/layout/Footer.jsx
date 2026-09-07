@@ -30,15 +30,16 @@ export const Footer = () => {
     };
 
     return (
-        <footer
-            className="
-                relative
-                overflow-hidden
-                bg-black
-                border-t
-                border-purple-500/20
-            "
-        >
+<footer
+    id="footer"
+    className="
+        relative
+        overflow-hidden
+        bg-black
+        border-t
+        border-purple-500/20
+    "
+>
 
             {/* ================= BACKGROUND ================= */}
 
@@ -299,92 +300,102 @@ export const Footer = () => {
                 <div className="border-t border-white/10" />
 
 
-{/* ================= BOTTOM BAR ================= */}
+                {/* ================= BOTTOM BAR ================= */}
 
-<div
+                <div
+                    className="
+                        relative
+                        py-1
+                        min-h-14
+                        flex
+                        items-center
+                    "
+                >
+
+                    {/* Copyright + Made With */}
+
+                    <div
+                        className="
+                            flex
+                            items-center
+                            justify-start
+                            gap-3
+                            text-xs
+                            text-white/40
+                            text-left
+                        "
+                    >
+                        <span>
+                            © {currentYear} Sladjana Mandaric. All rights reserved.
+                        </span>
+
+                        <span className="text-white/20">
+                            ·
+                        </span>
+
+                        <span
+                            className="
+                                flex
+                                items-center
+                                gap-2
+                            "
+                        >
+                            Made with
+
+                            <Heart
+                                className="
+                                    w-3.5
+                                    h-3.5
+                                    text-purple-500
+                                    fill-current
+                                "
+                            />
+                        </span>
+                    </div>
+
+
+                    {/* Back To Top */}
+
+                    <div
     className="
-        py-1
-        grid
-        grid-cols-1
-        md:grid-cols-3
-        gap-1
+        absolute
+        left-1/2
+        -translate-x-1/2
+        bottom-7
+        flex
+        items-center
+        justify-center
     "
 >
 
-    {/* Copyright + Made With */}
+                        <button
+                            onClick={scrollToTop}
+                            aria-label="Back to top"
+                            className="
+                                w-12
+                                h-12
+                                rounded-full
+                                bg-primary/50
+                                border
+                                border-white/10
+                                flex
+                                items-center
+                                justify-center
+                                text-white/60
+                                hover:text-purple-500
+                                hover:border-purple-500/50
+                                hover:bg-purple-500/10
+                                transition-all
+                                duration-300
+                                animate-bounce
+                            "
+                        >
+                            <ArrowUp className="w-6 h-6" />
+                        </button>
 
-    <div
-        className="
-            md:col-span-2
-            flex
-            items-center
-            justify-start
-            gap-3
-            text-xs
-            text-white/40
-            text-left
-        "
-    >
-        <span>
-            © {currentYear} Sladjana Mandaric. All rights reserved.
-        </span>
+                    </div>
 
-        <span className="text-white/20">
-            ·
-        </span>
-
-        <span
-            className="
-                flex
-                items-center
-                gap-2
-            "
-        >
-            Made with
-
-            <Heart
-                className="
-                    w-3.5
-                    h-3.5
-                    text-purple-500
-                    fill-current
-                "
-            />
-        </span>
-    </div>
-
-
-    {/* Back To Top */}
-
-    <div className="flex justify-center md:justify-end">
-
-        <button
-            onClick={scrollToTop}
-            aria-label="Back to top"
-            className="
-                w-9
-                h-9
-                rounded-full
-                bg-white/5
-                border
-                border-white/10
-                flex
-                items-center
-                justify-center
-                text-white/60
-                hover:text-purple-500
-                hover:border-purple-500/50
-                hover:bg-purple-500/10
-                transition-all
-                duration-300
-            "
-        >
-            <ArrowUp className="w-4 h-4" />
-        </button>
-
-    </div>
-
-</div>
+                </div>
 
             </div>
 

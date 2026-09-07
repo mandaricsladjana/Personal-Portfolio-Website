@@ -75,687 +75,894 @@ export function Resources() {
             {/* =========================
                 LEFT RESOURCE RIBBON
             ========================== */}
-            {showRibbon && isOpen && (
-                <aside
-                    className="
-                        fixed
-                        left-0
-                        top-0
-                        z-40
-                        hidden
-                        h-screen
-                        w-[280px]
-                        overflow-hidden
-                        border-r
-                        border-white/15
-                        bg-primary-dark/90
-                        shadow-[12px_0_50px_rgba(60,20,100,0.28)]
-                        backdrop-blur-2xl
-                        md:block
-                    "
-                    style={{
-                        animation:
-                            "ribbonReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards",
-                    }}
-                >
-                    {/* LUXURY BACKGROUND DETAILS */}
-                    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
-                        <div
-                            className="
-                                absolute
-                                -left-20
-                                -top-20
-                                h-64
-                                w-64
-                                rounded-full
-                                bg-white/10
-                                blur-3xl
-                            "
-                        />
-
-                        <div
-                            className="
-                                absolute
-                                -bottom-24
-                                -right-24
-                                h-72
-                                w-72
-                                rounded-full
-                                bg-primary/30
-                                blur-3xl
-                            "
-                        />
-
-                        <div
-                            className="
-                                absolute
-                                left-0
-                                top-0
-                                h-full
-                                w-px
-                                bg-gradient-to-b
-                                from-transparent
-                                via-white/30
-                                to-transparent
-                            "
-                        />
-
-                    </div>
-
-
-                    <div className="relative flex h-full flex-col px-5 pb-6 pt-28">
-
-                        {/* CLOSE BUTTON */}
+            {showRibbon && (
+                <>
+                    {/* =========================
+                        CLOSED RESOURCE TAB
+                    ========================== */}
+                    {!isOpen && (
                         <button
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => setIsOpen(true)}
                             className="
-                                absolute
-                                right-4
-                                top-24
-                                z-10
-                                flex
-                                h-9
-                                w-9
+                                fixed
+                                left-0
+                                top-1/2
+                                -translate-y-1/2
+                                z-40
+                                hidden
+                                h-32
+                                w-10
                                 items-center
                                 justify-center
-                                rounded-full
+                                rounded-r-2xl
                                 border
+                                border-l-0
                                 border-white/15
-                                bg-white/10
-                                text-white/60
-                                shadow-lg
+                                bg-primary-dark
+                                text-white/70
+                                shadow-[8px_0_30px_rgba(60,20,100,0.25)]
+                                backdrop-blur-xl
                                 transition-all
                                 duration-300
-                                hover:scale-105
-                                hover:bg-white/20
+                                hover:w-12
                                 hover:text-white
+                                md:flex
                             "
-                            aria-label="Close resources ribbon"
+                            aria-label="Open resources ribbon"
                         >
-                            <FaTimes size={12} />
-                        </button>
-
-
-                        {/* =========================
-                            CURRENTLY WORKING ON
-                        ========================== */}
-                        <section>
-
-                            <div className="mb-5 flex items-center gap-2">
-
-                                <span
-                                    className="
-                                        h-1.5
-                                        w-1.5
-                                        rounded-full
-                                        bg-white
-                                        shadow-[0_0_12px_rgba(255,255,255,0.9)]
-                                    "
-                                />
-
-                                <p
-                                    className="
-                                        text-[9px]
-                                        font-semibold
-                                        uppercase
-                                        tracking-[0.28em]
-                                        text-white/55
-                                    "
-                                >
-                                    Currently
-                                </p>
-
-                            </div>
-
-
-                            <h3
+                            <span
                                 className="
-                                    max-w-[220px]
-                                    text-[25px]
+                                    rotate-180
+                                    text-[9px]
                                     font-semibold
-                                    leading-[1.08]
-                                    tracking-[-0.02em]
-                                    text-white
+                                    uppercase
+                                    tracking-[0.25em]
+                                    [writing-mode:vertical-rl]
                                 "
                             >
-                                What am I currently working on?
-                            </h3>
+                                Resources
+                            </span>
+                        </button>
+                    )}
 
 
-                            <div className="mt-5 flex items-center gap-3">
+                    {/* =========================
+                        RESOURCE RIBBON
+                    ========================== */}
+                    <aside
+                        className="
+                            fixed
+                            left-0
+                            top-0
+                            z-40
+                            hidden
+                            h-screen
+                            w-[280px]
+                            overflow-hidden
+                            border-r
+                            border-white/15
+                            bg-primary-dark
+                            shadow-[12px_0_50px_rgba(60,20,100,0.28)]
+                            backdrop-blur-2xl
+                            transition-all
+                            duration-700
+                            ease-[cubic-bezier(0.22,1,0.36,1)]
+                            md:block
+                        "
+                        style={{
+                            transform: isOpen
+                                ? "translateX(0)"
+                                : "translateX(-100%)",
+                            opacity: isOpen ? 1 : 0,
+                            pointerEvents: isOpen ? "auto" : "none",
+                        }}
+                    >
+                        {/* LUXURY BACKGROUND DETAILS */}
+                        <div className="pointer-events-none absolute inset-0 overflow-hidden">
 
-                                <div
-                                    className="
-                                        flex
-                                        h-9
-                                        w-9
-                                        shrink-0
-                                        items-center
-                                        justify-center
-                                        rounded-xl
-                                        border
-                                        border-white/15
-                                        bg-white/10
-                                        text-white
-                                        shadow-[0_8px_25px_rgba(40,20,70,0.20)]
-                                    "
-                                >
-                                    <FaArrowRight size={13} />
-                                </div>
+                            {/* MAIN DEPTH GRADIENT */}
+                            <div
+                                className="
+                                    absolute
+                                    inset-0
+                                    bg-gradient-to-br
+                                    from-primary-dark
+                                    via-primary-dark
+                                    to-primary
+                                "
+                            />
+
+                            {/* SOFT TOP LIGHT */}
+                            <div
+                                className="
+                                    absolute
+                                    -left-24
+                                    -top-28
+                                    h-80
+                                    w-80
+                                    rounded-full
+                                    bg-violet-300/10
+                                    blur-[90px]
+                                "
+                            />
+
+                            {/* SOFT CENTER GLOW */}
+                            <div
+                                className="
+                                    absolute
+                                    left-1/2
+                                    top-[28%]
+                                    h-72
+                                    w-72
+                                    -translate-x-1/2
+                                    rounded-full
+                                    bg-purple-300/5
+                                    blur-[100px]
+                                "
+                            />
+
+                            {/* BOTTOM PURPLE GLOW */}
+                            <div
+                                className="
+                                    absolute
+                                    -bottom-28
+                                    -right-28
+                                    h-96
+                                    w-96
+                                    rounded-full
+                                    bg-primary/35
+                                    blur-[100px]
+                                "
+                            />
+
+                            {/* SMALL FLOATING GLOW */}
+                            <div
+                                className="
+                                    absolute
+                                    right-[-45px]
+                                    top-[42%]
+                                    h-36
+                                    w-36
+                                    rounded-full
+                                    bg-white/[0.035]
+                                    blur-[55px]
+                                "
+                            />
+
+                            {/* SUBTLE GRID */}
+                            <div
+                                className="
+                                    absolute
+                                    inset-0
+                                    opacity-[0.035]
+                                "
+                                style={{
+                                    backgroundImage:
+                                        "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
+                                    backgroundSize: "32px 32px",
+                                }}
+                            />
+
+                            {/* DIAGONAL LIGHT TEXTURE */}
+                            <div
+                                className="
+                                    absolute
+                                    inset-0
+                                    opacity-[0.025]
+                                "
+                                style={{
+                                    backgroundImage:
+                                        "repeating-linear-gradient(135deg, transparent 0px, transparent 18px, rgba(255,255,255,0.8) 19px, transparent 20px)",
+                                }}
+                            />
+
+                            {/* TOP EDGE LIGHT */}
+                            <div
+                                className="
+                                    absolute
+                                    left-0
+                                    right-0
+                                    top-0
+                                    h-px
+                                    bg-gradient-to-r
+                                    from-transparent
+                                    via-white/25
+                                    to-transparent
+                                "
+                            />
+
+                            {/* LEFT EDGE GLOW */}
+                            <div
+                                className="
+                                    absolute
+                                    left-0
+                                    top-0
+                                    h-full
+                                    w-px
+                                    bg-gradient-to-b
+                                    from-transparent
+                                    via-white/30
+                                    to-transparent
+                                "
+                            />
+
+                            {/* RIGHT EDGE DEPTH */}
+                            <div
+                                className="
+                                    absolute
+                                    right-0
+                                    top-0
+                                    h-full
+                                    w-16
+                                    bg-gradient-to-l
+                                    from-black/15
+                                    to-transparent
+                                "
+                            />
+
+                            {/* BOTTOM FADE */}
+                            <div
+                                className="
+                                    absolute
+                                    bottom-0
+                                    left-0
+                                    right-0
+                                    h-40
+                                    bg-gradient-to-t
+                                    from-primary-dark/60
+                                    to-transparent
+                                "
+                            />
+
+                        </div>
 
 
-                                <div>
+                        <div className="relative flex h-full flex-col px-5 pb-6 pt-28">
+
+                            {/* CLOSE BUTTON */}
+                            <button
+                                onClick={() => setIsOpen(false)}
+                                className="
+                                    absolute
+                                    right-4
+                                    top-24
+                                    z-10
+                                    flex
+                                    h-9
+                                    w-9
+                                    items-center
+                                    justify-center
+                                    rounded-full
+                                    border
+                                    border-white/15
+                                    bg-white/10
+                                    text-white/60
+                                    shadow-lg
+                                    transition-all
+                                    duration-300
+                                    hover:scale-105
+                                    hover:bg-white/20
+                                    hover:text-white
+                                "
+                                aria-label="Close resources ribbon"
+                            >
+                                <FaTimes size={12} />
+                            </button>
+
+
+                            {/* =========================
+                                CURRENTLY WORKING ON
+                            ========================== */}
+                            <section>
+
+                                <div className="mb-5 flex items-center gap-2">
+
+                                    <span
+                                        className="
+                                            h-1.5
+                                            w-1.5
+                                            rounded-full
+                                            bg-white
+                                            shadow-[0_0_12px_rgba(255,255,255,0.9)]
+                                            animate-[pulseWhite_2s_ease-in-out_infinite]
+                                        "
+                                    />
 
                                     <p
                                         className="
-                                            text-[10px]
+                                            text-[9px]
                                             font-semibold
                                             uppercase
-                                            tracking-[0.16em]
-                                            text-white
+                                            tracking-[0.28em]
+                                            text-white/55
                                         "
                                     >
-                                        Creating a Fully Functioning Web Workshop
+                                        Currently
                                     </p>
+
+                                </div>
+
+
+                                <h3
+                                    className="
+                                        max-w-[220px]
+                                        text-[25px]
+                                        font-semibold
+                                        leading-[1.08]
+                                        tracking-[-0.02em]
+                                        text-white
+                                    "
+                                >
+                                    What am I currently working on?
+                                </h3>
+
+
+                                <div className="mt-5 flex items-center gap-3">
 
                                     <div
                                         className="
-                                            mt-2
-                                            inline-flex
+                                            flex
+                                            h-9
+                                            w-9
+                                            shrink-0
                                             items-center
-                                            rounded-full
+                                            justify-center
+                                            rounded-xl
                                             border
-                                            border-white
-                                            bg-white
-                                            px-4
-                                            py-1.5
-                                            text-[10px]
-                                            font-bold
-                                            uppercase
-                                            tracking-[0.12em]
-                                            text-primary-dark
-                                            shadow-[0_6px_20px_rgba(255,255,255,0.18)]
+                                            border-white/15
+                                            bg-white/10
+                                            text-white
+                                            shadow-[0_8px_25px_rgba(40,20,70,0.20)]
                                         "
                                     >
-                                        Coming Soon
+                                        <FaArrowRight size={13} />
+                                    </div>
+
+
+                                    <div>
+
+                                        <p
+                                            className="
+                                                text-[13px]
+                                                font-semibold
+                                                uppercase
+                                                tracking-[0.12em]
+                                                text-white
+                                                animate-[projectPulse_3s_ease-in-out_infinite]
+                                            "
+                                        >
+                                            Creating a Fully Functioning Web Workshop
+                                        </p>
+
+                                        <div
+                                            className="
+                                                mt-2
+                                                inline-flex
+                                                items-center
+                                                rounded-full
+                                                border
+                                                border-white
+                                                bg-white
+                                                px-5
+                                                py-2
+                                                text-[12px]
+                                                font-bold
+                                                uppercase
+                                                tracking-[0.12em]
+                                                text-primary-dark
+                                                shadow-[0_6px_20px_rgba(255,255,255,0.18)]
+                                            "
+                                        >
+                                            Coming Soon
+                                        </div>
+
                                     </div>
 
                                 </div>
 
+                            </section>
+
+
+                            {/* DIVIDER */}
+                            <div
+                                className="
+                                    my-7
+                                    flex
+                                    items-center
+                                    gap-3
+                                "
+                            >
+                                <div
+                                    className="
+                                        h-px
+                                        flex-1
+                                        bg-gradient-to-r
+                                        from-transparent
+                                        via-white/30
+                                        to-white/10
+                                    "
+                                />
+
+                                <div
+                                    className="
+                                        h-1
+                                        w-1
+                                        rounded-full
+                                        bg-white/40
+                                        shadow-[0_0_8px_rgba(255,255,255,0.4)]
+                                    "
+                                />
+
+                                <div
+                                    className="
+                                        h-px
+                                        flex-1
+                                        bg-gradient-to-l
+                                        from-transparent
+                                        via-white/30
+                                        to-white/10
+                                    "
+                                />
+
                             </div>
 
-                        </section>
+
+                            {/* =========================
+                                FREE DOWNLOADS HEADER
+                            ========================== */}
+                            <section>
+
+                                <div className="mb-4">
+
+                                    <p
+                                        className="
+                                            text-[9px]
+                                            font-semibold
+                                            uppercase
+                                            tracking-[0.28em]
+                                            text-white/45
+                                        "
+                                    >
+                                        Resources
+                                    </p>
 
 
-                        {/* DIVIDER */}
-                        <div
-                            className="
-                                my-7
-                                h-px
-                                bg-gradient-to-r
-                                from-transparent
-                                via-white/20
-                                to-transparent
-                            "
-                        />
+                                    <div className="mt-1 flex items-end justify-between">
+
+                                        <h3
+                                            className="
+                                                text-[22px]
+                                                font-semibold
+                                                leading-none
+                                                tracking-tight
+                                                text-white
+                                            "
+                                        >
+                                            Free Downloads
+                                        </h3>
+
+                                    </div>
 
 
-                        {/* =========================
-                            FREE DOWNLOADS HEADER
-                        ========================== */}
-                        <section>
+                                    <p
+                                        className="
+                                            mt-2
+                                            max-w-[225px]
+                                            text-[10px]
+                                            leading-relaxed
+                                            text-white/50
+                                        "
+                                    >
+                                        Free Notion systems designed to make
+                                        planning, tracking and reporting easier.
+                                    </p>
 
-                            <div className="mb-4">
+                                </div>
 
-                                <p
+
+                                {/* =========================
+                                    KPI PLANNING VISUALS
+                                ========================== */}
+                                <button
+                                    onClick={() =>
+                                        setSelectedResource(resources[0])
+                                    }
                                     className="
-                                        text-[9px]
-                                        font-semibold
-                                        uppercase
-                                        tracking-[0.28em]
-                                        text-white/45
+                                        group
+                                        mb-3
+                                        block
+                                        w-full
+                                        overflow-hidden
+                                        rounded-2xl
+                                        border
+                                        border-white/15
+                                        bg-white/[0.08]
+                                        text-left
+                                        shadow-[0_12px_30px_rgba(30,10,60,0.18)]
+                                        backdrop-blur-md
+                                        transition-all
+                                        duration-300
+                                        hover:-translate-y-1
+                                        hover:border-white/25
+                                        hover:bg-white/[0.13]
+                                        hover:shadow-[0_18px_38px_rgba(30,10,60,0.28)]
                                     "
                                 >
-                                    Resources
-                                </p>
+                                    <div className="p-4">
+
+                                        <div className="flex items-start justify-between">
+
+                                            <div
+                                                className="
+                                                    flex
+                                                    h-9
+                                                    w-9
+                                                    items-center
+                                                    justify-center
+                                                    rounded-xl
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    text-white
+                                                    transition-all
+                                                    duration-300
+                                                    group-hover:bg-white/15
+                                                "
+                                            >
+                                                <FaThLarge size={13} />
+                                            </div>
 
 
-                                <div className="mt-1 flex items-end justify-between">
+                                            <FaArrowRight
+                                                size={10}
+                                                className="
+                                                    mt-1
+                                                    text-white/30
+                                                    transition-all
+                                                    duration-300
+                                                    group-hover:translate-x-1
+                                                    group-hover:text-white
+                                                "
+                                            />
 
-                                    <h3
+                                        </div>
+
+
+                                        <h4
+                                            className="
+                                                mt-3
+                                                text-[13px]
+                                                font-semibold
+                                                leading-snug
+                                                text-white
+                                            "
+                                        >
+                                            KPI Planning Visuals
+                                        </h4>
+
+
+                                        <p
+                                            className="
+                                                mt-1
+                                                text-[9px]
+                                                font-medium
+                                                uppercase
+                                                tracking-wider
+                                                text-white/40
+                                            "
+                                        >
+                                            Notion Pattern
+                                        </p>
+
+
+                                        <p
+                                            className="
+                                                mt-3
+                                                text-[10px]
+                                                leading-relaxed
+                                                text-white/65
+                                            "
+                                        >
+                                            Visual planning for KPIs,
+                                            dashboards and reporting workflows.
+                                        </p>
+
+                                    </div>
+
+
+                                    {/* DOWNLOAD AREA */}
+                                    <div
                                         className="
-                                            text-[22px]
+                                            flex
+                                            items-center
+                                            justify-between
+                                            border-t
+                                            border-white/10
+                                            bg-white/[0.05]
+                                            px-4
+                                            py-2.5
+                                            transition-all
+                                            duration-300
+                                            group-hover:bg-white/[0.10]
+                                        "
+                                    >
+                                        <span
+                                            className="
+                                                text-[8px]
+                                                font-semibold
+                                                uppercase
+                                                tracking-[0.16em]
+                                                text-white/80
+                                            "
+                                        >
+                                            Download Free Pattern
+                                        </span>
+
+                                        <FaDownload
+                                            size={9}
+                                            className="
+                                                text-white/70
+                                                transition-transform
+                                                duration-300
+                                                group-hover:translate-y-0.5
+                                            "
+                                        />
+                                    </div>
+
+                                </button>
+
+
+                                {/* =========================
+                                    ADS TRACKING PATTERN
+                                ========================== */}
+                                <button
+                                    onClick={() =>
+                                        setSelectedResource(resources[1])
+                                    }
+                                    className="
+                                        group
+                                        block
+                                        w-full
+                                        overflow-hidden
+                                        rounded-2xl
+                                        border
+                                        border-white/15
+                                        bg-white/[0.08]
+                                        text-left
+                                        shadow-[0_12px_30px_rgba(30,10,60,0.18)]
+                                        backdrop-blur-md
+                                        transition-all
+                                        duration-300
+                                        hover:-translate-y-1
+                                        hover:border-white/25
+                                        hover:bg-white/[0.13]
+                                        hover:shadow-[0_18px_38px_rgba(30,10,60,0.28)]
+                                    "
+                                >
+                                    <div className="p-4">
+
+                                        <div className="flex items-start justify-between">
+
+                                            <div
+                                                className="
+                                                    flex
+                                                    h-9
+                                                    w-9
+                                                    items-center
+                                                    justify-center
+                                                    rounded-xl
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    text-white
+                                                    transition-all
+                                                    duration-300
+                                                    group-hover:bg-white/15
+                                                "
+                                            >
+                                                <FaBullhorn size={13} />
+                                            </div>
+
+
+                                            <FaArrowRight
+                                                size={10}
+                                                className="
+                                                    mt-1
+                                                    text-white/30
+                                                    transition-all
+                                                    duration-300
+                                                    group-hover:translate-x-1
+                                                    group-hover:text-white
+                                                "
+                                            />
+
+                                        </div>
+
+
+                                        <h4
+                                            className="
+                                                mt-3
+                                                text-[13px]
+                                                font-semibold
+                                                leading-snug
+                                                text-white
+                                            "
+                                        >
+                                            Ads Tracking Pattern
+                                        </h4>
+
+
+                                        <p
+                                            className="
+                                                mt-1
+                                                text-[9px]
+                                                font-medium
+                                                uppercase
+                                                tracking-wider
+                                                text-white/40
+                                            "
+                                        >
+                                            Notion Pattern
+                                        </p>
+
+
+                                        <p
+                                            className="
+                                                mt-3
+                                                text-[10px]
+                                                leading-relaxed
+                                                text-white/65
+                                            "
+                                        >
+                                            Organize campaigns, advertising
+                                            activities and performance.
+                                        </p>
+
+                                    </div>
+
+
+                                    {/* DOWNLOAD AREA */}
+                                    <div
+                                        className="
+                                            flex
+                                            items-center
+                                            justify-between
+                                            border-t
+                                            border-white/10
+                                            bg-white/[0.05]
+                                            px-4
+                                            py-2.5
+                                            transition-all
+                                            duration-300
+                                            group-hover:bg-white/[0.10]
+                                        "
+                                    >
+                                        <span
+                                            className="
+                                                text-[8px]
+                                                font-semibold
+                                                uppercase
+                                                tracking-[0.16em]
+                                                text-white/80
+                                            "
+                                        >
+                                            Download Free Pattern
+                                        </span>
+
+                                        <FaDownload
+                                            size={9}
+                                            className="
+                                                text-white/70
+                                                transition-transform
+                                                duration-300
+                                                group-hover:translate-y-0.5
+                                            "
+                                        />
+                                    </div>
+
+                                </button>
+
+                            </section>
+
+
+                            {/* =========================
+                                LOOK AT MY PROJECTS
+                            ========================== */}
+                            <div className="mt-auto pt-6">
+
+                                <div
+                                    className="
+                                        relative
+                                        overflow-hidden
+                                        rounded-2xl
+                                        border
+                                        border-white/15
+                                        bg-white/[0.07]
+                                        p-4
+                                        shadow-[0_15px_35px_rgba(30,10,60,0.20)]
+                                    "
+                                >
+
+                                    <div
+                                        className="
+                                            absolute
+                                            -right-8
+                                            -top-8
+                                            h-24
+                                            w-24
+                                            rounded-full
+                                            bg-white/10
+                                            blur-2xl
+                                        "
+                                    />
+
+                                    <p
+                                        className="
+                                            relative
+                                            text-[8px]
                                             font-semibold
-                                            leading-none
+                                            uppercase
+                                            tracking-[0.24em]
+                                            text-white/45
+                                        "
+                                    >
+                                        Portfolio
+                                    </p>
+
+
+                                    <h4
+                                        className="
+                                            relative
+                                            mt-1.5
+                                            text-[16px]
+                                            font-semibold
                                             tracking-tight
                                             text-white
                                         "
                                     >
-                                        Free Downloads
-                                    </h3>
-
-                                </div>
-
-
-                                <p
-                                    className="
-                                        mt-2
-                                        max-w-[225px]
-                                        text-[10px]
-                                        leading-relaxed
-                                        text-white/50
-                                    "
-                                >
-                                    Free Notion systems designed to make
-                                    planning, tracking and reporting easier.
-                                </p>
-
-                            </div>
-
-
-                            {/* =========================
-                                KPI PLANNING VISUALS
-                            ========================== */}
-                            <button
-                                onClick={() =>
-                                    setSelectedResource(resources[0])
-                                }
-                                className="
-                                    group
-                                    mb-3
-                                    block
-                                    w-full
-                                    overflow-hidden
-                                    rounded-2xl
-                                    border
-                                    border-white/15
-                                    bg-white/[0.08]
-                                    text-left
-                                    shadow-[0_12px_30px_rgba(30,10,60,0.18)]
-                                    backdrop-blur-md
-                                    transition-all
-                                    duration-300
-                                    hover:-translate-y-1
-                                    hover:border-white/25
-                                    hover:bg-white/[0.13]
-                                    hover:shadow-[0_18px_38px_rgba(30,10,60,0.28)]
-                                "
-                            >
-                                <div className="p-4">
-
-                                    <div className="flex items-start justify-between">
-
-                                        <div
-                                            className="
-                                                flex
-                                                h-9
-                                                w-9
-                                                items-center
-                                                justify-center
-                                                rounded-xl
-                                                border
-                                                border-white/15
-                                                bg-white/10
-                                                text-white
-                                                transition-all
-                                                duration-300
-                                                group-hover:bg-white/15
-                                            "
-                                        >
-                                            <FaThLarge size={13} />
-                                        </div>
-
-
-                                        <FaArrowRight
-                                            size={10}
-                                            className="
-                                                mt-1
-                                                text-white/30
-                                                transition-all
-                                                duration-300
-                                                group-hover:translate-x-1
-                                                group-hover:text-white
-                                            "
-                                        />
-
-                                    </div>
-
-
-                                    <h4
-                                        className="
-                                            mt-3
-                                            text-[13px]
-                                            font-semibold
-                                            leading-snug
-                                            text-white
-                                        "
-                                    >
-                                        KPI Planning Visuals
+                                        Look at my projects
                                     </h4>
 
 
-                                    <p
+                                    <button
                                         className="
-                                            mt-1
-                                            text-[9px]
-                                            font-medium
-                                            uppercase
-                                            tracking-wider
-                                            text-white/40
-                                        "
-                                    >
-                                        Notion Pattern
-                                    </p>
-
-
-                                    <p
-                                        className="
+                                            relative
                                             mt-3
-                                            text-[10px]
-                                            leading-relaxed
-                                            text-white/65
-                                        "
-                                    >
-                                        Visual planning for KPIs,
-                                        dashboards and reporting workflows.
-                                    </p>
-
-                                </div>
-
-
-                                {/* DOWNLOAD AREA */}
-                                <div
-                                    className="
-                                        flex
-                                        items-center
-                                        justify-between
-                                        border-t
-                                        border-white/10
-                                        bg-white/[0.05]
-                                        px-4
-                                        py-2.5
-                                        transition-all
-                                        duration-300
-                                        group-hover:bg-white/[0.10]
-                                    "
-                                >
-                                    <span
-                                        className="
-                                            text-[8px]
+                                            flex
+                                            w-full
+                                            items-center
+                                            justify-between
+                                            rounded-xl
+                                            border
+                                            border-white/15
+                                            bg-white/10
+                                            px-3
+                                            py-2.5
+                                            text-[9px]
                                             font-semibold
                                             uppercase
-                                            tracking-[0.16em]
-                                            text-white/80
+                                            tracking-[0.12em]
+                                            text-white
+                                            transition-all
+                                            duration-300
+                                            hover:bg-white/15
                                         "
                                     >
-                                        Download Free Pattern
-                                    </span>
-
-                                    <FaDownload
-                                        size={9}
-                                        className="
-                                            text-white/70
-                                            transition-transform
-                                            duration-300
-                                            group-hover:translate-y-0.5
-                                        "
-                                    />
-                                </div>
-
-                            </button>
-
-
-                            {/* =========================
-                                ADS TRACKING PATTERN
-                            ========================== */}
-                            <button
-                                onClick={() =>
-                                    setSelectedResource(resources[1])
-                                }
-                                className="
-                                    group
-                                    block
-                                    w-full
-                                    overflow-hidden
-                                    rounded-2xl
-                                    border
-                                    border-white/15
-                                    bg-white/[0.08]
-                                    text-left
-                                    shadow-[0_12px_30px_rgba(30,10,60,0.18)]
-                                    backdrop-blur-md
-                                    transition-all
-                                    duration-300
-                                    hover:-translate-y-1
-                                    hover:border-white/25
-                                    hover:bg-white/[0.13]
-                                    hover:shadow-[0_18px_38px_rgba(30,10,60,0.28)]
-                                "
-                            >
-                                <div className="p-4">
-
-                                    <div className="flex items-start justify-between">
-
-                                        <div
-                                            className="
-                                                flex
-                                                h-9
-                                                w-9
-                                                items-center
-                                                justify-center
-                                                rounded-xl
-                                                border
-                                                border-white/15
-                                                bg-white/10
-                                                text-white
-                                                transition-all
-                                                duration-300
-                                                group-hover:bg-white/15
-                                            "
-                                        >
-                                            <FaBullhorn size={13} />
-                                        </div>
-
+                                        View Projects
 
                                         <FaArrowRight
-                                            size={10}
-                                            className="
-                                                mt-1
-                                                text-white/30
-                                                transition-all
-                                                duration-300
-                                                group-hover:translate-x-1
-                                                group-hover:text-white
-                                            "
+                                            size={9}
+                                            className="text-white/70"
                                         />
-
-                                    </div>
-
-
-                                    <h4
-                                        className="
-                                            mt-3
-                                            text-[13px]
-                                            font-semibold
-                                            leading-snug
-                                            text-white
-                                        "
-                                    >
-                                        Ads Tracking Pattern
-                                    </h4>
-
-
-                                    <p
-                                        className="
-                                            mt-1
-                                            text-[9px]
-                                            font-medium
-                                            uppercase
-                                            tracking-wider
-                                            text-white/40
-                                        "
-                                    >
-                                        Notion Pattern
-                                    </p>
-
-
-                                    <p
-                                        className="
-                                            mt-3
-                                            text-[10px]
-                                            leading-relaxed
-                                            text-white/65
-                                        "
-                                    >
-                                        Organize campaigns, advertising
-                                        activities and performance.
-                                    </p>
+                                    </button>
 
                                 </div>
-
-
-                                {/* DOWNLOAD AREA */}
-                                <div
-                                    className="
-                                        flex
-                                        items-center
-                                        justify-between
-                                        border-t
-                                        border-white/10
-                                        bg-white/[0.05]
-                                        px-4
-                                        py-2.5
-                                        transition-all
-                                        duration-300
-                                        group-hover:bg-white/[0.10]
-                                    "
-                                >
-                                    <span
-                                        className="
-                                            text-[8px]
-                                            font-semibold
-                                            uppercase
-                                            tracking-[0.16em]
-                                            text-white/80
-                                        "
-                                    >
-                                        Download Free Pattern
-                                    </span>
-
-                                    <FaDownload
-                                        size={9}
-                                        className="
-                                            text-white/70
-                                            transition-transform
-                                            duration-300
-                                            group-hover:translate-y-0.5
-                                        "
-                                    />
-                                </div>
-
-                            </button>
-
-                        </section>
-
-
-                        {/* =========================
-                            LOOK AT MY PROJECTS
-                        ========================== */}
-                        <div className="mt-auto pt-6">
-
-                            <div
-                                className="
-                                    relative
-                                    overflow-hidden
-                                    rounded-2xl
-                                    border
-                                    border-white/15
-                                    bg-white/[0.07]
-                                    p-4
-                                    shadow-[0_15px_35px_rgba(30,10,60,0.20)]
-                                "
-                            >
-
-                                <div
-                                    className="
-                                        absolute
-                                        -right-8
-                                        -top-8
-                                        h-24
-                                        w-24
-                                        rounded-full
-                                        bg-white/10
-                                        blur-2xl
-                                    "
-                                />
-
-                                <p
-                                    className="
-                                        relative
-                                        text-[8px]
-                                        font-semibold
-                                        uppercase
-                                        tracking-[0.24em]
-                                        text-white/45
-                                    "
-                                >
-                                    Portfolio
-                                </p>
-
-
-                                <h4
-                                    className="
-                                        relative
-                                        mt-1.5
-                                        text-[16px]
-                                        font-semibold
-                                        tracking-tight
-                                        text-white
-                                    "
-                                >
-                                    Look at my projects
-                                </h4>
-
-
-                                <button
-                                    className="
-                                        relative
-                                        mt-3
-                                        flex
-                                        w-full
-                                        items-center
-                                        justify-between
-                                        rounded-xl
-                                        border
-                                        border-white/15
-                                        bg-white/10
-                                        px-3
-                                        py-2.5
-                                        text-[9px]
-                                        font-semibold
-                                        uppercase
-                                        tracking-[0.12em]
-                                        text-white
-                                        transition-all
-                                        duration-300
-                                        hover:bg-white/15
-                                    "
-                                >
-                                    View Projects
-
-                                    <FaArrowRight
-                                        size={9}
-                                        className="text-white/70"
-                                    />
-                                </button>
 
                             </div>
 
                         </div>
-
-                    </div>
-                </aside>
+                    </aside>
+                </>
             )}
 
 
@@ -1036,30 +1243,6 @@ export function Resources() {
             ========================== */}
             <style>
                 {`
-                    @keyframes ribbonReveal {
-                        0% {
-                            opacity: 0;
-                            transform: translateX(-70px);
-                            filter: blur(10px);
-                        }
-
-                        35% {
-                            opacity: 0.35;
-                            filter: blur(6px);
-                        }
-
-                        65% {
-                            opacity: 0.8;
-                            filter: blur(2px);
-                        }
-
-                        100% {
-                            opacity: 1;
-                            transform: translateX(0);
-                            filter: blur(0);
-                        }
-                    }
-
                     @keyframes resourcePopup {
                         0% {
                             opacity: 0;
@@ -1082,6 +1265,38 @@ export function Resources() {
                                 translateY(0)
                                 scale(1);
                             filter: blur(0);
+                        }
+                    }
+
+                    @keyframes pulseWhite {
+                        0%,
+                        100% {
+                            opacity: 0.45;
+                            transform: scale(0.9);
+                            box-shadow: 0 0 5px rgba(255,255,255,0.35);
+                        }
+
+                        50% {
+                            opacity: 1;
+                            transform: scale(1.35);
+                            box-shadow:
+                                0 0 8px rgba(255,255,255,0.8),
+                                0 0 16px rgba(255,255,255,0.45);
+                        }
+                    }
+
+                    @keyframes projectPulse {
+                        0%,
+                        100% {
+                            opacity: 0.65;
+                            text-shadow: 0 0 0 rgba(255,255,255,0);
+                        }
+
+                        50% {
+                            opacity: 1;
+                            text-shadow:
+                                0 0 8px rgba(255,255,255,0.45),
+                                0 0 16px rgba(255,255,255,0.2);
                         }
                     }
                 `}

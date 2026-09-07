@@ -137,19 +137,19 @@ export const Services = () => {
 
                 {/* ================= HERO ================= */}
 
-                <div className="pt-16 pb-16 max-w-4xl">
+                <div className="pt-20 pb-16 max-w-4xl">
 
                     <span className="text-primary text-sm font-medium tracking-wider uppercase">
                         Services
                     </span>
 
-                    <h1 className="text-5xl md:text-7xl font-bold leading-tight mt-4 text-gray-900">
+                    <h1 className="text-4xl md:text-6xl font-bold leading-tight mt-4 text-gray-900">
                         What I can
                         <span className="text-primary"> build </span>
                         for you.
                     </h1>
 
-                    <p className="text-gray-600 text-lg md:text-xl max-w-2xl mt-6 leading-relaxed">
+                    <p className="text-gray-600 text-base md:text-lg max-w-2xl mt-3 leading-relaxed">
                         From turning complex data into clear insights to
                         creating digital experiences, I combine analytical
                         thinking with creative problem solving.
@@ -725,7 +725,6 @@ export const Services = () => {
                                             w-4
                                             h-4
                                             transition-transform
-                                            duration-300
                                         "
                                     />
 

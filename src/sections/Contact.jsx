@@ -140,7 +140,6 @@ export const Contact = () => {
 
             </div>
 
-
             {/* ================= CONTENT ================= */}
 
             <div className="container mx-auto px-6 relative z-10">
@@ -191,15 +190,11 @@ export const Contact = () => {
 
                 </div>
 
-
                 {/* ================= CONTACT FORM + RIGHT COLUMN ================= */}
 
                 <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
 
-
-                    {/* ===================================================== */}
-                    {/* LEFT — CONTACT FORM                                  */}
-                    {/* ===================================================== */}
+                    {/* LEFT — CONTACT FORM */}
 
                     <div
                         className="
@@ -260,7 +255,6 @@ export const Contact = () => {
 
                             </div>
 
-
                             {/* Email */}
 
                             <div>
@@ -301,7 +295,6 @@ export const Contact = () => {
                                 />
 
                             </div>
-
 
                             {/* Message */}
 
@@ -345,7 +338,6 @@ export const Contact = () => {
 
                             </div>
 
-
                             {/* Submit Button */}
 
                             <Button
@@ -365,7 +357,6 @@ export const Contact = () => {
                                 )}
 
                             </Button>
-
 
                             {/* Submit Status */}
 
@@ -404,17 +395,11 @@ export const Contact = () => {
 
                     </div>
 
-
-                    {/* ===================================================== */}
-                    {/* RIGHT COLUMN                                           */}
-                    {/* ===================================================== */}
+                    {/* RIGHT COLUMN */}
 
                     <div className="space-y-6">
 
-
-                        {/* ================================================= */}
-                        {/* AVAILABLE FOR WORK                                 */}
-                        {/* ================================================= */}
+                        {/* AVAILABLE FOR WORK */}
 
                         <div
                             className="
@@ -461,13 +446,11 @@ export const Contact = () => {
 
                                 </span>
 
-
                                 <h3 className="text-lg font-semibold">
                                     Available For Work
                                 </h3>
 
                             </div>
-
 
                             <p className="text-sm text-muted-foreground leading-relaxed">
                                 I'm currently open to new opportunities and
@@ -476,10 +459,7 @@ export const Contact = () => {
 
                             </p>
 
-
-                            {/* ================================================= */}
-                            {/* CONTACT INFORMATION                                 */}
-                            {/* ================================================= */}
+                            {/* CONTACT INFORMATION */}
 
                             <div
                                 className="
@@ -498,7 +478,6 @@ export const Contact = () => {
                                 <h3 className="text-xl font-semibold mb-6">
                                     Contact Information
                                 </h3>
-
 
                                 <div className="space-y-4">
 
@@ -542,7 +521,6 @@ export const Contact = () => {
                                                     <Icon className="w-5 h-5 text-primary" />
 
                                                 </div>
-
 
                                                 {/* Text */}
 

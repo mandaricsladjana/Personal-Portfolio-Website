@@ -1,15 +1,19 @@
+import { useEffect, useState } from "react";
+import { ArrowDown } from "lucide-react";
+
 import { Navbar } from "@/layout/Navbar";
 import { Hero } from "@/sections/Hero";
 import { About } from "@/sections/About";
 import { Projects } from "@/sections/Projects";
 import { Experience } from "@/sections/Experience";
 import { Skills } from "@/sections/Skills";
+import { Learning } from "@/sections/Learning";
 import { Services } from "@/sections/Services";
 import { Resources } from "@/sections/Resources";
 import { Contact } from "@/sections/Contact";
 import { Footer } from "@/layout/Footer";
 
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -21,71 +25,148 @@ import ExperienceAnalytics from "@/pages/ExperienceAnalytics";
 import { AllProjects } from "@/pages/AllProjects";
 import { ProjectDetails } from "@/projects/ProjectDetails";
 
-function App() {
-return ( <HashRouter>
-  <ScrollToTop />
 
-        <div className="min-h-screen overflow-x-hidden">
+function PageScrollArrow() {
+    const location = useLocation();
 
-            <Navbar />
+    const [showArrow, setShowArrow] = useState(true);
 
-<Routes>
-
-    <Route
-        path="/"
-        element={
-            <main>
-                <Hero />
-                <About />
-                <Projects />
-                <Resources />
-                <Services />
-                <Experience />
-                <Skills />
-                <Contact />
-            </main>
+    useEffect(() => {
+        if (location.pathname !== "/") {
+            setShowArrow(false);
+            return;
         }
-    />
 
-    <Route
-        path="/experience/ads"
-        element={<ExperienceAds />}
-    />
+        const handleScroll = () => {
+            const nearBottom =
+                window.innerHeight + window.scrollY >=
+                document.documentElement.scrollHeight - 100;
 
-    <Route
-        path="/experience/quality-engineer"
-        element={<ExperienceQualityEngineer />}
-    />
+            setShowArrow(!nearBottom);
+        };
 
-    <Route
-        path="/experience/logistics"
-        element={<ExperienceLogistics />}
-    />
+        handleScroll();
 
-    <Route
-        path="/experience/data-analytics"
-        element={<ExperienceAnalytics />}
-    />
+        window.addEventListener("scroll", handleScroll);
 
-    <Route
-        path="/pages"
-        element={<AllProjects />}
-    />
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [location.pathname]);
 
-    <Route
-        path="/projects/:projectId"
-        element={<ProjectDetails />}
-    />
+    const scrollDown = () => {
+        window.scrollBy({
+            top: window.innerHeight * 0.75,
+            behavior: "smooth",
+        });
+    };
 
-</Routes>
+    if (!showArrow || location.pathname !== "/") {
+        return null;
+    }
 
-            <Footer />
+    return (
+        <button
+            onClick={scrollDown}
+            aria-label="Scroll down"
+            className="
+                fixed
+                bottom-8
+                left-1/2
+                -translate-x-1/2
+                z-50
+                w-10
+                h-10
+                rounded-full
+                flex
+                items-center
+                justify-center
+                bg-primary/30
+                backdrop-blur-md
+                border border-white/30
+                text-white
+                hover:bg-primary/20
+                hover:border-primary
+                hover:text-primary
+                transition-all
+                duration-300
+            "
+        >
+            <ArrowDown className="w-5 h-5" />
+        </button>
+    );
+}
 
-        </div>
 
-    </HashRouter>
-);
+function App() {
+    return (
+        <HashRouter>
 
+            <ScrollToTop />
+
+            <div className="min-h-screen overflow-x-hidden">
+
+                <Navbar />
+
+                <Routes>
+
+                    <Route
+                        path="/"
+                        element={
+                            <main>
+                                <Hero />
+                                <About />
+                                <Projects />
+                                <Resources />
+                                <Services />
+                                <Experience />
+                                <Skills />
+                                <Learning />
+                                <Contact />
+                            </main>
+                        }
+                    />
+
+                    <Route
+                        path="/experience/ads"
+                        element={<ExperienceAds />}
+                    />
+
+                    <Route
+                        path="/experience/quality-engineer"
+                        element={<ExperienceQualityEngineer />}
+                    />
+
+                    <Route
+                        path="/experience/logistics"
+                        element={<ExperienceLogistics />}
+                    />
+
+                    <Route
+                        path="/experience/data-analytics"
+                        element={<ExperienceAnalytics />}
+                    />
+
+                    <Route
+                        path="/pages"
+                        element={<AllProjects />}
+                    />
+
+                    <Route
+                        path="/projects/:projectId"
+                        element={<ProjectDetails />}
+                    />
+
+                </Routes>
+
+                <Footer />
+
+                <PageScrollArrow />
+
+            </div>
+
+        </HashRouter>
+    );
 }
 
 export default App;

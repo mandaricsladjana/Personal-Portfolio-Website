@@ -23,7 +23,7 @@ export const Projects = () => {
 
                 {/* ================= SECTION TITLE ================= */}
 
-                <div className="pt-8 pb-12 text-center">
+                <div className="pt-30 pb-12 text-center">
 
                     <span className="text-primary text-sm font-medium tracking-wider uppercase">
                         My Work
@@ -331,6 +331,7 @@ export const Projects = () => {
                 </div>
 
             </div>
+       
 
         </section>
     );

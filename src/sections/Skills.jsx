@@ -164,7 +164,7 @@ export const Skills = () => {
     return (
         <section
             id="skills"
-            className="relative py-16 md:py-20 overflow-hidden"
+            className="relative py-30 md:py-35 overflow-hidden"
         >
             {/* TOP DIVIDER */}
             <div className="absolute top-0 left-0 w-full h-px bg-gray-300" />
