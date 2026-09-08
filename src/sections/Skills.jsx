@@ -7,7 +7,7 @@ import {
     FaChartLine,
     FaCogs,
     FaBullhorn,
-    FaFileExcel,
+    FaMicrosoft,
     FaFilm,
     FaCode,
     FaServer,
@@ -31,7 +31,7 @@ const slides = [
         tools: [
             { name: "SQL", icon: FaDatabase },
             { name: "Power BI", icon: FaChartBar },
-            { name: "Excel", icon: FaFileExcel },
+            { name: "Microsoft Office Advanced", icon: FaMicrosoft },
             { name: "Python", icon: FaPython },
             { name: "Pandas", icon: FaTable },
             { name: "Jupyter", icon: FaCode },
@@ -95,7 +95,11 @@ const slides = [
         tools: [
             { name: "Google Analytics", icon: FaChartBar },
             { name: "Google Ads", icon: FaBullhorn },
-            { name: "Instagram", icon: FaMobileAlt },
+            { name: "Instagram Ads", icon: FaMobileAlt },
+            { name: "Premiere Pro", icon: FaFilm },
+            { name: "Canva Pro", icon: FaPaintBrush },
+            { name: "Pinterest Ads", icon: FaBullhorn },
+            { name: "Meta Ads", icon: FaBullhorn },
         ],
         skills: [
             "Campaign Management",
@@ -103,6 +107,8 @@ const slides = [
             "Conversion Tracking",
             "Performance Analysis",
             "KPI Tracking",
+            "UX Design",
+            "Content Creation",
         ],
     },
 
@@ -120,14 +126,10 @@ const slides = [
             { name: "Vite", icon: FaCode },
             { name: "Git", icon: FaGitAlt },
             { name: "GitHub", icon: FaGithub },
-            { name: "Canva", icon: FaPaintBrush },
-            { name: "Premiere Pro", icon: FaFilm },
         ],
         skills: [
             "Frontend Development",
-            "UI Design",
             "Responsive Design",
-            "Content Creation",
         ],
     },
 ];

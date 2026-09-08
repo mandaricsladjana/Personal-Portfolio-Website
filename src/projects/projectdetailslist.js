@@ -86,4 +86,19 @@ export const projects = [
         status: "Finished",
         progress: 100,
     },
+
+    {
+    id: "full-functional-webshop",
+    title: "Building a Fully Functional E-Commerce Webshop",
+    year: "2026",
+    description:
+        "Complete development of a fully functional webshop, covering the entire e-commerce experience from product browsing and category filtering to product details, shopping cart functionality, checkout flow, and order management, with a focus on creating a responsive, modern, and user-friendly shopping experience.",
+    image: "/ProjectsPhotos/ProjectWebshopProfile.png",
+    tags: ["React", "JavaScript", "Tailwind CSS", "Ads Management", "GA4"],
+    category: ["Web Development", "React"],
+    link: "",
+    github: "https://github.com/",
+    status: "In Progress",
+    progress: 0,
+    },
 ];

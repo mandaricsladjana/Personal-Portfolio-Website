@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     FaThLarge,
     FaBullhorn,
@@ -10,52 +10,45 @@ import {
 const resources = [
     {
         id: "visual-planning",
-        title: "KPI Planning Visuals",
-        subtitle: "Notion Pattern",
-        description:
-            "A visual planning system for organizing KPIs, dashboards, goals and reporting workflows in Notion.",
+        title: "Notion Template for Easy KPI Visuals Planning",
         popupDescription:
             "Download my KPI Planning Visuals pattern — a Notion-based visual system designed to help organize KPIs, dashboard ideas, goals and reporting workflows in one clear place.",
+        link: "https://sheer-toy-588.notion.site/Data-Analytics-Planner-375108b3e7c580dca8d3fc2046c9de68?source=copy_link",
         icon: FaThLarge,
-        link: "PASTE_YOUR_VISUAL_PLANNING_NOTION_LINK_HERE",
     },
     {
         id: "ads-tracking",
-        title: "Ads Tracking Pattern",
-        subtitle: "Notion Pattern",
+        title: "Notion Ads & Campaign Tracking Template",
         description:
             "A practical Notion system for organizing campaigns, advertising activities and performance tracking.",
         popupDescription:
             "Download my Ads Tracking pattern — a practical Notion system for organizing advertising activities, campaigns, performance and results.",
+        link: "https://sheer-toy-588.notion.site/Ads-Planner-306108b3e7c581579e79ec83fb223660?source=copy_link",
         icon: FaBullhorn,
-        link: "PASTE_YOUR_ADS_TRACKING_NOTION_LINK_HERE",
     },
 ];
 
 export function Resources() {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [showRibbon, setShowRibbon] = useState(false);
     const [selectedResource, setSelectedResource] = useState(null);
+    const hasTriggeredRibbon = useRef(false);
 
     useEffect(() => {
-        const aboutSection = document.getElementById("about");
-
-        if (!aboutSection) return;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setShowRibbon(true);
-                }
-            },
-            {
-                threshold: 0.15,
+        const handleScroll = () => {
+            if (
+                window.scrollY > window.innerHeight * 0.15 &&
+                !hasTriggeredRibbon.current
+            ) {
+                hasTriggeredRibbon.current = true;
+                setShowRibbon(true);
+                setIsOpen(true);
             }
-        );
+        };
 
-        observer.observe(aboutSection);
+        window.addEventListener("scroll", handleScroll);
 
-        return () => observer.disconnect();
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     const handleDownload = () => {
@@ -80,51 +73,53 @@ export function Resources() {
                     {/* =========================
                         CLOSED RESOURCE TAB
                     ========================== */}
-                    {!isOpen && (
-                        <button
-                            onClick={() => setIsOpen(true)}
+                    <button
+                        onClick={() => setIsOpen(true)}
+                        className={`
+                            fixed
+                            left-0
+                            top-1/2
+                            -translate-y-1/2
+                            z-50
+                            h-32
+                            w-10
+                            items-center
+                            justify-center
+                            rounded-r-2xl
+                            border
+                            border-l-0
+                            border-white/15
+                            bg-primary-dark
+                            text-white/70
+                            shadow-[8px_0_30px_rgba(60,20,100,0.25)]
+                            backdrop-blur-xl
+                            transition-all
+                            duration-700
+                            ease-[cubic-bezier(0.22,1,0.36,1)]
+                            hover:w-12
+                            hover:text-white
+                            md:flex
+                            ${
+                                isOpen
+                                    ? "pointer-events-none -translate-x-full opacity-0"
+                                    : "pointer-events-auto translate-x-0 opacity-100"
+                            }
+                        `}
+                        aria-label="Open resources ribbon"
+                    >
+                        <span
                             className="
-                                fixed
-                                left-0
-                                top-1/2
-                                -translate-y-1/2
-                                z-40
-                                hidden
-                                h-32
-                                w-10
-                                items-center
-                                justify-center
-                                rounded-r-2xl
-                                border
-                                border-l-0
-                                border-white/15
-                                bg-primary-dark
-                                text-white/70
-                                shadow-[8px_0_30px_rgba(60,20,100,0.25)]
-                                backdrop-blur-xl
-                                transition-all
-                                duration-300
-                                hover:w-12
-                                hover:text-white
-                                md:flex
+                                rotate-180
+                                text-[9px]
+                                font-semibold
+                                uppercase
+                                tracking-[0.25em]
+                                [writing-mode:vertical-rl]
                             "
-                            aria-label="Open resources ribbon"
                         >
-                            <span
-                                className="
-                                    rotate-180
-                                    text-[9px]
-                                    font-semibold
-                                    uppercase
-                                    tracking-[0.25em]
-                                    [writing-mode:vertical-rl]
-                                "
-                            >
-                                Resources
-                            </span>
-                        </button>
-                    )}
-
+                            Resources
+                        </span>
+                    </button>
 
                     {/* =========================
                         RESOURCE RIBBON
@@ -159,8 +154,6 @@ export function Resources() {
                     >
                         {/* LUXURY BACKGROUND DETAILS */}
                         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
-                            {/* MAIN DEPTH GRADIENT */}
                             <div
                                 className="
                                     absolute
@@ -172,7 +165,6 @@ export function Resources() {
                                 "
                             />
 
-                            {/* SOFT TOP LIGHT */}
                             <div
                                 className="
                                     absolute
@@ -186,7 +178,6 @@ export function Resources() {
                                 "
                             />
 
-                            {/* SOFT CENTER GLOW */}
                             <div
                                 className="
                                     absolute
@@ -201,7 +192,6 @@ export function Resources() {
                                 "
                             />
 
-                            {/* BOTTOM PURPLE GLOW */}
                             <div
                                 className="
                                     absolute
@@ -215,7 +205,6 @@ export function Resources() {
                                 "
                             />
 
-                            {/* SMALL FLOATING GLOW */}
                             <div
                                 className="
                                     absolute
@@ -229,7 +218,6 @@ export function Resources() {
                                 "
                             />
 
-                            {/* SUBTLE GRID */}
                             <div
                                 className="
                                     absolute
@@ -243,7 +231,6 @@ export function Resources() {
                                 }}
                             />
 
-                            {/* DIAGONAL LIGHT TEXTURE */}
                             <div
                                 className="
                                     absolute
@@ -256,7 +243,6 @@ export function Resources() {
                                 }}
                             />
 
-                            {/* TOP EDGE LIGHT */}
                             <div
                                 className="
                                     absolute
@@ -271,7 +257,6 @@ export function Resources() {
                                 "
                             />
 
-                            {/* LEFT EDGE GLOW */}
                             <div
                                 className="
                                     absolute
@@ -286,7 +271,6 @@ export function Resources() {
                                 "
                             />
 
-                            {/* RIGHT EDGE DEPTH */}
                             <div
                                 className="
                                     absolute
@@ -300,7 +284,6 @@ export function Resources() {
                                 "
                             />
 
-                            {/* BOTTOM FADE */}
                             <div
                                 className="
                                     absolute
@@ -313,11 +296,9 @@ export function Resources() {
                                     to-transparent
                                 "
                             />
-
                         </div>
 
-
-                        <div className="relative flex h-full flex-col px-5 pb-6 pt-28">
+                        <div className="relative flex h-full flex-col px-5 pb-4 pt-26">
 
                             {/* CLOSE BUTTON */}
                             <button
@@ -325,11 +306,11 @@ export function Resources() {
                                 className="
                                     absolute
                                     right-4
-                                    top-24
+                                    top-25
                                     z-10
                                     flex
-                                    h-9
-                                    w-9
+                                    h-6
+                                    w-6
                                     items-center
                                     justify-center
                                     rounded-full
@@ -346,17 +327,14 @@ export function Resources() {
                                 "
                                 aria-label="Close resources ribbon"
                             >
-                                <FaTimes size={12} />
+                                <FaTimes size={11} />
                             </button>
-
 
                             {/* =========================
                                 CURRENTLY WORKING ON
                             ========================== */}
                             <section>
-
-                                <div className="mb-5 flex items-center gap-2">
-
+                                <div className="mb-3 flex items-center gap-2">
                                     <span
                                         className="
                                             h-1.5
@@ -370,7 +348,7 @@ export function Resources() {
 
                                     <p
                                         className="
-                                            text-[9px]
+                                            text-[8px]
                                             font-semibold
                                             uppercase
                                             tracking-[0.28em]
@@ -379,31 +357,27 @@ export function Resources() {
                                     >
                                         Currently
                                     </p>
-
                                 </div>
-
 
                                 <h3
                                     className="
                                         max-w-[220px]
-                                        text-[25px]
+                                        text-[22px]
                                         font-semibold
                                         leading-[1.08]
                                         tracking-[-0.02em]
                                         text-white
                                     "
                                 >
-                                    What am I currently working on?
+                                    What am I working on?
                                 </h3>
 
-
-                                <div className="mt-5 flex items-center gap-3">
-
+                                <div className="mt-3 flex items-center gap-3">
                                     <div
                                         className="
                                             flex
-                                            h-9
-                                            w-9
+                                            h-8
+                                            w-8
                                             shrink-0
                                             items-center
                                             justify-center
@@ -415,15 +389,13 @@ export function Resources() {
                                             shadow-[0_8px_25px_rgba(40,20,70,0.20)]
                                         "
                                     >
-                                        <FaArrowRight size={13} />
+                                        <FaArrowRight size={12} />
                                     </div>
 
-
                                     <div>
-
                                         <p
                                             className="
-                                                text-[13px]
+                                                text-[11px]
                                                 font-semibold
                                                 uppercase
                                                 tracking-[0.12em]
@@ -431,21 +403,21 @@ export function Resources() {
                                                 animate-[projectPulse_3s_ease-in-out_infinite]
                                             "
                                         >
-                                            Creating a Fully Functioning Web Workshop
+                                            Building a Fully Functional Webshop
                                         </p>
 
                                         <div
                                             className="
-                                                mt-2
+                                                mt-1.5
                                                 inline-flex
                                                 items-center
                                                 rounded-full
                                                 border
                                                 border-white
                                                 bg-white
-                                                px-5
-                                                py-2
-                                                text-[12px]
+                                                px-4
+                                                py-1.5
+                                                text-[10px]
                                                 font-bold
                                                 uppercase
                                                 tracking-[0.12em]
@@ -455,23 +427,12 @@ export function Resources() {
                                         >
                                             Coming Soon
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </section>
 
-
                             {/* DIVIDER */}
-                            <div
-                                className="
-                                    my-7
-                                    flex
-                                    items-center
-                                    gap-3
-                                "
-                            >
+                            <div className="my-5 flex items-center gap-3">
                                 <div
                                     className="
                                         h-px
@@ -503,20 +464,16 @@ export function Resources() {
                                         to-white/10
                                     "
                                 />
-
                             </div>
-
 
                             {/* =========================
                                 FREE DOWNLOADS HEADER
                             ========================== */}
                             <section>
-
-                                <div className="mb-4">
-
+                                <div className="mb-3">
                                     <p
                                         className="
-                                            text-[9px]
+                                            text-[8px]
                                             font-semibold
                                             uppercase
                                             tracking-[0.28em]
@@ -526,39 +483,31 @@ export function Resources() {
                                         Resources
                                     </p>
 
-
                                     <div className="mt-1 flex items-end justify-between">
-
                                         <h3
                                             className="
-                                                text-[22px]
+                                                text-[20px]
                                                 font-semibold
                                                 leading-none
                                                 tracking-tight
                                                 text-white
                                             "
                                         >
-                                            Free Downloads
+                                            Use My Templates
                                         </h3>
-
                                     </div>
-
 
                                     <p
                                         className="
-                                            mt-2
+                                            mt-1.5
                                             max-w-[225px]
-                                            text-[10px]
+                                            text-[9px]
                                             leading-relaxed
                                             text-white/50
                                         "
                                     >
-                                        Free Notion systems designed to make
-                                        planning, tracking and reporting easier.
                                     </p>
-
                                 </div>
-
 
                                 {/* =========================
                                     KPI PLANNING VISUALS
@@ -569,7 +518,7 @@ export function Resources() {
                                     }
                                     className="
                                         group
-                                        mb-3
+                                        mb-2
                                         block
                                         w-full
                                         overflow-hidden
@@ -588,35 +537,26 @@ export function Resources() {
                                         hover:shadow-[0_18px_38px_rgba(30,10,60,0.28)]
                                     "
                                 >
-                                    <div className="p-4">
+                                    <div className="p-3">
 
                                         <div className="flex items-start justify-between">
-
-                                            <div
+                                            <h4
                                                 className="
-                                                    flex
-                                                    h-9
-                                                    w-9
-                                                    items-center
-                                                    justify-center
-                                                    rounded-xl
-                                                    border
-                                                    border-white/15
-                                                    bg-white/10
+                                                    text-[12px]
+                                                    font-semibold
+                                                    leading-snug
                                                     text-white
-                                                    transition-all
-                                                    duration-300
-                                                    group-hover:bg-white/15
                                                 "
                                             >
-                                                <FaThLarge size={13} />
-                                            </div>
-
+                                                Notion Template for Easy KPI Visuals Planning
+                                            </h4>
 
                                             <FaArrowRight
-                                                size={10}
+                                                size={9}
                                                 className="
+                                                    ml-2
                                                     mt-1
+                                                    shrink-0
                                                     text-white/30
                                                     transition-all
                                                     duration-300
@@ -624,51 +564,65 @@ export function Resources() {
                                                     group-hover:text-white
                                                 "
                                             />
-
                                         </div>
 
+                                        <div className="mt-2 flex flex-wrap gap-1">
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                Power BI
+                                            </span>
 
-                                        <h4
-                                            className="
-                                                mt-3
-                                                text-[13px]
-                                                font-semibold
-                                                leading-snug
-                                                text-white
-                                            "
-                                        >
-                                            KPI Planning Visuals
-                                        </h4>
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                DAX
+                                            </span>
 
-
-                                        <p
-                                            className="
-                                                mt-1
-                                                text-[9px]
-                                                font-medium
-                                                uppercase
-                                                tracking-wider
-                                                text-white/40
-                                            "
-                                        >
-                                            Notion Pattern
-                                        </p>
-
-
-                                        <p
-                                            className="
-                                                mt-3
-                                                text-[10px]
-                                                leading-relaxed
-                                                text-white/65
-                                            "
-                                        >
-                                            Visual planning for KPIs,
-                                            dashboards and reporting workflows.
-                                        </p>
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                Charts
+                                            </span>
+                                        </div>
 
                                     </div>
-
 
                                     {/* DOWNLOAD AREA */}
                                     <div
@@ -679,8 +633,8 @@ export function Resources() {
                                             border-t
                                             border-white/10
                                             bg-white/[0.05]
-                                            px-4
-                                            py-2.5
+                                            px-3
+                                            py-2
                                             transition-all
                                             duration-300
                                             group-hover:bg-white/[0.10]
@@ -688,18 +642,18 @@ export function Resources() {
                                     >
                                         <span
                                             className="
-                                                text-[8px]
+                                                text-[9px]
                                                 font-semibold
                                                 uppercase
-                                                tracking-[0.16em]
+                                                tracking-[0.14em]
                                                 text-white/80
                                             "
                                         >
-                                            Download Free Pattern
+                                            Download My Free Pattern
                                         </span>
 
                                         <FaDownload
-                                            size={9}
+                                            size={13}
                                             className="
                                                 text-white/70
                                                 transition-transform
@@ -710,7 +664,6 @@ export function Resources() {
                                     </div>
 
                                 </button>
-
 
                                 {/* =========================
                                     ADS TRACKING PATTERN
@@ -739,35 +692,26 @@ export function Resources() {
                                         hover:shadow-[0_18px_38px_rgba(30,10,60,0.28)]
                                     "
                                 >
-                                    <div className="p-4">
+                                    <div className="p-3">
 
                                         <div className="flex items-start justify-between">
-
-                                            <div
+                                            <h4
                                                 className="
-                                                    flex
-                                                    h-9
-                                                    w-9
-                                                    items-center
-                                                    justify-center
-                                                    rounded-xl
-                                                    border
-                                                    border-white/15
-                                                    bg-white/10
+                                                    text-[12px]
+                                                    font-semibold
+                                                    leading-snug
                                                     text-white
-                                                    transition-all
-                                                    duration-300
-                                                    group-hover:bg-white/15
                                                 "
                                             >
-                                                <FaBullhorn size={13} />
-                                            </div>
-
+                                               Notion Ads & Campaign Tracking Template
+                                            </h4>
 
                                             <FaArrowRight
-                                                size={10}
+                                                size={9}
                                                 className="
+                                                    ml-2
                                                     mt-1
+                                                    shrink-0
                                                     text-white/30
                                                     transition-all
                                                     duration-300
@@ -775,51 +719,65 @@ export function Resources() {
                                                     group-hover:text-white
                                                 "
                                             />
-
                                         </div>
 
+                                        <div className="mt-2 flex flex-wrap gap-1">
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                LinkedIn
+                                            </span>
 
-                                        <h4
-                                            className="
-                                                mt-3
-                                                text-[13px]
-                                                font-semibold
-                                                leading-snug
-                                                text-white
-                                            "
-                                        >
-                                            Ads Tracking Pattern
-                                        </h4>
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                Meta
+                                            </span>
 
-
-                                        <p
-                                            className="
-                                                mt-1
-                                                text-[9px]
-                                                font-medium
-                                                uppercase
-                                                tracking-wider
-                                                text-white/40
-                                            "
-                                        >
-                                            Notion Pattern
-                                        </p>
-
-
-                                        <p
-                                            className="
-                                                mt-3
-                                                text-[10px]
-                                                leading-relaxed
-                                                text-white/65
-                                            "
-                                        >
-                                            Organize campaigns, advertising
-                                            activities and performance.
-                                        </p>
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                Google Ads
+                                            </span>
+                                        </div>
 
                                     </div>
-
 
                                     {/* DOWNLOAD AREA */}
                                     <div
@@ -830,8 +788,8 @@ export function Resources() {
                                             border-t
                                             border-white/10
                                             bg-white/[0.05]
-                                            px-4
-                                            py-2.5
+                                            px-3
+                                            py-2
                                             transition-all
                                             duration-300
                                             group-hover:bg-white/[0.10]
@@ -839,10 +797,10 @@ export function Resources() {
                                     >
                                         <span
                                             className="
-                                                text-[8px]
+                                                text-[9px]
                                                 font-semibold
                                                 uppercase
-                                                tracking-[0.16em]
+                                                tracking-[0.14em]
                                                 text-white/80
                                             "
                                         >
@@ -850,7 +808,7 @@ export function Resources() {
                                         </span>
 
                                         <FaDownload
-                                            size={9}
+                                            size={13}
                                             className="
                                                 text-white/70
                                                 transition-transform
@@ -864,107 +822,10 @@ export function Resources() {
 
                             </section>
 
-
-                            {/* =========================
-                                LOOK AT MY PROJECTS
-                            ========================== */}
-                            <div className="mt-auto pt-6">
-
-                                <div
-                                    className="
-                                        relative
-                                        overflow-hidden
-                                        rounded-2xl
-                                        border
-                                        border-white/15
-                                        bg-white/[0.07]
-                                        p-4
-                                        shadow-[0_15px_35px_rgba(30,10,60,0.20)]
-                                    "
-                                >
-
-                                    <div
-                                        className="
-                                            absolute
-                                            -right-8
-                                            -top-8
-                                            h-24
-                                            w-24
-                                            rounded-full
-                                            bg-white/10
-                                            blur-2xl
-                                        "
-                                    />
-
-                                    <p
-                                        className="
-                                            relative
-                                            text-[8px]
-                                            font-semibold
-                                            uppercase
-                                            tracking-[0.24em]
-                                            text-white/45
-                                        "
-                                    >
-                                        Portfolio
-                                    </p>
-
-
-                                    <h4
-                                        className="
-                                            relative
-                                            mt-1.5
-                                            text-[16px]
-                                            font-semibold
-                                            tracking-tight
-                                            text-white
-                                        "
-                                    >
-                                        Look at my projects
-                                    </h4>
-
-
-                                    <button
-                                        className="
-                                            relative
-                                            mt-3
-                                            flex
-                                            w-full
-                                            items-center
-                                            justify-between
-                                            rounded-xl
-                                            border
-                                            border-white/15
-                                            bg-white/10
-                                            px-3
-                                            py-2.5
-                                            text-[9px]
-                                            font-semibold
-                                            uppercase
-                                            tracking-[0.12em]
-                                            text-white
-                                            transition-all
-                                            duration-300
-                                            hover:bg-white/15
-                                        "
-                                    >
-                                        View Projects
-
-                                        <FaArrowRight
-                                            size={9}
-                                            className="text-white/70"
-                                        />
-                                    </button>
-
-                                </div>
-
-                            </div>
-
                         </div>
                     </aside>
                 </>
             )}
-
 
             {/* =========================
                 RESOURCE POPUP
@@ -1029,7 +890,6 @@ export function Resources() {
                             <FaTimes size={11} />
                         </button>
 
-
                         <div className="flex items-center gap-3">
 
                             <div
@@ -1076,7 +936,6 @@ export function Resources() {
 
                     </div>
 
-
                     {/* POPUP BODY */}
                     <div className="px-5 py-5">
 
@@ -1090,7 +949,6 @@ export function Resources() {
                         >
                             Download my {selectedResource.title} pattern
                         </h4>
-
 
                         <div
                             className="
@@ -1111,7 +969,6 @@ export function Resources() {
                             Notion
                         </div>
 
-
                         <p
                             className="
                                 mt-4
@@ -1122,7 +979,6 @@ export function Resources() {
                         >
                             {selectedResource.popupDescription}
                         </p>
-
 
                         {/* NOTION INDICATOR */}
                         <div
@@ -1139,6 +995,7 @@ export function Resources() {
                                 py-3
                             "
                         >
+
                             <div
                                 className="
                                     flex
@@ -1176,8 +1033,8 @@ export function Resources() {
                                     Free to access
                                 </p>
                             </div>
-                        </div>
 
+                        </div>
 
                         {/* BUTTONS */}
                         <div className="mt-5 flex gap-3">
@@ -1202,7 +1059,6 @@ export function Resources() {
                             >
                                 Maybe Later
                             </button>
-
 
                             <button
                                 onClick={handleDownload}
@@ -1236,7 +1092,6 @@ export function Resources() {
 
                 </div>
             )}
-
 
             {/* =========================
                 ANIMATIONS

@@ -473,7 +473,9 @@ export const About = () => {
                                 I started my journey in Engineering Management,
                                 where I learned to look at problems from more
                                 than one angle — processes, people, quality,
-                                resources and, eventually, data.
+                                resources and, eventually, data. A little bit data. A little bit engineering. A lot of curiosity. And always something new to build.
+
+                                I’m curious by nature, and I like learning by doing — whether that means cleaning a dataset, designing a dashboard, exploring a new tool, analyzing content performance, or starting a completely new creative project.
                             </p>
 
                         </div>

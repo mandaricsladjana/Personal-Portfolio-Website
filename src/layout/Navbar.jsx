@@ -87,7 +87,7 @@ export const Navbar = () => {
             }`}
         >
             {/* LEFT SIDE - LOGO */}
-            <nav className="container mx-auto px-0 flex items-center justify-between">
+            <nav className="container mx-auto px-15 flex items-center justify-between">
 
                 <Link
                     to="/"
