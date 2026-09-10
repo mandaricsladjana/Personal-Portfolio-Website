@@ -403,12 +403,88 @@ export function Resources() {
                                                 animate-[projectPulse_3s_ease-in-out_infinite]
                                             "
                                         >
-                                            Building a Fully Functional Webshop
+                                            Building a Fully Functional Boutique Webshop
                                         </p>
 
+                                        {/* PROJECT TAGS */}
+                                        <div className="mt-2 flex flex-wrap gap-1">
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                UI/UX Design
+                                            </span>
+
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                SEO
+                                            </span>
+
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                GA4
+                                            </span>
+
+                                            <span
+                                                className="
+                                                    rounded-full
+                                                    border
+                                                    border-white/15
+                                                    bg-white/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-[7px]
+                                                    font-medium
+                                                    uppercase
+                                                    tracking-wider
+                                                    text-white/65
+                                                "
+                                            >
+                                                Web Development
+                                            </span>
+                                        </div>
+
+                                        {/* COMING SOON */}
                                         <div
                                             className="
-                                                mt-1.5
+                                                mt-2
                                                 inline-flex
                                                 items-center
                                                 rounded-full
@@ -703,7 +779,7 @@ export function Resources() {
                                                     text-white
                                                 "
                                             >
-                                               Notion Ads & Campaign Tracking Template
+                                                Notion Ads & Campaign Tracking Template
                                             </h4>
 
                                             <FaArrowRight

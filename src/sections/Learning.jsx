@@ -9,24 +9,50 @@ export const Learning = () => {
             provider: "Google",
             category: "Data Analytics",
             year: "2026",
+            reference: "",
+            diplomaImage: "/ProfilePhotos/GoogleProf.png",
+            link: "",
+            linkText: "View Diploma",
         },
         {
             title: "EITCA / AI Academy",
             provider: "EITCI",
             category: "Artificial Intelligence",
             year: "2026",
+            reference: "",
+            diplomaImage: "/Certificates/EITCA-AI-Academy.png",
+            link: "",
+            linkText: "View Diploma",
         },
         {
             title: "Microsoft Azure & Cloud Fundamentals",
             provider: "Microsoft",
             category: "Cloud & Data",
             year: "2026",
+            reference: "",
+            diplomaImage: "/Certificates/Microsoft-Azure-Cloud.png",
+            link: "",
+            linkText: "View Diploma",
         },
         {
             title: "Business Intelligence Certification",
             provider: "Professional Certification",
             category: "Business Intelligence",
             year: "2026",
+            reference: "",
+            diplomaImage: "/Certificates/Business-Intelligence.png",
+            link: "",
+            linkText: "View Diploma",
+        },
+        {
+            title: "Cambridge English: Advanced",
+            provider: "Cambridge Assessment English",
+            category: "English Language · C1 Advanced",
+            reference: "Certificate Number: 15AEA0010027",
+            year: "2015",
+            diplomaImage: "/ProfilePhotos/EngFCEproba.jpeg",
+            link: "",
+            linkText: "View Diploma",
         },
     ];
 
@@ -258,6 +284,7 @@ export const Learning = () => {
 
                                     <div
                                         className="
+                                            relative
                                             w-12
                                             h-12
                                             shrink-0
@@ -269,9 +296,52 @@ export const Learning = () => {
                                             items-center
                                             justify-center
                                             text-xl
+                                            cursor-pointer
                                         "
                                     >
                                         🎓
+
+                                        {certificate.diplomaImage && (
+                                            <div
+                                                className="
+                                                    absolute
+                                                    left-16
+                                                    top-0
+                                                    z-50
+                                                    w-99
+                                                    p-2
+                                                    rounded-2xl
+                                                    bg-black/95
+                                                    border
+                                                    border-purple-500/30
+                                                    shadow-2xl
+                                                    shadow-purple-900/30
+                                                    opacity-0
+                                                    invisible
+                                                    group-hover:opacity-100
+                                                    group-hover:visible
+                                                    transition-all
+                                                    duration-300
+                                                    pointer-events-none
+                                                "
+                                            >
+                                                <div className="text-[10px] uppercase tracking-widest text-purple-400 font-semibold px-2 py-1.5">
+                                                    Diploma Preview
+                                                </div>
+
+                                                <img
+                                                    src={certificate.diplomaImage}
+                                                    alt={`${certificate.title} diploma`}
+                                                    className="
+                                                        w-full
+                                                        rounded-xl
+                                                        border
+                                                        border-white/10
+                                                        object-cover
+                                                    "
+                                                />
+                                            </div>
+                                        )}
                                     </div>
 
                                     <span
@@ -300,6 +370,34 @@ export const Learning = () => {
                                     <p className="text-sm text-white/40 mt-2">
                                         {certificate.provider}
                                     </p>
+
+                                    {certificate.reference && (
+                                        <p className="text-xs text-white/30 mt-3">
+                                            {certificate.reference}
+                                        </p>
+                                    )}
+
+                                    {certificate.link && (
+                                        <a
+                                            href={certificate.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="
+                                                inline-flex
+                                                items-center
+                                                gap-2
+                                                mt-4
+                                                text-sm
+                                                font-semibold
+                                                text-purple-400
+                                                hover:text-purple-300
+                                                transition-colors
+                                            "
+                                        >
+                                            {certificate.linkText}
+                                            <span>↗</span>
+                                        </a>
+                                    )}
 
                                 </div>
 
@@ -769,3 +867,4 @@ export const Learning = () => {
         </section>
     );
 };
+

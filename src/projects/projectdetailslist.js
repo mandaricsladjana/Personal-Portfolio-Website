@@ -39,7 +39,8 @@ export const projects = [
             "Blob Storage",
             "Azure SQL Database",
             "Azure Data Factory",
-            "Power BI"],
+            "Power BI"
+        ],
         category: ["Cloud & Data Engineering", "Business Intelligence"],
         link: "https://medium.com/p/0eb32dbc058c/edit",
         github: "",
@@ -64,8 +65,8 @@ export const projects = [
 
     {
         id: "shop-floor-data-collecting-system",
-        title: "Shop Floor Data Collection & Reporting System",
-        year: "2025",
+        title: "Shop Floor Data Collection & Reporting System (Recreation of Previous Professional Work)",
+        year: "2026",
         category: [
             "Data Analytics",
             "Process Automation",
@@ -79,7 +80,8 @@ export const projects = [
             "Data Quality",
             "Reporting",
             "Manufacturing",
-            "KPI Analysis"],
+            "KPI Analysis"
+        ],
         image: "/projects/shop-floor-data.jpg",
         link: "",
         github: "",
@@ -88,17 +90,23 @@ export const projects = [
     },
 
     {
-    id: "full-functional-webshop",
-    title: "Building a Fully Functional E-Commerce Webshop",
-    year: "2026",
-    description:
-        "Complete development of a fully functional webshop, covering the entire e-commerce experience from product browsing and category filtering to product details, shopping cart functionality, checkout flow, and order management, with a focus on creating a responsive, modern, and user-friendly shopping experience.",
-    image: "/ProjectsPhotos/ProjectWebshopProfile.png",
-    tags: ["React", "JavaScript", "Tailwind CSS", "Ads Management", "GA4"],
-    category: ["Web Development", "React"],
-    link: "",
-    github: "https://github.com/",
-    status: "In Progress",
-    progress: 0,
+        id: "glowbyanadu_webshop",
+        title: "Building a Fully Functional Boutique Webshop with a Custom CMS, SEO Optimized and Integrated GA4",
+        year: "2026",
+        description:
+            "Building a fully functional boutique webshop with a custom CMS, covering the complete e-commerce experience from product browsing and category filtering to product details, shopping cart functionality, checkout flow and content management, with a focus on responsive design, SEO optimization and GA4 integration for tracking user behavior and conversions.",
+        image: "/ProjectsPhotos/ProjectWebshopProfile.png",
+        tags: [
+            "Custom CMS",
+            "SEO",
+            "GA4",
+            "Web Development",
+            "E-Commerce"
+        ],
+        category: ["Web Development", "E-Commerce", "Digital Marketing"],
+        link: "",
+        github: "https://github.com/",
+        status: "In Progress",
+        progress: 0,
     },
 ];

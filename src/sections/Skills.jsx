@@ -108,7 +108,9 @@ const slides = [
             "Quality KPIs", 
             "Process Optimization", 
             "Statistical Process Control", 
-            "Procedures & Instructions Development", 
+            "Procedures & Instructions Development",
+            "Risk Management" ,
+            "Scrap & Rework Analysis",
         ], 
     }, 
      
