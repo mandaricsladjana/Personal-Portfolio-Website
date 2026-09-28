@@ -138,7 +138,8 @@ export const About = () => {
         <section
             id="about"
             className="
-                py-32
+                pt-32
+                pb-20
                 relative
                 overflow-hidden
                 bg-gray-100
@@ -212,8 +213,8 @@ export const About = () => {
 
                     <h2
                         className="
-                            text-4xl
-                            md:text-6xl
+                            text-6xl
+                            md:text-7xl
                             font-bold
                             leading-tight
                             mt-4
@@ -1492,3 +1493,4 @@ export const About = () => {
         </section>
     );
 };
+

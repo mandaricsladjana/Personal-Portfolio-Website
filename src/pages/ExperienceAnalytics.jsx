@@ -94,6 +94,8 @@ export default function ExperienceAnalytics() {
     return (
         <main className="min-h-screen bg-white text-black">
 
+            <div className="origin-top-left scale-[0.9] w-[111.111%]">
+
             {/* =====================================================
                 HERO
             ===================================================== */}
@@ -439,6 +441,8 @@ export default function ExperienceAnalytics() {
                 </div>
 
             </section>
+
+            </div>
 
         </main>
     );

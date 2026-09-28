@@ -35,7 +35,7 @@
 
 @layer base {
   html{
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 }
 /*General/Deafult background, color and font style*/
@@ -203,4 +203,22 @@ body {
     color-mix(in srgb, var(--color-primary) 35%, transparent),
     0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
 
+}
+
+@keyframes navigationFade {
+  from {
+    opacity: 0.75;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.navigation-transition {
+  animation: navigationFade 0.25s ease-out;
+}
+
+#root {
+    zoom: 0.9;
 }

@@ -4,6 +4,9 @@ import { FaGithub } from "react-icons/fa";
 
 import { projects } from "@/projects/projectdetailslist";
 import { projectDetails } from "@/projects";
+import PersonalPortfolioProject from "@/projects/details/PersonalPortfolioDetails";
+import CloudProjectDetails from "@/projects/details/CloudProjectDetails";
+import NashvilleProjectDetails from "@/projects/details/NashvilleProjectDetails";
 
 export const ProjectDetails = () => {
     const { projectId } = useParams();
@@ -46,6 +49,33 @@ export const ProjectDetails = () => {
         );
     }
 
+    if (projectId === "personal-portfolio-website") {
+        return (
+            <PersonalPortfolioProject
+                project={project}
+                details={details}
+            />
+        );
+    }
+
+    if (projectId === "power-bi-nashville") {
+        return (
+            <NashvilleProjectDetails
+                project={project}
+                details={details}
+            />
+        );
+    }
+
+    if (projectId === "azure-nashville") {
+        return (
+            <CloudProjectDetails
+                project={project}
+                details={details}
+            />
+        );
+    }
+
     const projectIndex = projects.findIndex(
         (item) => item.id === projectId
     );
@@ -74,32 +104,11 @@ export const ProjectDetails = () => {
 
             {/* ================= CONTENT ================= */}
 
+            <div className="origin-top-left scale-[0.9] w-[111.111%]">
+
             <div className="container mx-auto px-6 md:px-10 lg:px-24 relative z-10">
 
 
-                {/* ================= BACK ================= */}
-
-                <div className="pt-32 pb-8">
-
-                    <Link
-                        to="/projects"
-                        className="
-                            inline-flex
-                            items-center
-                            gap-2
-                            text-sm
-                            font-semibold
-                            text-gray-500
-                            hover:text-purple-600
-                            transition-colors
-                            duration-300
-                        "
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        Back to All Projects
-                    </Link>
-
-                </div>
 
 
                 {/* ================= HERO ================= */}
@@ -392,6 +401,8 @@ export const ProjectDetails = () => {
 
             </div>
 
+            </div>
+
         </section>
     );
 };
@@ -585,6 +596,7 @@ const ProjectSection = ({ section }) => {
             </div>
         );
     }
+
 
 
     return null;

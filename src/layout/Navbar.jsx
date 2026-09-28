@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Menu, X } from "lucide-react";
@@ -16,36 +16,115 @@ const Navlinks = [
 export const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isTopHovered, setIsTopHovered] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 50) {
+            const scrollThreshold = window.innerHeight;
+
+            if (window.scrollY > scrollThreshold) {
                 setIsScrolled(true);
             } else {
                 setIsScrolled(false);
+                setIsTopHovered(false);
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+
+        window.addEventListener("scroll", handleScroll, {
+            passive: true,
+        });
 
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, []);
+    }, [location.pathname]);
+
+    useEffect(() => {
+        const handleMouseMove = (event) => {
+            if (window.scrollY <= window.innerHeight) {
+                setIsTopHovered(false);
+                return;
+            }
+
+            setIsTopHovered(event.clientY <= 80);
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, [location.pathname]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | DIRECT NAVIGATION TO HOME SECTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    useLayoutEffect(() => {
+        if (location.pathname !== "/") {
+            return;
+        }
+
+        const section = location.state?.scrollTo;
+
+        if (!section) {
+            return;
+        }
+
+        document.documentElement.style.scrollBehavior = "auto";
+
+        const scrollToSection = () => {
+            const element = document.getElementById(section);
+
+            if (!element) {
+                requestAnimationFrame(scrollToSection);
+                return;
+            }
+
+            window.scrollTo({
+                top: element.offsetTop,
+                behavior: "auto",
+            });
+
+            requestAnimationFrame(() => {
+                document.documentElement.style.scrollBehavior = "";
+
+                navigate("/", {
+                    replace: true,
+                    state: {},
+                });
+            });
+        };
+
+        requestAnimationFrame(scrollToSection);
+
+        return () => {
+            document.documentElement.style.scrollBehavior = "";
+        };
+    }, [location.pathname, location.state, navigate]);
 
     const handleSectionClick = (section) => {
         setIsMobileMenuOpen(false);
 
         if (location.pathname !== "/") {
-            navigate(`/#${section}`);
+            navigate("/", {
+                state: {
+                    scrollTo: section,
+                },
+            });
+
             return;
         }
 
         document.getElementById(section)?.scrollIntoView({
-            behavior: "smooth",
+            behavior: "auto",
             block: "start",
         });
     };
@@ -60,7 +139,7 @@ export const Navbar = () => {
 
         window.scrollTo({
             top: 0,
-            behavior: "smooth",
+            behavior: "auto",
         });
     };
 
@@ -68,15 +147,22 @@ export const Navbar = () => {
         setIsMobileMenuOpen(false);
 
         if (location.pathname !== "/") {
-            navigate("/#contact");
+            navigate("/", {
+                state: {
+                    scrollTo: "contact",
+                },
+            });
+
             return;
         }
 
         document.getElementById("contact")?.scrollIntoView({
-            behavior: "smooth",
+            behavior: "auto",
             block: "start",
         });
     };
+
+    const showNavbar = !isScrolled || isTopHovered;
 
     return (
         <header
@@ -84,6 +170,10 @@ export const Navbar = () => {
                 isScrolled
                     ? "glass-strong py-3"
                     : "bg-transparent py-5"
+            } ${
+                showNavbar
+                    ? "translate-y-0 opacity-100"
+                    : "-translate-y-full opacity-0 pointer-events-none"
             }`}
         >
             {/* LEFT SIDE - LOGO */}
@@ -96,12 +186,12 @@ export const Navbar = () => {
                         inline-flex
                         items-center
                         justify-center
-                        w-18
-                        h-18
+                        w-19
+                        h-19
                         rounded-full
                         overflow-hidden
                         border-2
-                        border-white/30
+                        border-primary/30
                         hover:border-purple-500
                         hover:-translate-y-1
                         transition-all
@@ -109,7 +199,7 @@ export const Navbar = () => {
                     "
                 >
                     <img
-                        src="/ProfilePhotos/footer-logo-black.png"
+                        src="/ProfilePhotos/LogoAlternative.png"
                         alt="Sladjana Mandaric"
                         className="w-full h-full object-cover"
                     />

@@ -110,7 +110,7 @@ export const Footer = () => {
 
                 <div
                     className="
-                        py-4
+                        py-3
                         grid
                         md:grid-cols-2
                         lg:grid-cols-2
@@ -144,7 +144,7 @@ export const Footer = () => {
                             "
                         >
                             <img
-                                src="/ProfilePhotos/footer-logo-black.png"
+                                src="/ProfilePhotos/LogoAlternative.png"
                                 alt="Sladjana Mandaric"
                                 className="w-full h-full object-cover"
                             />
@@ -155,7 +155,7 @@ export const Footer = () => {
 
                         <p
                             className="
-                                mt-3
+                                mt-2
                                 max-w-sm
                                 text-sm
                                 leading-6
@@ -175,7 +175,7 @@ export const Footer = () => {
                                 inline-flex
                                 items-center
                                 gap-2
-                                mt-4
+                                mt-3
                                 px-4
                                 py-2
                                 rounded-full
@@ -206,7 +206,7 @@ export const Footer = () => {
 
                     {/* ================= SOCIALS ================= */}
 
-                    <div className="text-center md:text-left pt-12 lg:pl-70">
+                    <div className="text-center md:text-left pt-8 lg:pl-70">
 
                         <h3
                             className="
@@ -215,7 +215,7 @@ export const Footer = () => {
                                 uppercase
                                 tracking-[0.2em]
                                 text-white
-                                mb-4
+                                mb-3
                             "
                         >
                             Let's Connect
@@ -230,7 +230,7 @@ export const Footer = () => {
                                 max-w-xs
                                 mx-auto
                                 md:mx-0
-                                mb-4
+                                mb-3
                             "
                         >
                             Have an interesting project, opportunity, or idea?
@@ -305,8 +305,8 @@ export const Footer = () => {
                 <div
                     className="
                         relative
-                        py-1
-                        min-h-14
+                        py-0
+                        min-h-7
                         flex
                         items-center
                     "
@@ -357,16 +357,16 @@ export const Footer = () => {
                     {/* Back To Top */}
 
                     <div
-    className="
-        absolute
-        left-1/2
-        -translate-x-1/2
-        bottom-7
-        flex
-        items-center
-        justify-center
-    "
->
+                        className="
+                            absolute
+                            left-1/2
+                            -translate-x-1/2
+                            bottom-1
+                            flex
+                            items-center
+                            justify-center
+                        "
+                    >
 
                         <button
                             onClick={scrollToTop}

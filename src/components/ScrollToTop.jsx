@@ -2,12 +2,22 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function ScrollToTop() {
-const { pathname } = useLocation();
+    const { pathname } = useLocation();
 
-useEffect(() => {
-    window.scrollTo(0, 0);
-}, [pathname]);
+    useEffect(() => {
+        const html = document.documentElement;
 
-return null;
+        // Temporarily disable smooth scrolling
+        html.style.scrollBehavior = "auto";
 
+        // Jump immediately to the top
+        window.scrollTo(0, 0);
+
+        // Restore smooth scrolling after the jump
+        requestAnimationFrame(() => {
+            html.style.scrollBehavior = "";
+        });
+    }, [pathname]);
+
+    return null;
 }

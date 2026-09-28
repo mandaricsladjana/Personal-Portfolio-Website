@@ -7,338 +7,346 @@ import { projects } from "@/projects/projectdetailslist";
 import { projectDetails } from "@/projects";
 
 const filters = [
-    "All",
-    "Data Analytics",
-    "Business Intelligence",
-    "SQL",
-    "Cloud & Data Engineering",
-    "Web Development",
-    "Marketing & Ads",
+"All",
+"Data Analytics",
+"Business Intelligence",
+"SQL",
+"Cloud & Data Engineering",
+"Web Development",
+"Marketing & Ads",
 ];
 
 const yearFilters = [
-    "All",
-    "2026",
-    "2025",
+"All",
+"2026",
+"2025",
 ];
 
 export const AllProjects = () => {
-    const [searchParams] = useSearchParams();
+const [searchParams] = useSearchParams();
 
-    const categoriesFromUrl = searchParams.getAll("category");
 
-    const [activeFilter, setActiveFilter] = useState(
-        categoriesFromUrl.length > 0
-            ? categoriesFromUrl
-            : ["All"]
-    );
+const categoriesFromUrl = searchParams.getAll("category");
 
-    const [activeYear, setActiveYear] = useState("All");
+const [activeFilter, setActiveFilter] = useState(
+    categoriesFromUrl.length > 0
+        ? categoriesFromUrl
+        : ["All"]
+);
 
-    const handleFilterClick = (filter, event) => {
+const [activeYear, setActiveYear] = useState("All");
 
-        if (event.ctrlKey) {
+const handleFilterClick = (filter, event) => {
 
-            if (filter === "All") {
-                setActiveFilter(["All"]);
-                return;
+    if (event.ctrlKey) {
+
+        if (filter === "All") {
+            setActiveFilter(["All"]);
+            return;
+        }
+
+        setActiveFilter((current) => {
+
+            let updatedFilters = current.filter(
+                (item) => item !== "All"
+            );
+
+            if (updatedFilters.includes(filter)) {
+                updatedFilters = updatedFilters.filter(
+                    (item) => item !== filter
+                );
+            } else {
+                updatedFilters = [...updatedFilters, filter];
             }
 
-            setActiveFilter((current) => {
+            if (updatedFilters.length === 0) {
+                return ["All"];
+            }
 
-                let updatedFilters = current.filter(
-                    (item) => item !== "All"
-                );
+            return updatedFilters;
+        });
 
-                if (updatedFilters.includes(filter)) {
-                    updatedFilters = updatedFilters.filter(
-                        (item) => item !== filter
-                    );
-                } else {
-                    updatedFilters = [...updatedFilters, filter];
-                }
+    } else {
 
-                if (updatedFilters.length === 0) {
-                    return ["All"];
-                }
+        setActiveFilter([filter]);
 
-                return updatedFilters;
-            });
+    }
+};
 
-        } else {
+const filteredProjects =
+    activeFilter.includes("All")
+        ? (
+            activeYear === "All"
+                ? projects
+                : projects.filter(
+                    (project) => project.year === activeYear
+                )
+        )
+        : projects.filter((project) => {
 
-            setActiveFilter([filter]);
+              const matchesCategory = activeFilter.some((filter) => {
 
-        }
-    };
+                  if (filter === "Data Analytics") {
+                      return (
+                          project.category?.includes("Data Analytics") ||
+                          project.category?.includes("Azure")
+                      );
+                  }
 
-    const filteredProjects =
-        activeFilter.includes("All")
-            ? (
-                activeYear === "All"
-                    ? projects
-                    : projects.filter(
-                        (project) => project.year === activeYear
-                    )
-            )
-            : projects.filter((project) => {
-
-                  const matchesCategory = activeFilter.some((filter) => {
-
-                      if (filter === "Data Analytics") {
-                          return (
-                              project.category?.includes("Data Analytics") ||
-                              project.category?.includes("Azure")
-                          );
-                      }
-
-                      return project.category?.includes(filter);
-
-                  });
-
-                  const matchesYear =
-                      activeYear === "All" ||
-                      project.year === activeYear;
-
-                  return matchesCategory && matchesYear;
+                  return project.category?.includes(filter);
 
               });
 
-    return (
-        <section className="relative overflow-hidden bg-gray-100 border-t border-gray-300 min-h-screen">
+              const matchesYear =
+                  activeYear === "All" ||
+                  project.year === activeYear;
 
-            {/* ================= BACKGROUND GLOW ================= */}
+              return matchesCategory && matchesYear;
 
-            <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+          });
 
-            <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
+return (
+    <section className="relative overflow-hidden bg-gray-100 border-t border-gray-300 min-h-screen">
+
+        {/* ================= BACKGROUND GLOW ================= */}
+
+        <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
 
-            {/* ================= CONTENT ================= */}
+        {/* ================= CONTENT ================= */}
 
-            <div className="container mx-auto px-6 md:px-10 lg:px-16 relative z-10">
+        <div className="container mx-auto px-6 md:px-10 lg:px-16 relative z-10">
 
 
-                {/* ================= PAGE TITLE ================= */}
+            {/* ================= PAGE TITLE ================= */}
 
-                <div className="pt-32 pb-10 text-center">
+            <div className="pt-32 pb-10 text-center">
 
-                    <span className="text-primary text-sm font-medium tracking-wider uppercase">
-                        My Work
+                <span className="text-primary text-sm font-medium tracking-wider uppercase">
+                    My Work
+                </span>
+
+                <h1 className="text-5xl md:text-6xl font-bold leading-tight mt-1">
+
+                    All{" "}
+
+                    <span className="text-primary italic font-serif">
+                        Projects
                     </span>
 
-                    <h1 className="text-5xl md:text-6xl font-bold leading-tight mt-1">
+                </h1>
 
-                        All{" "}
+                <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-lg">
+                    Explore my projects, from data analytics and business
+                    intelligence to cloud solutions and web development.
+                </p>
 
-                        <span className="text-primary italic font-serif">
-                            Projects
-                        </span>
-
-                    </h1>
-
-                    <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-lg">
-                        Explore my projects, from data analytics and business
-                        intelligence to cloud solutions and web development.
-                    </p>
-
-                </div>
+            </div>
 
 
-                {/* ================= YEAR FILTERS ================= */}
+            {/* ================= YEAR FILTERS ================= */}
 
-                <div className="flex flex-wrap justify-center gap-3 mb-5">
+            <div className="flex flex-wrap justify-center gap-3 mb-5">
 
-                    {yearFilters.map((year) => (
+                {yearFilters.map((year) => (
 
-                        <button
-                            key={year}
-                            type="button"
-                            onClick={() => setActiveYear(year)}
-                            className={`
-                                px-5
-                                py-2.5
-                                rounded-full
-                                text-sm
-                                font-semibold
-                                border-2
-                                transition-all
-                                duration-300
-                                ease-in-out
-                                ${
-                                    activeYear === year
-                                        ? "bg-primary text-white border-primary shadow-[0_0_18px_rgba(124,58,237,0.35)]"
-                                        : "bg-white text-purple-600 border-purple-200 hover:bg-purple-50 hover:border-purple-400"
-                                }
-                            `}
-                        >
-                            {year === "All" ? "All Years" : year}
-                        </button>
-
-                    ))}
-
-                </div>
-
-
-                {/* ================= FILTERS ================= */}
-
-                <div className="flex flex-wrap justify-center gap-3 mb-12">
-
-                    {filters.map((filter) => (
-
-                        <button
-                            key={filter}
-                            type="button"
-                            onClick={(event) =>
-                                handleFilterClick(filter, event)
+                    <button
+                        key={year}
+                        type="button"
+                        onClick={() => setActiveYear(year)}
+                        className={`
+                            px-5
+                            py-2.5
+                            rounded-full
+                            text-sm
+                            font-semibold
+                            border-2
+                            transition-all
+                            duration-300
+                            ease-in-out
+                            ${
+                                activeYear === year
+                                    ? "bg-primary text-white border-primary shadow-[0_0_18px_rgba(124,58,237,0.35)]"
+                                    : "bg-white text-purple-600 border-purple-200 hover:bg-purple-50 hover:border-purple-400"
                             }
-                            className={`
-                                px-5
-                                py-2.5
-                                rounded-full
-                                text-sm
-                                font-semibold
-                                border-2
-                                transition-all
-                                duration-300
-                                ease-in-out
-                                ${
-                                    activeFilter.includes(filter)
-                                        ? "bg-primary text-white border-primary shadow-[0_0_18px_rgba(124,58,237,0.35)]"
-                                        : "bg-white text-purple-600 border-purple-200 hover:bg-purple-50 hover:border-purple-400"
-                                }
-                            `}
-                        >
-                            {filter}
-                        </button>
+                        `}
+                    >
+                        {year === "All" ? "All Years" : year}
+                    </button>
 
-                    ))}
+                ))}
 
-                </div>
+            </div>
 
 
-                {/* ================= PROJECT GRID ================= */}
+            {/* ================= FILTERS ================= */}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 pb-20">
+            <div className="flex flex-wrap justify-center gap-3 mb-12">
 
-                    {filteredProjects.map((project, index) => (
+                {filters.map((filter) => (
 
-                        <article
-                            key={index}
-                            className="
-                                group
-                                bg-white
-                                rounded-2xl
-                                overflow-hidden
-                                border border-gray-200
-                                shadow-[0_20px_60px_rgba(88,28,135,0.18)]
-                                transition-all
-                                duration-500
-                                ease-in-out
-                                hover:-translate-y-1
-                                hover:border-purple-400
-                                hover:shadow-[0_0_30px_rgba(124,58,237,0.35)]
-                            "
-                        >
+                    <button
+                        key={filter}
+                        type="button"
+                        onClick={(event) =>
+                            handleFilterClick(filter, event)
+                        }
+                        className={`
+                            px-5
+                            py-2.5
+                            rounded-full
+                            text-sm
+                            font-semibold
+                            border-2
+                            transition-all
+                            duration-300
+                            ease-in-out
+                            ${
+                                activeFilter.includes(filter)
+                                    ? "bg-primary text-white border-primary shadow-[0_0_18px_rgba(124,58,237,0.35)]"
+                                    : "bg-white text-purple-600 border-purple-200 hover:bg-purple-50 hover:border-purple-400"
+                            }
+                        `}
+                    >
+                        {filter}
+                    </button>
 
-                            {/* ================= PROJECT IMAGE ================= */}
+                ))}
+
+            </div>
+
+
+            {/* ================= PROJECT GRID ================= */}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 pb-20">
+
+                {filteredProjects.map((project, index) => (
+
+                    <article
+                        key={index}
+                        className="
+                            group
+                            bg-white
+                            rounded-2xl
+                            overflow-hidden
+                            border border-gray-200
+                            shadow-[0_20px_60px_rgba(88,28,135,0.18)]
+                            transition-all
+                            duration-500
+                            ease-in-out
+                            hover:-translate-y-1
+                            hover:border-purple-400
+                            hover:shadow-[0_0_30px_rgba(124,58,237,0.35)]
+                            flex
+                            flex-col
+                        "
+                    >
+
+                        {/* ================= PROJECT IMAGE ================= */}
+
+                        <Link to={`/projects/${project.id}`}>
+                            <div className="relative overflow-hidden">
+
+                                <img
+                                    src={project.image}
+                                    alt={project.title}
+                                    className="
+                                        w-full
+                                        h-52
+                                        object-cover
+                                        transition-transform
+                                        duration-700
+                                        ease-in-out
+                                        group-hover:scale-105
+                                    "
+                                />
+
+                                <div
+                                    className="
+                                        absolute
+                                        inset-0
+                                        bg-linear-to-t
+                                        from-black/40
+                                        via-transparent
+                                        to-transparent
+                                        opacity-0
+                                        group-hover:opacity-100
+                                        transition-opacity
+                                        duration-500
+                                        ease-in-out
+                                    "
+                                />
+
+                            </div>
+                        </Link>
+
+
+                        {/* ================= PROJECT CONTENT ================= */}
+
+                        <div className="p-6 flex flex-col flex-1">
+
+
+                            {/* ================= YEAR ================= */}
+
+                            <div className="mb-3">
+
+                                <span
+                                    className="
+                                        inline-flex
+                                        items-center
+                                        px-3
+                                        py-1
+                                        rounded-full
+                                        text-xs
+                                        font-semibold
+                                        tracking-wider
+                                        uppercase
+                                        bg-purple-50
+                                        text-purple-700
+                                        border
+                                        border-purple-100
+                                    "
+                                >
+                                    {project.year}
+                                </span>
+
+                            </div>
+
+
+                            {/* ================= TITLE ================= */}
 
                             <Link to={`/projects/${project.id}`}>
-                                <div className="relative overflow-hidden">
 
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        className="
-                                            w-full
-                                            h-52
-                                            object-cover
-                                            transition-transform
-                                            duration-700
-                                            ease-in-out
-                                            group-hover:scale-105
-                                        "
-                                    />
+                                <h2
+                                    className="
+                                        text-xl
+                                        font-bold
+                                        text-gray-900
+                                        mb-3
+                                        transition-colors
+                                        duration-500
+                                        ease-in-out
+                                        group-hover:text-purple-600
+                                    "
+                                >
+                                    {project.title}
+                                </h2>
 
-                                    <div
-                                        className="
-                                            absolute
-                                            inset-0
-                                            bg-linear-to-t
-                                            from-black/40
-                                            via-transparent
-                                            to-transparent
-                                            opacity-0
-                                            group-hover:opacity-100
-                                            transition-opacity
-                                            duration-500
-                                            ease-in-out
-                                        "
-                                    />
-
-                                </div>
                             </Link>
 
 
-                            {/* ================= PROJECT CONTENT ================= */}
+                            {/* ================= DESCRIPTION ================= */}
 
-                            <div className="p-6">
-
-
-                                {/* ================= YEAR ================= */}
-
-                                <div className="mb-3">
-
-                                    <span
-                                        className="
-                                            inline-flex
-                                            items-center
-                                            px-3
-                                            py-1
-                                            rounded-full
-                                            text-xs
-                                            font-semibold
-                                            tracking-wider
-                                            uppercase
-                                            bg-purple-50
-                                            text-purple-700
-                                            border
-                                            border-purple-100
-                                        "
-                                    >
-                                        {project.year}
-                                    </span>
-
-                                </div>
+                            <p className="text-gray-600 leading-relaxed text-sm mb-5">
+                                {project.description}
+                            </p>
 
 
-                                {/* ================= TITLE ================= */}
+                            {/* ================= BOTTOM PROJECT AREA ================= */}
 
-                                <Link to={`/projects/${project.id}`}>
-
-                                    <h2
-                                        className="
-                                            text-xl
-                                            font-bold
-                                            text-gray-900
-                                            mb-3
-                                            transition-colors
-                                            duration-500
-                                            ease-in-out
-                                            group-hover:text-purple-600
-                                        "
-                                    >
-                                        {project.title}
-                                    </h2>
-
-                                </Link>
-
-
-                                {/* ================= DESCRIPTION ================= */}
-
-                                <p className="text-gray-600 leading-relaxed text-sm mb-5">
-                                    {project.description}
-                                </p>
+                            <div className="mt-auto">
 
 
                                 {/* ================= TAGS ================= */}
@@ -367,6 +375,45 @@ export const AllProjects = () => {
                                     ))}
 
                                 </div>
+
+
+                                {/* ================= PROJECT PROGRESS ================= */}
+
+                                {project.progress !== undefined && (
+                                    <div className="mb-6">
+
+                                        <div className="flex items-center justify-between mb-2">
+
+                                            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                                Progress
+                                            </span>
+
+                                            <span className="text-xs font-bold text-purple-600">
+                                                {project.progress}%
+                                            </span>
+
+                                        </div>
+
+                                        <div className="w-full h-2 rounded-full bg-purple-100 overflow-hidden">
+
+                                            <div
+                                                className="
+                                                    h-full
+                                                    rounded-full
+                                                    bg-primary
+                                                    transition-all
+                                                    duration-700
+                                                    ease-out
+                                                "
+                                                style={{
+                                                    width: `${project.progress}%`,
+                                                }}
+                                            />
+
+                                        </div>
+
+                                    </div>
+                                )}
 
 
                                 {/* ================= PROJECT BUTTONS ================= */}
@@ -436,29 +483,32 @@ export const AllProjects = () => {
 
                             </div>
 
-                        </article>
+                        </div>
 
-                    ))}
+                    </article>
 
-                </div>
-
-
-                {/* ================= NO PROJECTS MESSAGE ================= */}
-
-                {filteredProjects.length === 0 && (
-
-                    <div className="text-center pb-20">
-
-                        <p className="text-gray-500 text-lg">
-                            No projects found in this category yet.
-                        </p>
-
-                    </div>
-
-                )}
+                ))}
 
             </div>
 
-        </section>
-    );
+
+            {/* ================= NO PROJECTS MESSAGE ================= */}
+
+            {filteredProjects.length === 0 && (
+
+                <div className="text-center pb-20">
+
+                    <p className="text-gray-500 text-lg">
+                        No projects found in this category yet.
+                    </p>
+
+                </div>
+
+            )}
+
+        </div>
+
+    </section>
+);
+
 };

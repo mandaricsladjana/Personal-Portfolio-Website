@@ -1,30 +1,32 @@
 export const projects = [
     {
         id: "sql-cleaning-nashville",
-        title: "Building a SQL Cleaning & Preparation Layer",
+        title: "Building a SQL Cleaning & Preparation Layer for Power BI",
         year: "2026",
         description:
-            "Complete analytical process, from importing and understanding raw data, performing data profiling and quality checks, and identifying critical data issues using SQL with a goal to create a consistent and reusable cleaning data layer for Power BI.",
-        image: "/ProjectsPhotos/Project1Profile.png",
+            "Complete analytical process, from importing and understanding raw real estate data, performing data profiling and quality checks, and identifying critical data issues using SQL with a goal to create a consistent and reusable cleaning data layer for Power BI.",
+        image: "/ProfilePhotos/nashville-cover1.png",
         tags: ["SQL Management Studio", "SQL Views"],
         category: ["Data Analytics", "SQL"],
         link: "https://medium.com/p/0eb32dbc058c/edit",
-        github: "https://github.com/",
+        github: "https://github.com/mandaricsladjana/Real-Estate-Investment-and-Market-Analytics-Project",
         status: "Finished",
         progress: 100,
     },
 
     {
         id: "power-bi-nashville",
-        title: "Interactive Data Quality Power BI Dashboard",
+        title: "Real Estate Data Quality Power BI Visualization",
         year: "2026",
         description:
             "A hands-on look at dynamic KPIs, interactive filters, custom navigation buttons, dynamic titles, selected-record previews, detailed tables, and city-level data quality analysis for the real estate dataset.",
-        image: "/ProjectsPhotos/Project1Profile.png",
+        image: "/ProfilePhotos/Project1Profile.png",
         tags: ["SQL Management Studio", "Power BI"],
         category: ["Data Analytics", "Business Intelligence", "SQL"],
         link: "https://medium.com/p/0eb32dbc058c/edit",
-        github: "https://github.com/",
+        github: "https://github.com/mandaricsladjana/Real-Estate-Investment-and-Market-Analytics-Project",
+        status: "Finished",
+        progress: 100,
     },
 
     {
@@ -32,8 +34,8 @@ export const projects = [
         title: "From Excel to Power BI: Creating an Automated Data Pipeline Using Azure",
         year: "2026",
         description:
-            "The result was a cloud-based data workflow built on Azure, connecting Excel through SQL to a Power BI dashboard with automated refresh — cutting manual update work by roughly 90%.",
-        image: "/ProjectsPhotos/Project3Profile.png",
+            "The result was a cloud-based data workflow built on Azure, connecting Real Estate Data in Excel through SQL to a Power BI dashboard with automated refresh — cutting manual update work by roughly 90%.",
+        image: "/ProfilePhotos/nashville-cover3.png",
         tags: [
             "Microsoft Azure",
             "Blob Storage",
@@ -43,7 +45,7 @@ export const projects = [
         ],
         category: ["Cloud & Data Engineering", "Business Intelligence"],
         link: "https://medium.com/p/0eb32dbc058c/edit",
-        github: "",
+        github: "https://github.com/mandaricsladjana/Real-Estate-Investment-and-Market-Analytics-Project",
         status: "Finished",
         progress: 100,
     },
@@ -54,13 +56,13 @@ export const projects = [
         year: "2026",
         description:
             "How I built my first personal portfolio website using React, Tailwind CSS and Vite.",
-        image: "/ProjectsPhotos/Project3Profile.png",
-        tags: ["React", "Tailwind CSS", "Vite"],
+        image: "/ProfilePhotos/cover4.png",
+        tags: ["React", "Tailwind CSS", "Vite", "Node.js"],
         category: ["Web Development"],
         link: "https://medium.com/",
-        github: "https://github.com/",
+        github: "https://github.com/mandaricsladjana/personal-portfolio-website",
         status: "Ongoing",
-        progress: 80
+        progress: 90
     },
 
     {
@@ -82,11 +84,11 @@ export const projects = [
             "Manufacturing",
             "KPI Analysis"
         ],
-        image: "/projects/shop-floor-data.jpg",
+        image: "/ProfilePhotos/cover5.png",
         link: "",
         github: "",
-        status: "Finished",
-        progress: 100,
+        status: "To be started",
+        progress: 0,
     },
 
     {
@@ -105,8 +107,8 @@ export const projects = [
         ],
         category: ["Web Development", "E-Commerce", "Digital Marketing"],
         link: "",
-        github: "https://github.com/",
-        status: "In Progress",
+        github: "",
+        status: "To be started",
         progress: 0,
     },
 ];

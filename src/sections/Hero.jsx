@@ -1,9 +1,12 @@
-import { ArrowRight, Download } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Download, X } from "lucide-react";
 import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa";
 import { Button } from "../components/Button";
 import { DataParticles } from "../components/DataParticles";
 
 export const Hero = () => {
+    const [isCvPopupOpen, setIsCvPopupOpen] = useState(false);
+
     return (
         <section
             id="hero"
@@ -79,7 +82,7 @@ export const Hero = () => {
                                 size="lg"
                                 onClick={() => {
                                     document.getElementById("projects")?.scrollIntoView({
-                                        behavior: "smooth",
+                                        behavior: "auto",
                                         block: "start",
                                     });
                                 }}
@@ -91,6 +94,7 @@ export const Hero = () => {
 
                             {/* Download CV */}
                             <button
+                                onClick={() => setIsCvPopupOpen(true)}
                                 className="relative bg-transparent border border-border
                                 text-white hover:border-primary/50 transition-all
                                 duration-1000 focus:outline-none focus-visible:ring-2
@@ -161,7 +165,7 @@ export const Hero = () => {
                     <div className="relative animate-fade-in animation-delay-300">
 
                         {/* Profile picture */}
-                        <div className="relative max-w-md mx-auto">
+                        <div className="relative max-w-sm mx-auto">
 
                             <div
                                 className="absolute inset-0
@@ -197,7 +201,65 @@ export const Hero = () => {
                 </div>
             </div>
 
+            {/* CV POPUP */}
+            {isCvPopupOpen && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm px-6"
+                    onClick={() => setIsCvPopupOpen(false)}
+                >
+                    <div
+                        className="relative w-full max-w-md rounded-3xl border border-purple-500/30 bg-[#08050f] p-8 shadow-2xl"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        {/* Close button */}
+                        <button
+                            type="button"
+                            onClick={() => setIsCvPopupOpen(false)}
+                            aria-label="Close CV popup"
+                            className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-white/60 transition-all duration-300 hover:bg-purple-500/20 hover:text-white"
+                        >
+                            <X size={20} />
+                        </button>
+
+                        {/* Icon */}
+                        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-400">
+                            <Download size={28} />
+                        </div>
+
+                        {/* Text */}
+                        <h2 className="mb-3 text-2xl font-bold text-white">
+                            Download My CV
+                        </h2>
+
+                        <p className="mb-8 text-sm leading-relaxed text-white/60">
+                            Choose whether you would like to view my CV first or
+                            download a copy directly to your device.
+                        </p>
+
+                        {/* Buttons */}
+                        <div className="flex flex-col gap-3 sm:flex-row">
+                            <a
+                                href="/CV/Sladjana-Mandaric-CV.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex flex-1 items-center justify-center gap-2 rounded-full border border-purple-500/40 px-5 py-3 font-semibold text-purple-300 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/10 hover:text-white"
+                            >
+                                View CV
+                            </a>
+
+                            <a
+                                href="/CV/Sladjana-Mandaric-CV.pdf"
+                                download
+                                className="flex flex-1 items-center justify-center gap-2 rounded-full bg-purple-600 px-5 py-3 font-semibold text-white transition-all duration-300 hover:bg-purple-500"
+                            >
+                                <Download size={18} />
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </section>
     );
 };
-

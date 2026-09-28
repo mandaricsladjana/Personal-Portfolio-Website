@@ -87,6 +87,8 @@ const learned = [
 return (
     <main className="min-h-screen bg-white text-black">
 
+        <div className="origin-top-left scale-[0.8]">
+
         {/* =====================================================
             HERO
         ===================================================== */}
@@ -433,8 +435,11 @@ return (
 
         </section>
 
+        </div>
+
     </main>
 );
 
 
 }
+

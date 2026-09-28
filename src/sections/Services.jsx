@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -122,7 +123,7 @@ export const Services = () => {
             className="
                 relative
                 overflow-hidden
-                my-12
+                my-7
                 min-h-screen
                 bg-[linear-gradient(to_bottom,transparent_0%,#f3f4f6_12%,#f3f4f6_88%,transparent_100%)]
             "
@@ -136,15 +137,11 @@ export const Services = () => {
 
             <div className="absolute bottom-0 right-[20%] w-72 h-72 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
-
-            {/* ================= CONTENT ================= */}
-
             <div className="container mx-auto px-6 md:px-10 lg:px-24 relative z-10">
-
 
                 {/* ================= HERO ================= */}
 
-                <div className="pt-20 pb-16 max-w-4xl">
+                <div className="pt-12 pb-16 max-w-4xl">
 
                     <span className="text-primary text-sm font-medium tracking-wider uppercase">
                         Services
@@ -416,7 +413,7 @@ export const Services = () => {
 
                             {/* ================= VISUAL AREA ================= */}
 
-                            <div className="relative my-12 min-h-[190px] flex items-center">
+                            <div className="relative my-7 min-h-[190px] flex items-center">
 
 
                                 {/* ANALYTICS VISUAL */}
