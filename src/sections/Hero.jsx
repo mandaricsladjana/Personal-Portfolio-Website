@@ -605,7 +605,7 @@ export const Hero = () => {
 
                             <div className="flex flex-col gap-3 sm:flex-row">
                                 <a
-                                    href="/CV/Sladjana-Mandaric-CV.pdf"
+                                    href="/CV-QE_Sladjana_Mandaric.pdf"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex flex-1 items-center justify-center gap-2 rounded-full border border-purple-500/40 px-5 py-3 font-semibold text-purple-300 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/10 hover:text-white hover:scale-105"
