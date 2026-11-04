@@ -20,7 +20,7 @@ export const projects = [
         year: "2026",
         description:
             "A hands-on look at dynamic KPIs, interactive filters, custom navigation buttons, dynamic titles, selected-record previews, detailed tables, and city-level data quality analysis for the real estate dataset.",
-        image: "/ProfilePhotos/Project1Profile.png",
+        video: "/ProfilePhotos/ZAVRSEN.mp4",
         tags: ["SQL Management Studio", "Power BI"],
         category: ["Data Analytics", "Business Intelligence", "SQL"],
         link: "https://medium.com/p/0eb32dbc058c/edit",
@@ -97,7 +97,7 @@ export const projects = [
         year: "2026",
         description:
             "Building a fully functional boutique webshop with a custom CMS, covering the complete e-commerce experience from product browsing and category filtering to product details, shopping cart functionality, checkout flow and content management, with a focus on responsive design, SEO optimization and GA4 integration for tracking user behavior and conversions.",
-        image: "/ProjectsPhotos/ProjectWebshopProfile.png",
+        image: "/ProfilePhotos/webshop-cover.jpg",
         tags: [
             "Custom CMS",
             "SEO",

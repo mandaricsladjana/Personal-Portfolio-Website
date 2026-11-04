@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import {
     FaThLarge,
@@ -35,7 +36,7 @@ const resources = [
         title: "Web Development To-Do List",
         popupDescription:
             "A practical Notion checklist for planning and organizing website development projects — from structure and UI/UX to SEO, analytics, deployment and final testing.",
-        link: "#",
+        link: "https://app.notion.com/p/My-Website-Design-Development-To-Do-Checklist-dfb108b3e7c583e6b7b5011d04a16ffd?source=copy_link",
         icon: FaCode,
         tags: ["Web Development", "React", "SEO", "GA4", "GTM"],
     },
@@ -49,10 +50,20 @@ export function Resources() {
     const location = useLocation();
 
     useEffect(() => {
+        // Check if user has already closed it in this session
+        const hasClosedBefore = sessionStorage.getItem("hasClosedResourcesRibbon");
+        if (hasClosedBefore) {
+            hasTriggeredRibbon.current = true;
+            return;
+        }
+
         const handleScroll = () => {
+            if (hasTriggeredRibbon.current) return;
+
+            // Trigger if scrolled past 15% OR if the page is short and already scrolled/loaded
             if (
-                window.scrollY > window.innerHeight * 0.15 &&
-                !hasTriggeredRibbon.current
+                window.scrollY > window.innerHeight * 0.1 ||
+                document.documentElement.scrollHeight <= window.innerHeight * 1.2
             ) {
                 hasTriggeredRibbon.current = true;
                 setShowRibbon(true);
@@ -60,19 +71,20 @@ export function Resources() {
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        
+        // Run immediately on mount to catch cases where user is already scrolled
+        handleScroll();
 
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    // Reset the entire Resources UI whenever the user changes route.
-    // This prevents the ribbon from overlapping the fixed navbar on Home.
-    useEffect(() => {
-        setIsOpen(false);
-        setSelectedResource(null);
-        setShowRibbon(false);
-        hasTriggeredRibbon.current = false;
     }, [location.pathname]);
+
+    // Handle manual close by user clicking the X button
+    const handleCloseRibbon = () => {
+        setIsOpen(false);
+        setShowRibbon(false);
+        sessionStorage.setItem("hasClosedResourcesRibbon", "true");
+    };
 
     const handleDownload = () => {
         if (!selectedResource) return;
@@ -88,8 +100,8 @@ export function Resources() {
         setSelectedResource(null);
     };
 
-    return (
-        <div style={{ zoom: "1" }}>
+    return createPortal(
+        <div>
             <>
                 {/* =========================
                     LEFT RESOURCE RIBBON
@@ -108,22 +120,22 @@ export function Resources() {
                                 -translate-y-1/2
                                 z-50
                                 h-32
-                                w-10
+                                w-9
                                 items-center
                                 justify-center
                                 rounded-r-2xl
                                 border
                                 border-l-0
-                                border-white/15
-                                bg-[#08060d]
-                                text-white/70
-                                shadow-[8px_0_30px_rgba(20,10,30,0.45)]
-                                backdrop-blur-xl
+                                border-white/[0.06]
+                                bg-[#030105]
+                                text-white/50
+                                shadow-[4px_0_20px_rgba(0,0,0,0.6)]
+                                backdrop-blur-md
                                 transition-all
                                 duration-700
                                 ease-[cubic-bezier(0.22,1,0.36,1)]
-                                hover:w-12
-                                hover:text-white
+                                hover:w-11
+                                hover:text-white/80
                                 md:flex
                                 ${
                                     isOpen
@@ -137,7 +149,7 @@ export function Resources() {
                                 className="
                                     rotate-180
                                     text-[9px]
-                                    font-semibold
+                                    font-medium
                                     uppercase
                                     tracking-[0.25em]
                                     [writing-mode:vertical-rl]
@@ -162,9 +174,9 @@ export function Resources() {
                                 w-[280px]
                                 overflow-hidden
                                 border-r
-                                border-white/10
-                                bg-[#05030a]
-                                shadow-[12px_0_50px_rgba(20,10,30,0.45)]
+                                border-white/[0.05]
+                                bg-[#030105]
+                                shadow-[8px_0_40px_rgba(0,0,0,0.85)]
                                 backdrop-blur-2xl
                                 transition-all
                                 duration-700
@@ -179,24 +191,17 @@ export function Resources() {
                                 pointerEvents: isOpen ? "auto" : "none",
                             }}
                         >
-                            {/* =====================================================
-                                DARK TECHNICAL BACKGROUND
-                            ====================================================== */}
-
                             <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                                {/* Base background */}
                                 <div
                                     className="
                                         absolute
                                         inset-0
                                         bg-gradient-to-br
-                                        from-[#05030a]
-                                        via-[#08060d]
-                                        to-[#0b0712]
+                                        from-[#020104]
+                                        via-[#040207]
+                                        to-[#06030a]
                                     "
                                 />
-
-                                {/* Purple glow — top left */}
                                 <div
                                     className="
                                         absolute
@@ -205,12 +210,10 @@ export function Resources() {
                                         h-[520px]
                                         w-[520px]
                                         rounded-full
-                                        bg-purple-700/20
-                                        blur-[140px]
+                                        bg-purple-900/10
+                                        blur-[150px]
                                     "
                                 />
-
-                                {/* Purple glow — right */}
                                 <div
                                     className="
                                         absolute
@@ -219,190 +222,47 @@ export function Resources() {
                                         h-[480px]
                                         w-[480px]
                                         rounded-full
-                                        bg-fuchsia-600/10
-                                        blur-[150px]
+                                        bg-fuchsia-950/10
+                                        blur-[160px]
                                     "
                                 />
-
-                                {/* Violet glow — bottom */}
-                                <div
-                                    className="
-                                        absolute
-                                        -bottom-[25%]
-                                        left-[25%]
-                                        h-[450px]
-                                        w-[450px]
-                                        rounded-full
-                                        bg-violet-700/10
-                                        blur-[140px]
-                                    "
-                                />
-
-                                {/* Subtle purple center glow */}
-                                <div
-                                    className="
-                                        absolute
-                                        left-1/2
-                                        top-[38%]
-                                        h-[280px]
-                                        w-[280px]
-                                        -translate-x-1/2
-                                        rounded-full
-                                        bg-purple-600/[0.035]
-                                        blur-[100px]
-                                    "
-                                />
-
-                                {/* Technical grid */}
                                 <div
                                     className="
                                         absolute
                                         inset-0
-                                        opacity-[0.08]
+                                        opacity-[0.04]
                                     "
                                     style={{
                                         backgroundImage:
-                                            "linear-gradient(rgba(168,85,247,0.45) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.45) 1px, transparent 1px)",
+                                            "linear-gradient(rgba(168,85,247,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.3) 1px, transparent 1px)",
                                         backgroundSize: "55px 55px",
                                     }}
-                                />
-
-                                {/* Secondary diagonal technical texture */}
-                                <div
-                                    className="
-                                        absolute
-                                        inset-0
-                                        opacity-[0.025]
-                                    "
-                                    style={{
-                                        backgroundImage:
-                                            "repeating-linear-gradient(135deg, transparent 0px, transparent 18px, rgba(168,85,247,0.8) 19px, transparent 20px)",
-                                    }}
-                                />
-
-                                {/* Decorative circles */}
-                                <div
-                                    className="
-                                        absolute
-                                        -right-24
-                                        top-[20%]
-                                        h-48
-                                        w-48
-                                        rounded-full
-                                        border
-                                        border-purple-400/10
-                                    "
-                                />
-
-                                <div
-                                    className="
-                                        absolute
-                                        -right-12
-                                        top-[25%]
-                                        h-32
-                                        w-32
-                                        rounded-full
-                                        border
-                                        border-purple-400/10
-                                    "
-                                />
-
-                                <div
-                                    className="
-                                        absolute
-                                        right-[20%]
-                                        top-[30%]
-                                        h-16
-                                        w-16
-                                        rounded-full
-                                        bg-purple-500/[0.08]
-                                        blur-xl
-                                    "
-                                />
-
-                                {/* Top edge glow */}
-                                <div
-                                    className="
-                                        absolute
-                                        left-0
-                                        right-0
-                                        top-0
-                                        h-px
-                                        bg-gradient-to-r
-                                        from-transparent
-                                        via-purple-400/30
-                                        to-transparent
-                                    "
-                                />
-
-                                {/* Left edge glow */}
-                                <div
-                                    className="
-                                        absolute
-                                        left-0
-                                        top-0
-                                        h-full
-                                        w-px
-                                        bg-gradient-to-b
-                                        from-transparent
-                                        via-purple-400/20
-                                        to-transparent
-                                    "
-                                />
-
-                                {/* Right shadow */}
-                                <div
-                                    className="
-                                        absolute
-                                        right-0
-                                        top-0
-                                        h-full
-                                        w-16
-                                        bg-gradient-to-l
-                                        from-black/30
-                                        to-transparent
-                                    "
-                                />
-
-                                {/* Bottom fade */}
-                                <div
-                                    className="
-                                        absolute
-                                        bottom-0
-                                        left-0
-                                        right-0
-                                        h-40
-                                        bg-gradient-to-t
-                                        from-[#05030a]/90
-                                        to-transparent
-                                    "
                                 />
                             </div>
 
                             <div className="relative flex h-full flex-col px-5 pb-4 pt-5">
                                 {/* CLOSE BUTTON */}
                                 <button
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={handleCloseRibbon}
                                     className="
                                         absolute
                                         right-4
                                         top-5
                                         z-10
                                         flex
-                                        h-6
-                                        w-6
+                                        h-7
+                                        w-7
                                         items-center
                                         justify-center
                                         rounded-full
                                         border
-                                        border-white/15
-                                        bg-white/10
-                                        text-white/60
-                                        shadow-lg
+                                        border-white/[0.08]
+                                        bg-white/[0.04]
+                                        text-white/50
                                         transition-all
                                         duration-300
                                         hover:scale-105
-                                        hover:bg-white/20
+                                        hover:bg-white/[0.08]
                                         hover:text-white
                                     "
                                     aria-label="Close resources ribbon"
@@ -410,9 +270,7 @@ export function Resources() {
                                     <FaTimes size={11} />
                                 </button>
 
-                                {/* =========================
-                                    CURRENTLY WORKING ON
-                                ========================== */}
+                                {/* CURRENTLY WORKING ON */}
                                 <section>
                                     <div className="mb-3 flex items-center gap-2">
                                         <span
@@ -420,19 +278,18 @@ export function Resources() {
                                                 h-1.5
                                                 w-1.5
                                                 rounded-full
-                                                bg-white
-                                                shadow-[0_0_12px_rgba(255,255,255,0.9)]
+                                                bg-white/70
+                                                shadow-[0_0_8px_rgba(255,255,255,0.5)]
                                                 animate-[pulseWhite_2s_ease-in-out_infinite]
                                             "
                                         />
-
                                         <p
                                             className="
                                                 text-[8px]
-                                                font-semibold
+                                                font-medium
                                                 uppercase
                                                 tracking-[0.28em]
-                                                text-white/55
+                                                text-white/40
                                             "
                                         >
                                             Currently
@@ -442,11 +299,11 @@ export function Resources() {
                                     <h3
                                         className="
                                             max-w-[220px]
-                                            text-[22px]
-                                            font-semibold
-                                            leading-[1.08]
+                                            text-[20px]
+                                            font-medium
+                                            leading-[1.1]
                                             tracking-[-0.02em]
-                                            text-white
+                                            text-white/90
                                         "
                                     >
                                         What am I working on?
@@ -466,10 +323,9 @@ export function Resources() {
                                             p-2
                                             transition-all
                                             duration-300
-                                            hover:-translate-y-1
-                                            hover:border-white/15
-                                            hover:bg-white/[0.06]
-                                            hover:shadow-[0_12px_30px_rgba(255,255,255,0.08)]
+                                            hover:-translate-y-0.5
+                                            hover:border-white/[0.08]
+                                            hover:bg-white/[0.03]
                                         "
                                     >
                                         <div
@@ -482,10 +338,9 @@ export function Resources() {
                                                 justify-center
                                                 rounded-xl
                                                 border
-                                                border-white/15
-                                                bg-white/10
-                                                text-white
-                                                shadow-[0_8px_25px_rgba(20,10,30,0.30)]
+                                                border-white/[0.08]
+                                                bg-white/[0.04]
+                                                text-white/80
                                             "
                                         >
                                             <FaArrowRight size={12} />
@@ -495,109 +350,103 @@ export function Resources() {
                                             <p
                                                 className="
                                                     text-[11px]
-                                                    font-semibold
+                                                    font-medium
                                                     uppercase
                                                     tracking-[0.12em]
-                                                    text-white
-                                                    animate-[projectPulse_3s_ease-in-out_infinite]
+                                                    text-white/85
                                                 "
                                             >
-                                                Building a Fully Functional Boutique Webshop
+                                                Building a Fully Functional E-Commerce Boutique Website
                                             </p>
 
-                                            {/* PROJECT TAGS */}
                                             <div className="mt-2 flex flex-wrap gap-1">
                                                 <span
                                                     className="
                                                         rounded-full
                                                         border
-                                                        border-white/15
-                                                        bg-white/10
+                                                        border-white/[0.08]
+                                                        bg-white/[0.04]
                                                         px-2
                                                         py-0.5
                                                         text-[7px]
-                                                        font-medium
+                                                        font-normal
                                                         uppercase
                                                         tracking-wider
-                                                        text-white/65
+                                                        text-white/50
                                                     "
                                                 >
                                                     UI/UX Design
                                                 </span>
-
                                                 <span
                                                     className="
                                                         rounded-full
                                                         border
-                                                        border-white/15
-                                                        bg-white/10
+                                                        border-white/[0.08]
+                                                        bg-white/[0.04]
                                                         px-2
                                                         py-0.5
                                                         text-[7px]
-                                                        font-medium
+                                                        font-normal
                                                         uppercase
                                                         tracking-wider
-                                                        text-white/65
+                                                        text-white/50
                                                     "
                                                 >
                                                     SEO
                                                 </span>
-
                                                 <span
                                                     className="
                                                         rounded-full
                                                         border
-                                                        border-white/15
-                                                        bg-white/10
+                                                        border-white/[0.08]
+                                                        bg-white/[0.04]
                                                         px-2
                                                         py-0.5
                                                         text-[7px]
-                                                        font-medium
+                                                        font-normal
                                                         uppercase
                                                         tracking-wider
-                                                        text-white/65
+                                                        text-white/50
                                                     "
                                                 >
                                                     GA4
                                                 </span>
-
                                                 <span
                                                     className="
                                                         rounded-full
                                                         border
-                                                        border-white/15
-                                                        bg-white/10
+                                                        border-white/[0.08]
+                                                        bg-white/[0.04]
                                                         px-2
                                                         py-0.5
                                                         text-[7px]
-                                                        font-medium
+                                                        font-normal
                                                         uppercase
                                                         tracking-wider
-                                                        text-white/65
+                                                        text-white/50
                                                     "
                                                 >
                                                     Web Development
                                                 </span>
                                             </div>
 
-                                            {/* COMING SOON */}
                                             <div
                                                 className="
-                                                    mt-2
+                                                    mt-2.5
                                                     inline-flex
                                                     items-center
                                                     rounded-full
                                                     border
-                                                    border-white
-                                                    bg-white
-                                                    px-4
-                                                    py-1.5
-                                                    text-[10px]
-                                                    font-bold
+                                                    border-white/20
+                                                    bg-white/10
+                                                    px-3
+                                                    py-1
+                                                    text-[9px]
+                                                    font-semibold
                                                     uppercase
                                                     tracking-[0.12em]
-                                                    text-[#08060d]
-                                                    shadow-[0_6px_20px_rgba(255,255,255,0.18)]
+                                                    text-white/90
+                                                    backdrop-blur-sm
                                                 "
                                             >
                                                 Coming Soon
@@ -606,7 +455,6 @@ export function Resources() {
                                     </Link>
                                 </section>
 
-                                {/* DIVIDER */}
                                 <div className="my-5 flex items-center gap-3">
                                     <div
                                         className="
@@ -614,214 +462,74 @@ export function Resources() {
                                             flex-1
                                             bg-gradient-to-r
                                             from-transparent
-                                            via-purple-400/25
-                                            to-white/10
-                                        "
-                                    />
-
-                                    <div
-                                        className="
-                                            h-1
-                                            w-1
-                                            rounded-full
-                                            bg-purple-300/60
-                                            shadow-[0_0_8px_rgba(168,85,247,0.5)]
-                                        "
-                                    />
-
-                                    <div
-                                        className="
-                                            h-px
-                                            flex-1
-                                            bg-gradient-to-l
-                                            from-transparent
-                                            via-purple-400/25
-                                            to-white/10
+                                            via-white/[0.08]
+                                            to-transparent
                                         "
                                     />
                                 </div>
 
-                                {/* =========================
-                                    FREE DOWNLOADS HEADER
-                                ========================== */}
                                 <section className="flex min-h-0 flex-1 flex-col">
                                     <div className="mb-3">
                                         <p
                                             className="
                                                 text-[8px]
-                                                font-semibold
+                                                font-medium
                                                 uppercase
                                                 tracking-[0.28em]
-                                                text-white/45
+                                                text-white/40
                                             "
                                         >
                                             Resources
                                         </p>
-
-                                        <div className="mt-1 flex items-end justify-between">
-                                            <h3
-                                                className="
-                                                    text-[20px]
-                                                    font-semibold
-                                                    leading-none
-                                                    tracking-tight
-                                                    text-white
-                                                "
-                                            >
-                                                Use My Templates
-                                            </h3>
-                                        </div>
-
-                                        <p
+                                        <h3
                                             className="
-                                                mt-1.5
-                                                max-w-[225px]
-                                                text-[9px]
-                                                leading-relaxed
-                                                text-white/50
+                                                text-[18px]
+                                                font-medium
+                                                text-white/90
                                             "
-                                        ></p>
+                                        >
+                                            Free Downloads
+                                        </h3>
                                     </div>
 
-                                    {/* =========================
-                                        VERTICAL TEMPLATE LIST
-                                    ========================== */}
-                                    <div
-                                        className="
-                                            min-h-0
-                                            flex-1
-                                            overflow-y-auto
-                                            overflow-x-hidden
-                                            pr-2
-                                            scrollbar-thin
-                                            scrollbar-track-white/5
-                                            scrollbar-thumb-white/25
-                                            hover:scrollbar-thumb-purple-300/40
-                                        "
-                                    >
-                                        <div className="flex flex-col gap-2">
-                                            {resources.map((resource) => (
+                                    <div className="flex flex-col gap-2.5 overflow-y-auto pr-1">
+                                        {resources.map((res) => {
+                                            const Icon = res.icon;
+                                            return (
                                                 <button
-                                                    key={resource.id}
-                                                    onClick={() =>
-                                                        setSelectedResource(resource)
-                                                    }
+                                                    key={res.id}
+                                                    onClick={() => setSelectedResource(res)}
                                                     className="
                                                         group
-                                                        block
-                                                        w-full
-                                                        shrink-0
-                                                        overflow-hidden
-                                                        rounded-2xl
-                                                        border
-                                                        border-white/15
-                                                        bg-white/[0.06]
                                                         text-left
-                                                        shadow-[0_12px_30px_rgba(10,5,20,0.25)]
-                                                        backdrop-blur-md
+                                                        rounded-xl
+                                                        border
+                                                        border-white/[0.05]
+                                                        bg-white/[0.02]
+                                                        p-3
                                                         transition-all
                                                         duration-300
-                                                        hover:-translate-y-1
-                                                        hover:border-purple-400/25
-                                                        hover:bg-purple-500/[0.06]
-                                                        hover:shadow-[0_18px_38px_rgba(50,20,80,0.25)]
+                                                        hover:border-white/[0.12]
+                                                        hover:bg-white/[0.05]
                                                     "
                                                 >
-                                                    <div className="p-3">
-                                                        <div className="flex items-start justify-between">
-                                                            <h4
-                                                                className="
-                                                                    text-[12px]
-                                                                    font-semibold
-                                                                    leading-snug
-                                                                    text-white
-                                                                "
-                                                            >
-                                                                {resource.title}
+                                                    <div className="flex items-start gap-2.5">
+                                                        <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-white/70">
+                                                            <Icon size={12} />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="text-[12px] font-medium leading-snug text-white/90 group-hover:text-white">
+                                                                {res.title}
                                                             </h4>
-
-                                                            <FaArrowRight
-                                                                size={9}
-                                                                className="
-                                                                    ml-2
-                                                                    mt-1
-                                                                    shrink-0
-                                                                    text-white/30
-                                                                    transition-all
-                                                                    duration-300
-                                                                    group-hover:translate-x-1
-                                                                    group-hover:text-purple-300
-                                                                "
-                                                            />
+                                                            <div className="mt-2 flex items-center gap-1 text-[10px] text-purple-300/70">
+                                                                <FaDownload size={9} />
+                                                                <span>Get template</span>
+                                                            </div>
                                                         </div>
-
-                                                        <div className="mt-2 flex flex-wrap gap-1">
-                                                            {resource.tags.map((tag) => (
-                                                                <span
-                                                                    key={tag}
-                                                                    className="
-                                                                        rounded-full
-                                                                        border
-                                                                        border-white/15
-                                                                        bg-white/10
-                                                                        px-2
-                                                                        py-0.5
-                                                                        text-[7px]
-                                                                        font-medium
-                                                                        uppercase
-                                                                        tracking-wider
-                                                                        text-white/65
-                                                                    "
-                                                                >
-                                                                    {tag}
-                                                                </span>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-
-                                                    {/* DOWNLOAD AREA */}
-                                                    <div
-                                                        className="
-                                                            flex
-                                                            items-center
-                                                            justify-between
-                                                            border-t
-                                                            border-white/10
-                                                            bg-white
-                                                            px-3
-                                                            py-2
-                                                            transition-all
-                                                            duration-300
-                                                            group-hover:bg-[#e9e5ef]
-                                                        "
-                                                    >
-                                                        <span
-                                                            className="
-                                                                flex-1
-                                                                text-center
-                                                                text-[9px]
-                                                                font-semibold
-                                                                uppercase
-                                                                tracking-[0.14em]
-                                                                text-[#111111]
-                                                            "
-                                                        >
-                                                            Free Download
-                                                        </span>
-
-                                                        <FaDownload
-                                                            size={13}
-                                                            className="
-                                                                text-[#111111]
-                                                                transition-transform
-                                                                duration-300
-                                                                group-hover:translate-y-0.5
-                                                            "
-                                                        />
                                                     </div>
                                                 </button>
-                                            ))}
-                                        </div>
+                                            );
+                                        })}
                                     </div>
                                 </section>
                             </div>
@@ -830,342 +538,51 @@ export function Resources() {
                 )}
 
                 {/* =========================
-                    RESOURCE POPUP
+                    DOWNLOAD MODAL POPUP
                 ========================== */}
                 {selectedResource && (
                     <div
-                        className="
-                            fixed
-                            bottom-6
-                            right-6
-                            z-[60]
-                            w-[360px]
-                            max-w-[calc(100vw-2rem)]
-                            overflow-hidden
-                            rounded-3xl
-                            border
-                            border-primary/10
-                            bg-white
-                            shadow-[0_25px_70px_rgba(60,30,100,0.20)]
-                        "
-                        style={{
-                            animation:
-                                "resourcePopup 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards",
-                        }}
+                        className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4"
+                        onClick={() => setSelectedResource(null)}
                     >
-                        {/* POPUP HEADER */}
                         <div
-                            className="
-                                relative
-                                bg-gradient-to-br
-                                from-[#05030a]
-                                via-[#0b0712]
-                                to-purple-950
-                                px-5
-                                py-5
-                                text-white
-                            "
+                            className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#06040a] p-6 shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
                         >
                             <button
                                 onClick={() => setSelectedResource(null)}
-                                className="
-                                    absolute
-                                    right-4
-                                    top-4
-                                    flex
-                                    h-7
-                                    w-7
-                                    items-center
-                                    justify-center
-                                    rounded-full
-                                    bg-white/10
-                                    text-white/70
-                                    transition-all
-                                    duration-300
-                                    hover:bg-white/20
-                                    hover:text-white
-                                "
-                                aria-label="Close"
+                                className="absolute right-4 top-4 text-white/50 hover:text-white"
+                                aria-label="Close modal"
                             >
-                                <FaTimes size={11} />
+                                <FaTimes size={16} />
                             </button>
 
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className="
-                                        flex
-                                        h-11
-                                        w-11
-                                        shrink-0
-                                        items-center
-                                        justify-center
-                                        rounded-2xl
-                                        bg-white/15
-                                    "
-                                >
-                                    {(() => {
-                                        const SelectedIcon = selectedResource.icon;
-                                        return <SelectedIcon size={17} />;
-                                    })()}
-                                </div>
-
-                                <div>
-                                    <p
-                                        className="
-                                            text-[10px]
-                                            font-medium
-                                            uppercase
-                                            tracking-[0.18em]
-                                            text-white/60
-                                        "
-                                    >
-                                        Free Resource
-                                    </p>
-
-                                    <h3
-                                        className="
-                                            mt-1
-                                            pr-8
-                                            text-base
-                                            font-semibold
-                                        "
-                                    >
-                                        {selectedResource.title}
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* POPUP BODY */}
-                        <div className="px-5 py-5">
-                            <h4
-                                className="
-                                    text-base
-                                    font-semibold
-                                    leading-snug
-                                    text-gray-900
-                                "
-                            >
-                                Download my {selectedResource.title} pattern
-                            </h4>
-
-                            <div
-                                className="
-                                    mt-2
-                                    inline-flex
-                                    items-center
-                                    rounded-full
-                                    border
-                                    border-primary/10
-                                    bg-primary/5
-                                    px-3
-                                    py-1
-                                    text-[10px]
-                                    font-medium
-                                    text-primary-dark
-                                "
-                            >
-                                Notion
-                            </div>
-
-                            <p
-                                className="
-                                    mt-4
-                                    text-[12px]
-                                    leading-relaxed
-                                    text-gray-600
-                                "
-                            >
+                            <h3 className="text-lg font-semibold text-white mb-2">
+                                {selectedResource.title}
+                            </h3>
+                            <p className="text-xs text-white/70 leading-relaxed mb-6">
                                 {selectedResource.popupDescription}
                             </p>
 
-                            {/* NOTION INDICATOR */}
-                            <div
-                                className="
-                                    mt-5
-                                    flex
-                                    items-center
-                                    gap-3
-                                    rounded-2xl
-                                    border
-                                    border-gray-100
-                                    bg-gray-50
-                                    px-4
-                                    py-3
-                                "
-                            >
-                                <div
-                                    className="
-                                        flex
-                                        h-8
-                                        w-8
-                                        items-center
-                                        justify-center
-                                        rounded-xl
-                                        bg-white
-                                        text-primary-dark
-                                        shadow-sm
-                                    "
-                                >
-                                    <FaDownload size={12} />
-                                </div>
-
-                                <div>
-                                    <p
-                                        className="
-                                            text-[11px]
-                                            font-semibold
-                                            text-gray-800
-                                        "
-                                    >
-                                        Notion Pattern
-                                    </p>
-
-                                    <p
-                                        className="
-                                            mt-0.5
-                                            text-[9px]
-                                            text-gray-500
-                                        "
-                                    >
-                                        Free to access
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* BUTTONS */}
-                            <div className="mt-5 flex gap-3">
+                            <div className="flex justify-end gap-3">
                                 <button
                                     onClick={() => setSelectedResource(null)}
-                                    className="
-                                        flex-1
-                                        rounded-xl
-                                        border
-                                        border-gray-200
-                                        px-4
-                                        py-3
-                                        text-[11px]
-                                        font-semibold
-                                        text-gray-600
-                                        transition-all
-                                        duration-300
-                                        hover:border-gray-300
-                                        hover:bg-gray-50
-                                    "
+                                    className="rounded-xl border border-white/10 px-4 py-2 text-xs font-medium text-white/70 hover:bg-white/5 hover:text-white"
                                 >
-                                    Maybe Later
+                                    Cancel
                                 </button>
-
                                 <button
                                     onClick={handleDownload}
-                                    className="
-                                        flex
-                                        flex-1
-                                        items-center
-                                        justify-center
-                                        gap-2
-                                        rounded-xl
-                                        border
-                                        border-white
-                                        bg-white
-                                        px-4
-                                        py-3
-                                        text-[11px]
-                                        font-semibold
-                                        text-primary-dark
-                                        shadow-[0_6px_20px_rgba(255,255,255,0.18)]
-                                        transition-all
-                                        duration-300
-                                        hover:-translate-y-0.5
-                                        hover:bg-[#C4B5FD]
-                                        hover:shadow-[0_12px_25px_rgba(124,58,237,0.20)]
-                                    "
+                                    className="rounded-xl bg-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-lg hover:bg-purple-500"
                                 >
-                                    <FaDownload size={10} />
-                                    Get Pattern
+                                    Continue to Resource
                                 </button>
                             </div>
                         </div>
                     </div>
                 )}
-
-                {/* =========================
-                    ANIMATIONS
-                ========================== */}
-                <style>
-                    {`
-                        @keyframes resourcePopup {
-                            0% {
-                                opacity: 0;
-                                transform:
-                                    translateX(28px)
-                                    translateY(12px)
-                                    scale(0.985);
-                                filter: blur(2px);
-                            }
-
-                            45% {
-                                opacity: 0.45;
-                                transform:
-                                    translateX(16px)
-                                    translateY(7px)
-                                    scale(0.99);
-                                filter: blur(1px);
-                            }
-
-                            75% {
-                                opacity: 0.8;
-                                transform:
-                                    translateX(6px)
-                                    translateY(2px)
-                                    scale(0.997);
-                                filter: blur(0.4px);
-                            }
-
-                            100% {
-                                opacity: 1;
-                                transform:
-                                    translateX(0)
-                                    translateY(0)
-                                    scale(1);
-                                filter: blur(0);
-                            }
-                        }
-
-                        @keyframes pulseWhite {
-                            0%,
-                            100% {
-                                opacity: 0.45;
-                                transform: scale(0.9);
-                                box-shadow: 0 0 5px rgba(255,255,255,0.35);
-                            }
-
-                            50% {
-                                opacity: 1;
-                                transform: scale(1.35);
-                                box-shadow:
-                                    0 0 8px rgba(255,255,255,0.8),
-                                    0 0 16px rgba(255,255,255,0.45);
-                            }
-                        }
-
-                        @keyframes projectPulse {
-                            0%,
-                            100% {
-                                opacity: 0.65;
-                                text-shadow: 0 0 0 rgba(255,255,255,0);
-                            }
-
-                            50% {
-                                opacity: 1;
-                                text-shadow:
-                                    0 0 8px rgba(255,255,255,0.45),
-                                    0 0 16px rgba(255,255,255,0.2);
-                            }
-                        }
-                    `}
-                </style>
             </>
-        </div>
+        </div>,
+        document.body
     );
 }

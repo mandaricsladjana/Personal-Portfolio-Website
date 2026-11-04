@@ -1,5 +1,6 @@
+
 const detailModules = import.meta.glob(
-    "./details/*.js",
+    "./details/*.{js,jsx}",
     {
         eager: true,
         import: "default",
@@ -7,8 +8,10 @@ const detailModules = import.meta.glob(
 );
 
 export const projectDetails = Object.fromEntries(
-    Object.values(detailModules).map((detail) => [
-        detail.id,
-        detail,
-    ])
+    Object.values(detailModules)
+        .filter((detail) => detail && detail.id)
+        .map((detail) => [
+            detail.id,
+            detail,
+        ])
 );

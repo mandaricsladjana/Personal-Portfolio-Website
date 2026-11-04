@@ -1,4 +1,5 @@
-import { Heart, ArrowUp } from "lucide-react";
+
+import { Heart } from "lucide-react";
 import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa";
 
 const socialLinks = [
@@ -318,7 +319,7 @@ export const Footer = () => {
                         className="
                             flex
                             items-center
-                            justify-start
+                            justify-center
                             gap-3
                             text-xs
                             text-white/40
@@ -326,7 +327,7 @@ export const Footer = () => {
                         "
                     >
                         <span>
-                            © {currentYear} Sladjana Mandaric. All rights reserved.
+                            Designed, developed & managed by © {currentYear} Sladjana Mandaric. All rights reserved.
                         </span>
 
                         <span className="text-white/20">
@@ -340,59 +341,8 @@ export const Footer = () => {
                                 gap-2
                             "
                         >
-                            Made with
-
-                            <Heart
-                                className="
-                                    w-3.5
-                                    h-3.5
-                                    text-purple-500
-                                    fill-current
-                                "
-                            />
+                        
                         </span>
-                    </div>
-
-
-                    {/* Back To Top */}
-
-                    <div
-                        className="
-                            absolute
-                            left-1/2
-                            -translate-x-1/2
-                            bottom-1
-                            flex
-                            items-center
-                            justify-center
-                        "
-                    >
-
-                        <button
-                            onClick={scrollToTop}
-                            aria-label="Back to top"
-                            className="
-                                w-12
-                                h-12
-                                rounded-full
-                                bg-primary/50
-                                border
-                                border-white/10
-                                flex
-                                items-center
-                                justify-center
-                                text-white/60
-                                hover:text-purple-500
-                                hover:border-purple-500/50
-                                hover:bg-purple-500/10
-                                transition-all
-                                duration-300
-                                animate-bounce
-                            "
-                        >
-                            <ArrowUp className="w-6 h-6" />
-                        </button>
-
                     </div>
 
                 </div>

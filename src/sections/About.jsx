@@ -1,1496 +1,588 @@
+
+import { useEffect, useRef } from "react";
 import {
-    Lightbulb,
-    Palette,
     GraduationCap,
-    BarChart3,
+    BookOpen,
+    BriefcaseBusiness,
     Sparkles,
-    ArrowUpRight,
-    Heart,
-    Code2,
-    School,
+    Lightbulb,
+    ExternalLink,
 } from "lucide-react";
 
-
-/* =========================================================
-   ABOUT ME STORY
-========================================================= */
-
-const storyCards = [
-
-    {
-        type: "career",
-        title: "It started with engineering.",
-        subtitle: "And then things got interesting.",
-        text:
-            "I started my journey in Engineering Management, where I learned to look at problems from more than one angle — processes, people, quality, resources and, eventually, data.",
-        image: "/ProfilePhotos/engineering.jpg",
-        icon: GraduationCap,
-        tag: "THE BEGINNING",
-    },
-
-    {
-        type: "data",
-        title: "Then I discovered the fun part.",
-        subtitle: "What was hiding behind the numbers.",
-        text:
-            "Working with operations and logistics introduced me to a world full of spreadsheets, KPIs and business decisions. I quickly realized that I didn't just want to work with the numbers — I wanted to understand them.",
-        image: "/ProfilePhotos/data-analytics.jpg",
-        icon: BarChart3,
-        tag: "THE PLOT TWIST",
-    },
-
-    {
-        type: "creative",
-        title: "But I'm not only a data person.",
-        subtitle: "My creative side refuses to stay quiet.",
-        text:
-            "Outside analytics, I love visual design, content, branding and creative projects. I actually think this makes me better at analytics — because good data communication is not only about being correct. It's also about making people understand.",
-        image: "/ProfilePhotos/creative.jpg",
-        icon: Palette,
-        tag: "THE OTHER SIDE",
-    },
-
-    {
-        type: "pinterest",
-        title: "I accidentally became a content creator.",
-        subtitle: "13K+ followers • 12M+ monthly views",
-        text:
-            "One of my creative experiments grew into a Pinterest audience of more than 13,000 followers and 12 million monthly views. It taught me a completely different side of analytics: understanding people, trends, attention and what makes content work.",
-        image: "/ProfilePhotos/pinterest.jpg",
-        icon: Sparkles,
-        tag: "SIDE QUEST",
-    },
-
-    {
-        type: "learning",
-        title: "Apparently, I like learning.",
-        subtitle: "A little too much sometimes.",
-        text:
-            "Python, Azure, BI, AI, SQL, Power BI... I tend to get curious about how things work and then fall down a technical rabbit hole. Luckily, that habit has turned into a pretty useful skill.",
-        image: "/ProfilePhotos/learning.jpg",
-        icon: Lightbulb,
-        tag: "CURRENTLY CURIOUS",
-    },
-
-    {
-        type: "builder",
-        title: "I like building things from scratch.",
-        subtitle: "Not just talking about ideas.",
-        text:
-            "That's why I enjoy creating real projects — from analytics workflows and dashboards to this portfolio itself. I like taking something messy, figuring it out and eventually seeing something useful at the other end.",
-        image: "/ProfilePhotos/projects.jpg",
-        icon: Code2,
-        tag: "MAKER MODE",
-    },
-
-];
-
-
-/* =========================================================
-   EDUCATION
-========================================================= */
-
-const education = [
-
-    {
-        title: "Bachelor's Degree",
-        faculty: "Faculty of Technical Sciences, Novi Sad",
-        degree: "Engineer of Management",
-
-        thesis:
-            "Risk Analysis of Using Cryptocurrency and Blockchain in Optimizing Logistics Processes",
-
-        thesisFile: "/Theses/Bachelors-Thesis.pdf",
-
-        logo: "/ProfilePhotos/FTNlogo.png",
-        photo: "/ProfilePhotos/bachelor-graduation.jpg",
-
-        icon: Lightbulb,
-    },
-
-    {
-        title: "Master's Degree",
-        faculty: "Faculty of Technical Sciences, Novi Sad",
-        degree: "Master Engineer of Management",
-
-        thesis:
-            "Risk Analysis of Using Cryptocurrency and Blockchain in Optimizing Logistics Processes",
-
-        thesisFile: "/Theses/Masters-Thesis.pdf",
-
-        logo: "/ProfilePhotos/FTNlogo.png",
-        photo: "/ProfilePhotos/master-graduation.jpg",
-
-        icon: School,
-    },
-
-];
-
-
-/* =========================================================
-   ABOUT COMPONENT
-========================================================= */
-
 export const About = () => {
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const currentSection = sectionRef.current;
+        if (!currentSection) return;
+
+        const revealElements = currentSection.querySelectorAll(
+            "[data-about-reveal]"
+        );
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("about-reveal-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -40px 0px",
+            }
+        );
+
+        revealElements.forEach((element, index) => {
+            element.classList.add("about-reveal");
+            element.style.transitionDelay = `${(index % 5) * 100}ms`;
+            observer.observe(element);
+        });
+
+        return () => observer.disconnect();
+    }, []);
 
     return (
+        <div className="relative">
 
-        <section
-            id="about"
-            className="
-                pt-32
-                pb-20
-                relative
-                overflow-hidden
-                bg-gray-100
-            "
-        >
-
-            {/* =================================================
-                BACKGROUND
-            ================================================= */}
+            {/* BACKGROUND */}
 
             <div
-                className="
-                    absolute
-                    top-0
-                    right-[-150px]
-                    w-[500px]
-                    h-[500px]
-                    bg-primary/10
-                    rounded-full
-                    blur-3xl
-                "
-            />
+                aria-hidden="true"
+                style={{ position: "fixed", inset: 0 }}
+                className="pointer-events-none overflow-hidden -z-50 bg-[#09050D]"
+            >
+                <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#09050D] to-transparent z-10" />
 
-            <div
-                className="
-                    absolute
-                    bottom-[15%]
-                    left-[-180px]
-                    w-[500px]
-                    h-[500px]
-                    bg-purple-200/40
-                    rounded-full
-                    blur-3xl
-                "
-            />
+                <div className="absolute inset-0 opacity-[0.1] bg-[linear-gradient(rgba(196,181,253,0.45)_1px,transparent_1px),linear-gradient(90deg,rgba(196,181,253,0.45)_1px,transparent_1px)] bg-[size:80px_80px]" />
 
+                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[900px] h-[450px] rounded-full bg-purple-600/10 blur-[240px]" />
 
-            {/* =================================================
-                MAIN CONTAINER
-            ================================================= */}
+                <div className="absolute left-1/2 top-2/3 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-purple-600/12 blur-[200px]" />
 
-            <div className="container mx-auto px-6 relative z-10">
+                <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] rounded-full bg-violet-500/12 blur-[180px]" />
 
-
-                {/* =================================================
-                    INTRO
-                ================================================= */}
-
-                <div
-                    className="
-                        max-w-4xl
-                        mx-auto
-                        text-center
-                        mb-24
-                        animate-fade-in
-                    "
-                >
-
-                    <span
-                        className="
-                            text-primary
-                            text-sm
-                            font-medium
-                            tracking-[0.25em]
-                            uppercase
-                        "
-                    >
-                        A little more about me
-                    </span>
-
-
-                    <h2
-                        className="
-                            text-6xl
-                            md:text-7xl
-                            font-bold
-                            leading-tight
-                            mt-4
-                        "
-                    >
-
-                        More than just
-
-                        <span
-                            className="
-                                text-primary
-                                italic
-                                font-serif
-                            "
-                        >
-                            {" "}data & dashboards
-                        </span>
-
-                    </h2>
-
-
-                    <p
-                        className="
-                            text-gray-600
-                            text-lg
-                            md:text-xl
-                            leading-relaxed
-                            mt-7
-                            max-w-3xl
-                            mx-auto
-                        "
-                    >
-                        I'm an engineer who somehow ended up combining
-                        logistics, quality, analytics, marketing, creativity
-                        and a slightly obsessive curiosity about how things
-                        work.
-                    </p>
-
-                </div>
-
-
-
-                {/* =================================================
-                    "SHORT VERSION" INTRO CARD
-                ================================================= */}
-
-                <div className="max-w-5xl mx-auto mb-28">
-
-                    <div
-                        className="
-                            glass
-                            rounded-[2rem]
-                            p-8
-                            md:p-12
-                            shadow-[0_20px_60px_rgba(88,28,135,0.18)]
-                            border
-                            border-white/70
-                            animate-fade-in
-                        "
-                    >
-
-                        <div
-                            className="
-                                grid
-                                md:grid-cols-[180px_1fr]
-                                gap-10
-                                items-center
-                            "
-                        >
-
-                            {/* PHOTO */}
-
-                            <div
-                                className="
-                                    relative
-                                    w-40
-                                    h-40
-                                    mx-auto
-                                    md:mx-0
-                                    rounded-[2rem]
-                                    overflow-hidden
-                                    shadow-xl
-                                    rotate-[-4deg]
-                                "
-                            >
-
-                                <img
-                                    src="/ProfilePhotos/about-me.jpg"
-                                    alt="About me"
-                                    className="
-                                        w-full
-                                        h-full
-                                        object-cover
-                                    "
-                                />
-
-                            </div>
-
-
-                            {/* TEXT */}
-
-                            <div>
-
-                                <p
-                                    className="
-                                        text-primary
-                                        text-xs
-                                        uppercase
-                                        tracking-[0.2em]
-                                        font-semibold
-                                        mb-3
-                                    "
-                                >
-                                    The short version
-                                </p>
-
-
-                                <p
-                                    className="
-                                        text-xl
-                                        md:text-2xl
-                                        text-gray-700
-                                        leading-relaxed
-                                    "
-                                >
-                                    I like solving problems, learning new
-                                    things and building things from scratch.
-                                    Sometimes that's a Power BI dashboard.
-                                    Sometimes it's a website. Sometimes it's
-                                    something completely unrelated to work.
-                                </p>
-
-
-                                <div
-                                    className="
-                                        flex
-                                        flex-wrap
-                                        gap-2
-                                        mt-6
-                                    "
-                                >
-
-                                    <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm">
-                                        Curious
-                                    </span>
-
-                                    <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm">
-                                        Analytical
-                                    </span>
-
-                                    <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm">
-                                        Creative
-                                    </span>
-
-                                    <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm">
-                                        Always learning
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                {/* =================================================
-                    MY STORY
-                ================================================= */}
-
-                <div className="max-w-6xl mx-auto">
-
-                    <div className="flex items-center gap-4 mb-12">
-
-                        <div className="w-12 h-px bg-primary/40" />
-
-                        <span
-                            className="
-                                text-primary
-                                text-sm
-                                uppercase
-                                tracking-[0.2em]
-                                font-medium
-                            "
-                        >
-                            My story
-                        </span>
-
-                        <div className="flex-1 h-px bg-gray-300" />
-
-                    </div>
-
-
-                    {/* =================================================
-                        STORY CARD 1
-                    ================================================= */}
-
-                    <div
-                        className="
-                            grid
-                            lg:grid-cols-[1.1fr_0.9fr]
-                            gap-8
-                            items-center
-                            mb-16
-                            animate-fade-in
-                        "
-                    >
-
-                        <div
-                            className="
-                                bg-white
-                                rounded-[2rem]
-                                p-8
-                                md:p-10
-                                shadow-[0_20px_60px_rgba(88,28,135,0.15)]
-                                border
-                                border-gray-200
-                            "
-                        >
-
-                            <div className="flex items-center gap-3 mb-6">
-
-                                <div
-                                    className="
-                                        w-11
-                                        h-11
-                                        rounded-xl
-                                        bg-primary/10
-                                        flex
-                                        items-center
-                                        justify-center
-                                    "
-                                >
-                                    <GraduationCap className="w-5 h-5 text-primary" />
-                                </div>
-
-                                <span className="text-xs uppercase tracking-widest text-gray-400">
-                                    The beginning
-                                </span>
-
-                            </div>
-
-
-                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                                It started with engineering.
-                            </h3>
-
-                            <p className="text-primary font-medium mb-5">
-                                And then things got interesting.
-                            </p>
-
-                            <p className="text-gray-600 leading-relaxed">
-                                I started my journey in Engineering Management,
-                                where I learned to look at problems from more
-                                than one angle — processes, people, quality,
-                                resources and, eventually, data. A little bit data. A little bit engineering. A lot of curiosity. And always something new to build.
-
-                                I’m curious by nature, and I like learning by doing — whether that means cleaning a dataset, designing a dashboard, exploring a new tool, analyzing content performance, or starting a completely new creative project.
-                            </p>
-
-                        </div>
-
-
-                        <div
-                            className="
-                                relative
-                                h-[320px]
-                                rounded-[2rem]
-                                overflow-hidden
-                                shadow-xl
-                                group
-                            "
-                        >
-
-                            <img
-                                src="/ProfilePhotos/engineering.jpg"
-                                alt="Engineering journey"
-                                className="
-                                    w-full
-                                    h-full
-                                    object-cover
-                                    transition-transform
-                                    duration-700
-                                    group-hover:scale-105
-                                "
-                            />
-
-                            <div
-                                className="
-                                    absolute
-                                    inset-0
-                                    bg-gradient-to-t
-                                    from-black/50
-                                    to-transparent
-                                "
-                            />
-
-                            <span
-                                className="
-                                    absolute
-                                    bottom-6
-                                    left-6
-                                    text-white
-                                    text-sm
-                                    font-medium
-                                "
-                            >
-                                Where it all began
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    {/* =================================================
-                        STORY CARD 2 — REVERSED
-                    ================================================= */}
-
-                    <div
-                        className="
-                            grid
-                            lg:grid-cols-[0.9fr_1.1fr]
-                            gap-8
-                            items-center
-                            mb-16
-                            animate-fade-in
-                        "
-                    >
-
-                        <div
-                            className="
-                                relative
-                                h-[320px]
-                                rounded-[2rem]
-                                overflow-hidden
-                                shadow-xl
-                                group
-                                lg:order-1
-                            "
-                        >
-
-                            <img
-                                src="/ProfilePhotos/data-analytics.jpg"
-                                alt="Data analytics"
-                                className="
-                                    w-full
-                                    h-full
-                                    object-cover
-                                    transition-transform
-                                    duration-700
-                                    group-hover:scale-105
-                                "
-                            />
-
-                            <div
-                                className="
-                                    absolute
-                                    inset-0
-                                    bg-gradient-to-t
-                                    from-black/50
-                                    to-transparent
-                                "
-                            />
-
-                            <div
-                                className="
-                                    absolute
-                                    bottom-6
-                                    left-6
-                                    right-6
-                                    text-white
-                                "
-                            >
-
-                                <p className="text-xs uppercase tracking-widest opacity-80">
-                                    The plot twist
-                                </p>
-
-                                <p className="font-semibold mt-1">
-                                    Numbers started telling a story.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            className="
-                                bg-white
-                                rounded-[2rem]
-                                p-8
-                                md:p-10
-                                shadow-[0_20px_60px_rgba(88,28,135,0.15)]
-                                border
-                                border-gray-200
-                                lg:order-2
-                            "
-                        >
-
-                            <div className="flex items-center gap-3 mb-6">
-
-                                <div
-                                    className="
-                                        w-11
-                                        h-11
-                                        rounded-xl
-                                        bg-primary/10
-                                        flex
-                                        items-center
-                                        justify-center
-                                    "
-                                >
-                                    <BarChart3 className="w-5 h-5 text-primary" />
-                                </div>
-
-                                <span className="text-xs uppercase tracking-widest text-gray-400">
-                                    The plot twist
-                                </span>
-
-                            </div>
-
-
-                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                                Then I discovered the fun part.
-                            </h3>
-
-                            <p className="text-primary font-medium mb-5">
-                                What was hiding behind the numbers.
-                            </p>
-
-                            <p className="text-gray-600 leading-relaxed">
-                                Working with operations and logistics
-                                introduced me to a world full of spreadsheets,
-                                KPIs and business decisions. I quickly realized
-                                that I didn't just want to work with the
-                                numbers — I wanted to understand them.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    {/* =================================================
-                        CREATIVE + PINTEREST FEATURE
-                    ================================================= */}
-
-                    <div
-                        className="
-                            grid
-                            md:grid-cols-2
-                            gap-8
-                            mb-16
-                            animate-fade-in
-                        "
-                    >
-
-                        {/* CREATIVE */}
-
-                        <div
-                            className="
-                                bg-white
-                                rounded-[2rem]
-                                overflow-hidden
-                                shadow-[0_20px_60px_rgba(88,28,135,0.15)]
-                                border
-                                border-gray-200
-                                group
-                            "
-                        >
-
-                            <div className="relative h-64 overflow-hidden">
-
-                                <img
-                                    src="/ProfilePhotos/creative.jpg"
-                                    alt="Creative side"
-                                    className="
-                                        w-full
-                                        h-full
-                                        object-cover
-                                        transition-transform
-                                        duration-700
-                                        group-hover:scale-105
-                                    "
-                                />
-
-                                <div
-                                    className="
-                                        absolute
-                                        top-5
-                                        left-5
-                                        px-3
-                                        py-1.5
-                                        rounded-full
-                                        bg-white/90
-                                        text-xs
-                                        text-gray-700
-                                        font-medium
-                                    "
-                                >
-                                    THE OTHER SIDE
-                                </div>
-
-                            </div>
-
-
-                            <div className="p-8">
-
-                                <div className="flex items-center gap-3 mb-4">
-
-                                    <Palette className="w-5 h-5 text-primary" />
-
-                                    <span className="text-primary text-sm font-medium">
-                                        Not everything is about SQL
-                                    </span>
-
-                                </div>
-
-
-                                <h3 className="text-2xl font-bold mb-4">
-                                    But I'm not only a data person.
-                                </h3>
-
-
-                                <p className="text-gray-600 leading-relaxed">
-                                    Outside analytics, I love visual design,
-                                    content, branding and creative projects.
-                                    My analytical and creative sides actually
-                                    work pretty well together.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-
-                        {/* PINTEREST */}
-
-                        <div
-                            className="
-                                bg-primary
-                                text-white
-                                rounded-[2rem]
-                                overflow-hidden
-                                shadow-[0_25px_70px_rgba(88,28,135,0.28)]
-                                relative
-                                group
-                            "
-                        >
-
-                            <div className="relative h-64 overflow-hidden">
-
-                                <img
-                                    src="/ProfilePhotos/pinterest.jpg"
-                                    alt="Pinterest creator project"
-                                    className="
-                                        w-full
-                                        h-full
-                                        object-cover
-                                        opacity-80
-                                        transition-transform
-                                        duration-700
-                                        group-hover:scale-105
-                                    "
-                                />
-
-                                <div
-                                    className="
-                                        absolute
-                                        inset-0
-                                        bg-primary/50
-                                    "
-                                />
-
-                                <div
-                                    className="
-                                        absolute
-                                        top-5
-                                        left-5
-                                        px-3
-                                        py-1.5
-                                        rounded-full
-                                        bg-white/20
-                                        backdrop-blur-sm
-                                        text-xs
-                                        font-medium
-                                    "
-                                >
-                                    SIDE QUEST
-                                </div>
-
-                            </div>
-
-
-                            <div className="p-8">
-
-                                <div className="flex items-center gap-3 mb-4">
-
-                                    <Sparkles className="w-5 h-5" />
-
-                                    <span className="text-white/80 text-sm">
-                                        13K+ followers • 12M+ monthly views
-                                    </span>
-
-                                </div>
-
-
-                                <h3 className="text-2xl font-bold mb-4">
-                                    I accidentally became a content creator.
-                                </h3>
-
-
-                                <p className="text-white/80 leading-relaxed">
-                                    One of my creative experiments grew into a
-                                    Pinterest audience. It taught me a completely
-                                    different side of analytics — understanding
-                                    people, trends, attention and what makes
-                                    content work.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    {/* =================================================
-                        LEARNING + BUILDING
-                    ================================================= */}
-
-                    <div
-                        className="
-                            grid
-                            lg:grid-cols-[0.8fr_1.2fr]
-                            gap-8
-                            mb-28
-                            animate-fade-in
-                        "
-                    >
-
-                        {/* LEARNING */}
-
-                        <div
-                            className="
-                                bg-white
-                                rounded-[2rem]
-                                p-8
-                                shadow-[0_20px_60px_rgba(88,28,135,0.15)]
-                                border
-                                border-gray-200
-                            "
-                        >
-
-                            <div
-                                className="
-                                    w-12
-                                    h-12
-                                    rounded-xl
-                                    bg-primary/10
-                                    flex
-                                    items-center
-                                    justify-center
-                                    mb-6
-                                "
-                            >
-                                <Lightbulb className="w-6 h-6 text-primary" />
-                            </div>
-
-
-                            <span className="text-xs uppercase tracking-widest text-gray-400">
-                                Currently curious
-                            </span>
-
-
-                            <h3 className="text-2xl font-bold mt-3 mb-4">
-                                Apparently, I like learning.
-                            </h3>
-
-
-                            <p className="text-primary font-medium mb-4">
-                                A little too much sometimes.
-                            </p>
-
-
-                            <p className="text-gray-600 leading-relaxed">
-                                Python, Azure, BI, AI, SQL, Power BI... I tend
-                                to get curious about how things work and then
-                                fall down a technical rabbit hole. Luckily,
-                                that habit has turned into a pretty useful
-                                skill.
-                            </p>
-
-
-                            <div className="flex flex-wrap gap-2 mt-7">
-
-                                {[
-                                    "Python",
-                                    "SQL",
-                                    "Power BI",
-                                    "Azure",
-                                    "AI",
-                                ].map((skill) => (
-
-                                    <span
-                                        key={skill}
-                                        className="
-                                            px-3
-                                            py-1.5
-                                            rounded-full
-                                            bg-gray-100
-                                            text-gray-600
-                                            text-xs
-                                        "
-                                    >
-                                        {skill}
-                                    </span>
-
-                                ))}
-
-                            </div>
-
-                        </div>
-
-
-
-                        {/* BUILDING */}
-
-                        <div
-                            className="
-                                relative
-                                rounded-[2rem]
-                                overflow-hidden
-                                min-h-[420px]
-                                shadow-[0_25px_70px_rgba(88,28,135,0.25)]
-                                group
-                            "
-                        >
-
-                            <img
-                                src="/ProfilePhotos/projects.jpg"
-                                alt="Projects"
-                                className="
-                                    absolute
-                                    inset-0
-                                    w-full
-                                    h-full
-                                    object-cover
-                                    transition-transform
-                                    duration-700
-                                    group-hover:scale-105
-                                "
-                            />
-
-
-                            <div
-                                className="
-                                    absolute
-                                    inset-0
-                                    bg-gradient-to-t
-                                    from-black/80
-                                    via-black/30
-                                    to-transparent
-                                "
-                            />
-
-
-                            <div
-                                className="
-                                    absolute
-                                    bottom-0
-                                    left-0
-                                    right-0
-                                    p-8
-                                    md:p-10
-                                    text-white
-                                "
-                            >
-
-                                <div className="flex items-center gap-3 mb-4">
-
-                                    <Code2 className="w-6 h-6" />
-
-                                    <span className="text-xs uppercase tracking-widest text-white/70">
-                                        Maker mode
-                                    </span>
-
-                                </div>
-
-
-                                <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                                    I like building things from scratch.
-                                </h3>
-
-
-                                <p className="text-white/80 leading-relaxed max-w-xl">
-                                    That's why I enjoy creating real projects —
-                                    from analytics workflows and dashboards to
-                                    this portfolio itself. I like taking
-                                    something messy, figuring it out and seeing
-                                    something useful at the other end.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    {/* =================================================
-                        EDUCATION
-                    ================================================= */}
-
-                    <div className="mb-28">
-
-                        <div className="flex items-center gap-4 mb-12">
-
-                            <div className="w-12 h-px bg-primary/40" />
-
-                            <span
-                                className="
-                                    text-primary
-                                    text-sm
-                                    uppercase
-                                    tracking-[0.2em]
-                                    font-medium
-                                "
-                            >
-                                The academic chapter
-                            </span>
-
-                            <div className="flex-1 h-px bg-gray-300" />
-
-                        </div>
-
-
-                        <div className="grid md:grid-cols-2 gap-7">
-
-                            {/* BACHELOR */}
-
-                            <div
-                                className="
-                                    bg-white
-                                    border
-                                    border-gray-200
-                                    rounded-[2rem]
-                                    p-7
-                                    shadow-[0_20px_60px_rgba(88,28,135,0.15)]
-                                    hover:-translate-y-1
-                                    transition-all
-                                    duration-300
-                                    animate-fade-in
-                                "
-                            >
-
-                                <div className="flex items-center justify-between mb-6">
-
-                                    <div
-                                        className="
-                                            w-24
-                                            h-24
-                                            rounded-2xl
-                                            bg-gray-50
-                                            border
-                                            border-gray-200
-                                            flex
-                                            items-center
-                                            justify-center
-                                            p-3
-                                        "
-                                    >
-
-                                        <img
-                                            src="/ProfilePhotos/FTNlogo.png"
-                                            alt="Faculty of Technical Sciences logo"
-                                            className="w-full h-full object-contain"
-                                        />
-
-                                    </div>
-
-
-                                    <div
-                                        className="
-                                            w-12
-                                            h-12
-                                            rounded-xl
-                                            bg-primary/10
-                                            flex
-                                            items-center
-                                            justify-center
-                                        "
-                                    >
-
-                                        <GraduationCap className="w-6 h-6 text-primary" />
-
-                                    </div>
-
-                                </div>
-
-
-                                <h3 className="text-xl font-bold text-gray-900">
-                                    Bachelor's Degree
-                                </h3>
-
-
-                                <p className="text-gray-500 text-sm mt-2">
-                                    Faculty of Technical Sciences, Novi Sad
-                                </p>
-
-
-                                <p className="text-sm font-semibold text-primary mt-3">
-                                    Engineer of Management
-                                </p>
-
-
-                                <div className="relative overflow-hidden rounded-xl mt-6 mb-6">
-
-                                    <img
-                                        src="/ProfilePhotos/bachelor-graduation.jpg"
-                                        alt="Bachelor's graduation"
-                                        className="
-                                            w-full
-                                            h-44
-                                            object-cover
-                                            transition-transform
-                                            duration-500
-                                            hover:scale-105
-                                        "
-                                    />
-
-                                </div>
-
-
-                                <div className="border-t border-gray-200 pt-5">
-
-                                    <span className="text-xs uppercase tracking-wider text-gray-400">
-                                        Thesis
-                                    </span>
-
-
-                                    <p className="text-sm font-medium italic text-gray-600 mt-2 leading-relaxed">
-                                        Risk Analysis of Using Cryptocurrency
-                                        and Blockchain in Optimizing Logistics
-                                        Processes
-                                    </p>
-
-
-                                    <a
-                                        href="/Theses/Bachelors-Thesis.pdf"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="
-                                            inline-flex
-                                            items-center
-                                            gap-2
-                                            mt-5
-                                            px-4
-                                            py-2
-                                            rounded-full
-                                            bg-primary
-                                            text-white
-                                            text-sm
-                                            font-medium
-                                            hover:bg-primary-dark
-                                            transition-all
-                                        "
-                                    >
-
-                                        <ArrowUpRight className="w-4 h-4" />
-
-                                        View Full Thesis
-
-                                    </a>
-
-                                </div>
-
-                            </div>
-
-
-
-                            {/* MASTER */}
-
-                            <div
-                                className="
-                                    bg-white
-                                    border
-                                    border-gray-200
-                                    rounded-[2rem]
-                                    p-7
-                                    shadow-[0_20px_60px_rgba(88,28,135,0.15)]
-                                    hover:-translate-y-1
-                                    transition-all
-                                    duration-300
-                                    animate-fade-in
-                                "
-                            >
-
-                                <div className="flex items-center justify-between mb-6">
-
-                                    <div
-                                        className="
-                                            w-24
-                                            h-24
-                                            rounded-2xl
-                                            bg-gray-50
-                                            border
-                                            border-gray-200
-                                            flex
-                                            items-center
-                                            justify-center
-                                            p-3
-                                        "
-                                    >
-
-                                        <img
-                                            src="/ProfilePhotos/FTNlogo.png"
-                                            alt="Faculty of Technical Sciences logo"
-                                            className="w-full h-full object-contain"
-                                        />
-
-                                    </div>
-
-
-                                    <div
-                                        className="
-                                            w-12
-                                            h-12
-                                            rounded-xl
-                                            bg-primary/10
-                                            flex
-                                            items-center
-                                            justify-center
-                                        "
-                                    >
-
-                                        <GraduationCap className="w-6 h-6 text-primary" />
-
-                                    </div>
-
-                                </div>
-
-
-                                <h3 className="text-xl font-bold text-gray-900">
-                                    Master's Degree
-                                </h3>
-
-
-                                <p className="text-gray-500 text-sm mt-2">
-                                    Faculty of Technical Sciences, Novi Sad
-                                </p>
-
-
-                                <p className="text-sm font-semibold text-primary mt-3">
-                                    Master Engineer of Management
-                                </p>
-
-
-                                <div className="relative overflow-hidden rounded-xl mt-6 mb-6">
-
-                                    <img
-                                        src="/ProfilePhotos/master-graduation.jpg"
-                                        alt="Master's graduation"
-                                        className="
-                                            w-full
-                                            h-44
-                                            object-cover
-                                            transition-transform
-                                            duration-500
-                                            hover:scale-105
-                                        "
-                                    />
-
-                                </div>
-
-
-                                <div className="border-t border-gray-200 pt-5">
-
-                                    <span className="text-xs uppercase tracking-wider text-gray-400">
-                                        Thesis
-                                    </span>
-
-
-                                    <p className="text-sm font-medium italic text-gray-600 mt-2 leading-relaxed">
-                                        Risk Analysis of Using Cryptocurrency
-                                        and Blockchain in Optimizing Logistics
-                                        Processes
-                                    </p>
-
-
-                                    <a
-                                        href="/Theses/Masters-Thesis.pdf"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="
-                                            inline-flex
-                                            items-center
-                                            gap-2
-                                            mt-5
-                                            px-4
-                                            py-2
-                                            rounded-full
-                                            bg-primary
-                                            text-white
-                                            text-sm
-                                            font-medium
-                                            hover:bg-primary-dark
-                                            transition-all
-                                        "
-                                    >
-
-                                        <ArrowUpRight className="w-4 h-4" />
-
-                                        View Full Thesis
-
-                                    </a>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    {/* =================================================
-                        FINAL PERSONAL MESSAGE
-                    ================================================= */}
-
-                    <div className="max-w-5xl mx-auto">
-
-                        <div
-                            className="
-                                relative
-                                overflow-hidden
-                                rounded-[2.5rem]
-                                bg-primary
-                                text-white
-                                shadow-[0_30px_80px_rgba(88,28,135,0.30)]
-                            "
-                        >
-
-                            {/* Decorative circles */}
-
-                            <div
-                                className="
-                                    absolute
-                                    -top-28
-                                    -right-20
-                                    w-72
-                                    h-72
-                                    rounded-full
-                                    bg-white/10
-                                "
-                            />
-
-                            <div
-                                className="
-                                    absolute
-                                    -bottom-32
-                                    -left-24
-                                    w-80
-                                    h-80
-                                    rounded-full
-                                    bg-white/10
-                                "
-                            />
-
-
-                            <div
-                                className="
-                                    relative
-                                    z-10
-                                    p-9
-                                    md:p-14
-                                    text-center
-                                "
-                            >
-
-                                <Heart
-                                    className="
-                                        w-8
-                                        h-8
-                                        mx-auto
-                                        mb-6
-                                        text-white/80
-                                    "
-                                />
-
-
-                                <p
-                                    className="
-                                        text-xs
-                                        uppercase
-                                        tracking-[0.25em]
-                                        text-white/70
-                                        mb-4
-                                    "
-                                >
-                                    And the important part
-                                </p>
-
-
-                                <h3
-                                    className="
-                                        text-3xl
-                                        md:text-4xl
-                                        font-bold
-                                        mb-6
-                                    "
-                                >
-                                    I'm curious, I care, and I like making
-                                    things better.
-                                </h3>
-
-
-                                <p
-                                    className="
-                                        text-white/80
-                                        text-lg
-                                        leading-relaxed
-                                        max-w-2xl
-                                        mx-auto
-                                    "
-                                >
-                                    I enjoy working with people, asking
-                                    questions, learning from others and
-                                    turning ideas into something real. If you
-                                    have an interesting problem, project or
-                                    idea, I'm always happy to talk.
-                                </p>
-
-
-                                <div
-                                    className="
-                                        mt-8
-                                        inline-flex
-                                        items-center
-                                        gap-2
-                                        text-sm
-                                        font-medium
-                                    "
-                                >
-
-                                    <span>
-                                        Let's connect
-                                    </span>
-
-                                    <ArrowUpRight className="w-4 h-4" />
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+                <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#09050D] to-transparent z-10" />
             </div>
 
-        </section>
+
+            {/* ABOUT SECTION */}
+
+            <section
+                id="about"
+                ref={sectionRef}
+                className="min-h-[100svh] pt-20 pb-6 relative text-white flex flex-col justify-center"
+            >
+                <div className="container mx-auto px-5 lg:px-8 relative z-10 max-w-[1250px]">
+
+
+                    {/* INTRODUCTION */}
+
+                    <div
+                        data-about-reveal
+                        className="flex flex-col items-center mb-9"
+                    >
+                        <div className="w-full max-w-3xl mx-auto text-center">
+
+                            <span
+                                data-about-reveal
+                                className="text-purple-400 text-[11px] md:text-xs font-semibold tracking-[0.25em] uppercase"
+                            >
+                                MY JOURNEY
+                            </span>
+
+                            <h2
+                                data-about-reveal
+                                className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mt-3"
+                            >
+                                Curiously
+                                <br />
+                                <span className="text-purple-300 italic font-serif">
+                                    Driven by Improvement.
+                                </span>
+                            </h2>
+
+                            <div
+                                data-about-reveal
+                                className="w-14 h-px bg-purple-400/50 mx-auto mt-8 mb-8"
+                            />
+
+                            <div className="max-w-xl mx-auto text-justify">
+
+                                <p
+                                    data-about-reveal
+                                    className="text-gray-300 text-sm md:text-base leading-[1.85] text-justify"
+                                >
+                                    Detail-oriented and naturally curious, I am motivated by
+                                    finding better ways to approach challenges and make things
+                                    work. I enjoy learning new skills, exploring tools, taking
+                                    on unfamiliar topics, and developing new KPIs. For me,
+                                    growth means staying open to new perspectives, continuously
+                                    learning, and finding meaningful ways to add value.
+                                </p>
+
+                                <p
+                                    data-about-reveal
+                                    className="text-gray-300 text-sm md:text-base leading-[1.85] text-justify mt-4"
+                                >
+                                    I bring initiative, adaptability, and a genuine commitment
+                                    to improvement to everything I do. I enjoy turning complex
+                                    data, operational challenges, and business processes into
+                                    clear insights and practical solutions that support better
+                                    decisions, improve performance, and create measurable value.
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    {/* MAIN TITLE */}
+
+                    <div className="mb-5 md:mb-6">
+
+                    </div>
+
+
+                    {/* IRREGULAR PUZZLE MOSAIC */}
+
+                    <div
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 lg:grid-rows-2 lg:auto-rows-[190px] gap-4 lg:gap-4 max-w-[1120px] mx-auto"
+                    >
+
+
+                        {/* CAREER STORY */}
+
+                        <div
+                            data-about-reveal
+                            className="lg:col-start-1 lg:col-span-4 lg:row-span-2 lg:min-h-[392px] relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#2b1745] via-[#1c102c] to-[#110a1c] border border-purple-300/20 p-5 md:p-6 flex flex-col justify-between group transition-all duration-300 hover:border-purple-300/50 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(88,28,135,0.25)]"
+                        >
+
+                            <div className="absolute -right-16 -top-16 w-48 h-48 rounded-full bg-purple-500/10 blur-3xl group-hover:bg-purple-500/20 transition-all" />
+
+                            <div className="relative z-10 max-w-[95%]">
+
+                                <div
+                                    data-about-reveal
+                                    className="flex items-center gap-3 mb-5"
+                                >
+                                    <div className="w-11 h-11 rounded-xl bg-purple-400/15 flex items-center justify-center">
+                                        <BriefcaseBusiness className="w-5 h-5 text-purple-300" />
+                                    </div>
+
+                                    <span className="text-[11px] md:text-xs text-left uppercase tracking-[0.2em] text-purple-300 font-bold">
+                                        My Career Story
+                                    </span>
+                                </div>
+
+
+                                <div className="space-y-5">
+
+                                    <div
+                                        data-about-reveal
+                                        className="border-l-2 border-purple-400/60 pl-4"
+                                    >
+                                        <h4 className="text-white text-sm md:text-base font-bold">
+                                            Logistics & Supply Chain
+                                        </h4>
+
+                                        <p className="text-purple-200/80 text-xs md:text-sm leading-relaxed mt-2 text-justify max-w-[95%]">
+                                            As a Inventory & Supply Manager, I learned to
+                                            understand operations from the
+                                            inside: inventory, suppliers,
+                                            coordination and the impact
+                                            of everyday decisions on business
+                                            performance.
+                                        </p>
+                                    </div>
+
+
+                                    <div
+                                        data-about-reveal
+                                        className="border-l-2 border-purple-400/60 pl-4"
+                                    >
+                                        <h4 className="text-white text-sm md:text-base font-bold">
+                                            Quality Engineering & Analytics
+                                        </h4>
+
+                                        <p className="text-purple-200/80 text-xs md:text-sm leading-relaxed mt-2 text-justify max-w-[95%]">
+                                            At Continental, I developed a
+                                            stronger analytical perspective
+                                            through KPIs, reporting, quality
+                                            monitoring, process improvement,
+                                            and cross-functional collaboration.
+                                        </p>
+                                    </div>
+
+
+                                    <div
+                                        data-about-reveal
+                                        className="border-l-2 border-purple-400/60 pl-4"
+                                    >
+                                        <h4 className="text-white text-sm md:text-base font-bold">
+                                            Analytics & Digital Projects
+                                        </h4>
+
+                                        <p className="text-purple-200/80 text-xs md:text-sm leading-relaxed mt-2 text-justify max-w-[95%]">
+                                            Today, I bring these experiences
+                                            together through data analytics,
+                                            BI reporting, digital marketing,
+                                            and web development, continuously
+                                            exploring new ways to turn ideas
+                                            into practical solutions.
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div
+                                data-about-reveal
+                                className="relative z-10 mt-5 pt-4 border-t border-white/10 flex items-center gap-3"
+                            >
+
+                                <span className="text-xs md:text-sm text-purple-200 font-semibold tracking-wide">
+                                    Every experience added another piece.
+                                </span>
+                            </div>
+
+                        </div>
+
+
+
+                        {/* BACHELOR'S DEGREE */}
+
+                        <div
+                            data-about-reveal
+                            className="lg:col-start-5 lg:col-span-4 lg:row-start-1 lg:min-h-[190px] relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#E9DFFF] to-[#D5C2F5] border border-purple-100 p-5 md:p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(88,28,135,0.2)] group"
+                        >
+
+                            <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-purple-100 blur-2xl" />
+
+                            <div className="relative z-10">
+
+                                <div
+                                    data-about-reveal
+                                    className="flex items-center justify-between mb-4"
+                                >
+                                    <div className="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center">
+                                        <GraduationCap className="w-6 h-6 text-purple-700" />
+                                    </div>
+
+                                    <span className="text-[10px] md:text-[11px] uppercase tracking-wider text-purple-500 font-bold">
+                                        Bachelor's Degree
+                                    </span>
+                                </div>
+
+                                <h3
+                                    data-about-reveal
+                                    className="text-lg md:text-xl font-bold text-gray-900 leading-snug"
+                                >
+                                    Engineer of Management
+                                </h3>
+
+                                <p
+                                    data-about-reveal
+                                    className="text-purple-700 text-xs md:text-sm font-semibold mt-3"
+                                >
+                                    Faculty of Technical Sciences
+                                </p>
+
+                                <p
+                                    data-about-reveal
+                                    className="text-gray-500 text-xs md:text-sm mt-1"
+                                >
+                                    University of Novi Sad
+                                </p>
+
+                            </div>
+
+
+                            <div className="relative z-10 pt-3 mt-4 border-t border-purple-100 flex items-center justify-end">
+
+                            </div>
+
+                        </div>
+
+
+
+                        {/* MASTER'S DEGREE */}
+
+                        <div
+                            data-about-reveal
+                            className="lg:col-start-5 lg:col-span-4 lg:row-start-2 lg:min-h-[190px] relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#E9DFFF] to-[#D5C2F5] border border-purple-200 p-5 md:p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(88,28,135,0.2)] group"
+                        >
+
+                            <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-white/30 blur-2xl" />
+
+                            <div className="relative z-10">
+
+                                <div
+                                    data-about-reveal
+                                    className="flex items-center justify-between mb-4"
+                                >
+                                    <div className="w-11 h-11 rounded-xl bg-white/70 flex items-center justify-center">
+                                        <BookOpen className="w-6 h-6 text-purple-700" />
+                                    </div>
+
+                                    <span className="text-[10px] md:text-[11px] uppercase tracking-wider text-purple-700 font-bold">
+                                        Master's Degree
+                                    </span>
+                                </div>
+
+                                <h3
+                                    data-about-reveal
+                                    className="text-lg md:text-xl font-bold text-purple-950 leading-snug"
+                                >
+                                    Master Engineer of Management
+                                </h3>
+
+                                <p
+                                    data-about-reveal
+                                    className="text-purple-800 text-xs md:text-sm font-semibold mt-3"
+                                >
+                                    Faculty of Technical Sciences
+                                </p>
+
+                                <p
+                                    data-about-reveal
+                                    className="text-purple-800/70 text-xs md:text-sm mt-1"
+                                >
+                                    University of Novi Sad
+                                </p>
+
+                            </div>
+
+
+                            <div className="relative z-10 pt-3 mt-4 border-t border-purple-400/30 flex items-center justify-end">
+
+                                <a
+                                    data-about-reveal
+                                    href="/Masters-Thesis.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 text-xs md:text-sm font-semibold text-purple-900 hover:text-purple-950 transition-colors"
+                                >
+                                    View Thesis <ExternalLink className="w-4 h-4" />
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+
+                        {/* PINTEREST & CREATIVITY */}
+
+                        <div
+                            data-about-reveal
+                            className="lg:col-start-9 lg:col-span-4 lg:row-start-1 lg:row-span-2 min-h-[280px] lg:min-h-[392px] relative overflow-hidden rounded-2xl bg-[#5014A6] border border-purple-300/30 group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(88,28,135,0.3)]"
+                        >
+
+                            <img
+                                src="/ProfilePhotos/pinterest.jpg"
+                                alt="Creative Pinterest projects"
+                                className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-35 transition-opacity duration-500"
+                            />
+
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#32105F]/95 via-[#5014A6]/90 to-[#170925]/95" />
+
+
+                            <div className="relative z-10 h-full p-5 md:p-6 flex flex-col justify-between">
+
+                                <div className="max-w-[95%]">
+
+                                    <div
+                                        data-about-reveal
+                                        className="flex items-center gap-2 mb-8"
+                                    >
+
+                                        <span className="text-[11px] md:text-xs uppercase tracking-[0.2em] text-purple-200 font-bold">
+                                            Beyond My Professional Life
+                                        </span>
+                                    </div>
+
+
+                                    <h3
+                                        data-about-reveal
+                                        className="text-xl md:text-2xl font-bold leading-tight mb-3"
+                                    >
+                                        Creativity Has Its Own
+                                        <span className="block text-purple-200 italic font-serif">
+                                            Data Story.
+                                        </span>
+                                    </h3>
+
+
+                                    <p
+                                        data-about-reveal
+                                        className="text-purple-100/85 text-sm leading-relaxed text-justify max-w-[95%]"
+                                    >
+                                        I have always enjoyed combining
+                                        creativity with curiosity and data.
+                                        That led me to growing a hobby Pinterest
+                                        profile into an audience of more than
+                                        20,000 followers and over 12 million
+                                        monthly views.
+                                    </p>
+
+
+                                    <div
+                                        data-about-reveal
+                                        className="grid grid-cols-2 gap-3 mt-5"
+                                    >
+
+                                        <div className="rounded-xl bg-white/10 border border-white/10 p-3 md:p-4">
+                                            <p className="text-2xl md:text-3xl font-bold text-white">
+                                                20K+
+                                            </p>
+
+                                            <p className="text-[10px] md:text-xs text-purple-200 uppercase tracking-wider mt-2">
+                                                Followers
+                                            </p>
+                                        </div>
+
+
+                                        <div className="rounded-xl bg-white/10 border border-white/10 p-3 md:p-4">
+                                            <p className="text-2xl md:text-3xl font-bold text-white">
+                                                12M+
+                                            </p>
+
+                                            <p className="text-[10px] md:text-xs text-purple-200 uppercase tracking-wider mt-2">
+                                                Monthly Views
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    data-about-reveal
+                                    className="mt-4 pt-4 border-t border-white/15 max-w-[95%]"
+                                >
+
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <Lightbulb className="w-5 h-5 text-purple-200" />
+
+                                        <span className="text-sm font-bold text-white">
+                                            And when I am not working...
+                                        </span>
+                                    </div>
+
+                                    <p className="text-purple-100/85 text-xs md:text-sm leading-relaxed text-justify max-w-[95%]">
+                                        You will probably find me crocheting,
+                                        creating something by hand, or
+                                        exploring a new diy project. I enjoy the
+                                        balance between analytical thinking
+                                        and creative expression.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* CLOSING CARD */}
+
+                    <div
+                        data-about-reveal
+                        className="mt-5 rounded-2xl border border-purple-300/20 bg-gradient-to-br from-purple-950/60 via-[#160d24]/90 to-purple-950/50 p-6 md:p-9 flex flex-col items-center text-center shadow-[0_12px_40px_rgba(88,28,135,0.12)]"
+                    >
+
+                        <div
+                            data-about-reveal
+                            className="flex items-center justify-center gap-3 mb-4"
+                        >
+
+                            <Sparkles className="w-5 h-5 text-purple-300" />
+
+                            <span className="text-xs uppercase tracking-[0.25em] font-bold text-purple-300">
+                                My Approach
+                            </span>
+
+                        </div>
+
+                        <h3
+                            data-about-reveal
+                            className="text-xl md:text-2xl font-semibold text-white leading-snug max-w-3xl mb-5"
+                        >
+                            Good Analytics Should Do More Than Present Just Numbers.
+                        </h3>
+
+                        <div className="w-16 h-px bg-purple-400/50 mb-5" />
+
+                        <p
+                            data-about-reveal
+                            className="w-full max-w-xl mx-auto text-sm md:text-base leading-[1.9] text-white/75 text-justify"
+                        >
+                            It should help people understand what is happening, why it matters,
+                            and what can be done better. My goal is to make complex data
+                            easier to understand, support confident decision-making,
+                            and help teams & businesses improve the way they work.
+
+                            Whether I am reviewing a KPI, understanding
+                            an operational process, or measuring a
+                            campaign, my goal remains the same: to keep
+                            learning, identify opportunities, and turn
+                            ideas into improvements that make a difference.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {/* ANIMATIONS */}
+
+                <style>{`
+                    .about-reveal {
+                        opacity: 0;
+                        transform: translateY(28px);
+                        transition:
+                            opacity 850ms cubic-bezier(0.16, 1, 0.3, 1),
+                            transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
+                        will-change: opacity, transform;
+                    }
+
+                    .about-reveal.about-reveal-visible {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+
+                    @media (prefers-reduced-motion: reduce) {
+                        .about-reveal {
+                            opacity: 1 !important;
+                            transform: none !important;
+                            transition: none !important;
+                            will-change: auto;
+                        }
+                    }
+
+                    @media (min-width: 1024px) and (max-height: 850px) {
+                        #about {
+                            padding-top: 5rem;
+                            padding-bottom: 1rem;
+                        }
+
+                        #about .container {
+                            max-width: 1150px;
+                        }
+                    }
+                `}</style>
+
+            </section>
+        </div>
     );
 };
 
+export default About;

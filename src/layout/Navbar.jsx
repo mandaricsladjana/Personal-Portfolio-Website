@@ -1,3 +1,4 @@
+
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
@@ -5,11 +6,11 @@ import { Menu, X } from "lucide-react";
 
 const Navlinks = [
     { href: "home", title: "Home" },
-    { href: "about", title: "About Me" },
-    { href: "experience", title: "Experience" },
-    { href: "services", title: "Services" },
     { href: "projects", title: "Projects" },
-    { href: "skills", title: "Skills" },
+    { href: "services", title: "Services" },
+    { href: "skills", title: "Tools" },
+    { href: "experience", title: "Experience" },
+    { href: "about", title: "About" },
     { href: "learning", title: "Learning" },
 ];
 
@@ -17,13 +18,37 @@ export const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isTopHovered, setIsTopHovered] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    const navbarScale = Math.min(
+        Math.max(windowWidth / 1500, 0.78),
+        1
+    );
+
+    const logoSize = Math.round(76 * navbarScale);
+    const navFontSize = Math.round(16 * navbarScale);
+    const navHorizontalPadding = Math.round(16 * navbarScale);
+    const navVerticalPadding = Math.round(8 * navbarScale);
+    const contactHeight = Math.round(42 * navbarScale);
+
+    useEffect(() => {
         const handleScroll = () => {
-            const scrollThreshold = window.innerHeight;
+            const scrollThreshold = window.innerHeight * 0.5;
 
             if (window.scrollY > scrollThreshold) {
                 setIsScrolled(true);
@@ -46,7 +71,9 @@ export const Navbar = () => {
 
     useEffect(() => {
         const handleMouseMove = (event) => {
-            if (window.scrollY <= window.innerHeight) {
+            const scrollThreshold = window.innerHeight * 0.5;
+
+            if (window.scrollY <= scrollThreshold) {
                 setIsTopHovered(false);
                 return;
             }
@@ -78,37 +105,70 @@ export const Navbar = () => {
             return;
         }
 
+        let animationFrameId;
+        let attempts = 0;
+        let cancelled = false;
+
         document.documentElement.style.scrollBehavior = "auto";
 
         const scrollToSection = () => {
-            const element = document.getElementById(section);
-
-            if (!element) {
-                requestAnimationFrame(scrollToSection);
+            if (cancelled) {
                 return;
             }
 
-            window.scrollTo({
-                top: element.offsetTop,
+            const element = document.getElementById(section);
+
+            if (!element) {
+                attempts += 1;
+
+                if (attempts < 120) {
+                    animationFrameId =
+                        requestAnimationFrame(scrollToSection);
+                } else {
+                    document.documentElement.style.scrollBehavior = "";
+
+                    navigate("/", {
+                        replace: true,
+                        state: null,
+                    });
+                }
+
+                return;
+            }
+
+            element.scrollIntoView({
                 behavior: "auto",
+                block: "start",
             });
 
-            requestAnimationFrame(() => {
+            animationFrameId = requestAnimationFrame(() => {
+                if (cancelled) {
+                    return;
+                }
+
                 document.documentElement.style.scrollBehavior = "";
 
                 navigate("/", {
                     replace: true,
-                    state: {},
+                    state: null,
                 });
             });
         };
 
-        requestAnimationFrame(scrollToSection);
+        animationFrameId = requestAnimationFrame(scrollToSection);
 
         return () => {
+            cancelled = true;
+            cancelAnimationFrame(animationFrameId);
             document.documentElement.style.scrollBehavior = "";
         };
     }, [location.pathname, location.state, navigate]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | SECTION NAVIGATION
+    |--------------------------------------------------------------------------
+    */
 
     const handleSectionClick = (section) => {
         setIsMobileMenuOpen(false);
@@ -123,10 +183,14 @@ export const Navbar = () => {
             return;
         }
 
-        document.getElementById(section)?.scrollIntoView({
-            behavior: "auto",
-            block: "start",
-        });
+        const element = document.getElementById(section);
+
+        if (element) {
+            element.scrollIntoView({
+                behavior: "auto",
+                block: "start",
+            });
+        }
     };
 
     const handleHomeClick = () => {
@@ -156,10 +220,14 @@ export const Navbar = () => {
             return;
         }
 
-        document.getElementById("contact")?.scrollIntoView({
-            behavior: "auto",
-            block: "start",
-        });
+        const element = document.getElementById("contact");
+
+        if (element) {
+            element.scrollIntoView({
+                behavior: "auto",
+                block: "start",
+            });
+        }
     };
 
     const showNavbar = !isScrolled || isTopHovered;
@@ -177,7 +245,7 @@ export const Navbar = () => {
             }`}
         >
             {/* LEFT SIDE - LOGO */}
-            <nav className="container mx-auto px-15 flex items-center justify-between">
+            <nav className="container mx-auto px-15 flex items-center">
 
                 <Link
                     to="/"
@@ -186,8 +254,6 @@ export const Navbar = () => {
                         inline-flex
                         items-center
                         justify-center
-                        w-19
-                        h-19
                         rounded-full
                         overflow-hidden
                         border-2
@@ -196,7 +262,12 @@ export const Navbar = () => {
                         hover:-translate-y-1
                         transition-all
                         duration-300
+                        shrink-0
                     "
+                    style={{
+                        width: `${logoSize}px`,
+                        height: `${logoSize}px`,
+                    }}
                 >
                     <img
                         src="/ProfilePhotos/LogoAlternative.png"
@@ -205,8 +276,8 @@ export const Navbar = () => {
                     />
                 </Link>
 
-                {/* DESKTOP NAVIGATION */}
-                <div className="hidden md:flex items-center gap-1">
+                {/* DESKTOP NAVIGATION - CENTERED */}
+                <div className="hidden md:flex flex-1 items-center justify-center gap-1 min-w-0">
                     <div className="glass bg-white/10 rounded-full px-2 py-1 flex items-center gap-1 border-2 border-white/30">
 
                         {Navlinks.map((link) => (
@@ -219,9 +290,6 @@ export const Navbar = () => {
                                 }
                                 key={link.href}
                                 className="
-                                    px-4
-                                    py-2
-                                    text-base
                                     font-semibold
                                     text-white/80
                                     hover:text-purple-400
@@ -229,7 +297,12 @@ export const Navbar = () => {
                                     hover:bg-purple-500/15
                                     transition-all
                                     duration-300
+                                    whitespace-nowrap
                                 "
+                                style={{
+                                    fontSize: `${navFontSize}px`,
+                                    padding: `${navVerticalPadding}px ${navHorizontalPadding}px`,
+                                }}
                             >
                                 {link.title}
                             </button>
@@ -238,19 +311,35 @@ export const Navbar = () => {
                     </div>
                 </div>
 
-                {/* CONTACT BUTTON */}
+                {/* CONTACT BUTTON - FAR RIGHT */}
                 <Button
                     size="sm"
                     onClick={handleContactClick}
-                    className="h-[42px] border-2 border-primary hover:bg-primary/20 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300"
+                    className="
+                        whitespace-nowrap
+                        shrink-0
+                        border-2
+                        border-primary
+                        hover:bg-primary/20
+                        hover:-translate-y-1
+                        hover:scale-[1.02]
+                        transition-all
+                        duration-300
+                        ml-auto
+                    "
+                    style={{
+                        height: `${contactHeight}px`,
+                    }}
                 >
                     Contact Me
                 </Button>
 
                 {/* MOBILE MENU BUTTON */}
                 <button
-                    className="md:hidden p-2 text-foreground cursor-pointer"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="md:hidden p-2 text-white cursor-pointer"
+                    onClick={() =>
+                        setIsMobileMenuOpen(!isMobileMenuOpen)
+                    }
                     aria-label="Toggle navigation menu"
                 >
                     {isMobileMenuOpen ? (

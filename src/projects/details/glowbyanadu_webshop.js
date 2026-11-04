@@ -3,8 +3,8 @@ const GlowByAnaduWebshop = {
 
     overview: {
         eyebrow: "Web Development",
-        title: "Building a Fully Functional Boutique Webshop",
-        text: "A custom boutique webshop with a custom CMS, SEO optimization, and integrated GA4 analytics.",
+        title: "Building a Fully Functional E-Commerce Boutique Website",
+        text: "A custom boutique webshop with CMS, SEO optimization, and integrated GA4 analytics.",
     },
 
     sections: [

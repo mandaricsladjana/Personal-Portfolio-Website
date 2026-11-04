@@ -448,6 +448,43 @@ const NashvilleProjectDetails = ({ project, details }) => {
 
 
             {/* =========================================================
+                PROJECT MEDIA
+            ========================================================= */}
+
+            {(project?.video || project?.image) && (
+                <section
+                    data-watermark-bg="dark"
+                    className="relative z-20 overflow-hidden bg-[#05030a] px-6 pb-28 sm:px-10 lg:px-16 lg:pb-40"
+                >
+                    <div className="relative z-40 mx-auto max-w-7xl">
+
+                        <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.025] shadow-2xl">
+
+                            {project?.video ? (
+                                <video
+                                    src={project.video}
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                    preload="metadata"
+                                    className="block h-auto max-h-[700px] w-full object-cover"
+                                />
+                            ) : (
+                                <img
+                                    src={project.image}
+                                    alt={project.title}
+                                    className="block h-auto max-h-[700px] w-full object-cover"
+                                />
+                            )}
+
+                        </div>
+
+                    </div>
+                </section>
+            )}
+
+            {/* =========================================================
                 PROJECT SECTIONS
             ========================================================= */}
 
